@@ -108,6 +108,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\KarbonConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -155,6 +156,10 @@
     <Content Include="App_Data\Content\01-shop\01-metalch\Brand.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Karbon.Core\Karbon.Core.csproj">
+      <Project>{0CBE1B67-2FB8-40AE-B93F-87FE0BC17246}</Project>
+      <Name>Karbon.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Karbon.Web\Karbon.Web.csproj">
       <Project>{4F7AAB85-3046-4BA4-AD8A-0E3A08BC093C}</Project>
       <Name>Karbon.Web</Name>

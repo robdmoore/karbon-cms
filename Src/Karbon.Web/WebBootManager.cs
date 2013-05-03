@@ -13,17 +13,14 @@ namespace Karbon.Web
 {
     public class WebBootManager : CoreBootManager
     {
-        public override IBootManager Initialize()
+        public override void Initialize()
         {
             base.Initialize();
 
             KarbonWebContext.Current = new KarbonWebContext(
-                new HttpContextWrapper(HttpContext.Current),
-                KarbonAppContext.Current);
+                new HttpContextWrapper(HttpContext.Current));
 
             RegisterRoutes();
-
-            return this;
         }
 
         protected virtual void RegisterRoutes()
