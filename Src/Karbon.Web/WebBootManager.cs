@@ -17,9 +17,16 @@ namespace Karbon.Web
         {
             base.Initialize();
 
-            KarbonWebContext.Current = new KarbonWebContext(
-                new HttpContextWrapper(HttpContext.Current));
+            // Wrap the http context
+            var httpContextBase = new HttpContextWrapper(HttpContext.Current);
 
+            // Create the web context
+            KarbonWebContext.Current = new KarbonWebContext(httpContextBase);
+
+            // Reset the environment context
+            KarbonAppContext.Current.Environment = new WebEnvironmentContext(httpContextBase);
+
+            // Register required routes
             RegisterRoutes();
         }
 
@@ -30,7 +37,7 @@ namespace Karbon.Web
                     "{*path}",
                     new RouteValueDictionary(new
                     {
-                        controller = "pages", 
+                        controller = "karbon", 
                         action = "index"
                     }),
                     new MvcRouteHandler()));

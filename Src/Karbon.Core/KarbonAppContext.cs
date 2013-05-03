@@ -14,9 +14,12 @@ namespace Karbon.Core
 
         #endregion
 
+        public EnvironmentContext Environment { get; set; }
+
         internal KarbonAppContext()
         {
-            
+            // Setup the default environment behaviour
+            Environment = new EnvironmentContext();
         }
     }
 }
