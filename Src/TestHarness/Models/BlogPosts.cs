@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Karbon.Web.Model;
+using Karbon.Core.Models;
 
 namespace TestHarness.Models
 {
-    public class BlogPosts : ContentModel
+    public class BlogPosts : Content
     {
     }
 }

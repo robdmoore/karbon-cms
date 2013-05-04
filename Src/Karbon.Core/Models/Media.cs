@@ -1,7 +1,5 @@
 ﻿namespace Karbon.Core.Models
 {
-    public class Media : Content, IMedia
-    {
-
-    }
+    public class Media : Entity, IMedia
+    { }
 }

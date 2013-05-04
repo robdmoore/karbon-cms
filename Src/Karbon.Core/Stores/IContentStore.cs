@@ -1,6 +1,9 @@
-﻿namespace Karbon.Core.Stores
+﻿using Karbon.Core.Models;
+
+namespace Karbon.Core.Stores
 {
-    public interface IContentStore : IStore
+    public interface IContentStore : IStore<IContent>
     {
+
     }
 }

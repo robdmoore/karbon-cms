@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Karbon.Core
@@ -49,6 +50,11 @@ namespace Karbon.Core
                 input = input.Remove(input.LastIndexOf(toTrim, StringComparison.InvariantCultureIgnoreCase));
 
             return input;
+        }
+
+        public static bool IsAlphaNumeric(this string input)
+        {
+            return new Regex(@"^[a-zA-Z0-9]*$").IsMatch(input);
         }
     }
 }
