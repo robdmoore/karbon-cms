@@ -9,12 +9,12 @@ using Karbon.Core.Configuration;
 
 namespace Karbon.Core.Serialization
 {
-    public class PageDataSerializerManager
+    public class DataSerializerManager
     {
-        private static PageDataSerializer _defaultProvider;
-        private static PageDataSerializerCollection _providers;
+        private static DataSerializer _defaultProvider;
+        private static DataSerializerCollection _providers;
 
-        static PageDataSerializerManager()
+        static DataSerializerManager()
         {
             Initialize();
         }
@@ -22,15 +22,15 @@ namespace Karbon.Core.Serialization
         private static void Initialize()
         {
             // Parse config
-            var config = (PageDataSerializersSection)ConfigurationManager.GetSection("karbon/pageDataSerializers");
+            var config = (DataSerializersSection)ConfigurationManager.GetSection("karbon/dataSerializers");
             if (config == null)
-                throw new ConfigurationErrorsException("pageDataSerializers configuration section is not set correctly.");
+                throw new ConfigurationErrorsException("dataSerializers configuration section is not set correctly.");
 
             // Create providers
-            _providers = new PageDataSerializerCollection();
+            _providers = new DataSerializerCollection();
 
             ProvidersHelper.InstantiateProviders(config.Providers,
-                _providers, typeof(PageDataSerializer));
+                _providers, typeof(DataSerializer));
 
             _providers.SetReadOnly();
 
@@ -41,12 +41,12 @@ namespace Karbon.Core.Serialization
                 throw new Exception("_defaultProvider");
         }
 
-        public static PageDataSerializerCollection Providers
+        public static DataSerializerCollection Providers
         {
             get { return _providers; }
         }
 
-        public static PageDataSerializer Default
+        public static DataSerializer Default
         {
             get { return _defaultProvider; }
         }

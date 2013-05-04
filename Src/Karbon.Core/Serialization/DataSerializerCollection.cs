@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Karbon.Core.Serialization
 {
-    public class PageDataSerializerCollection : ProviderCollection
+    public class DataSerializerCollection : ProviderCollection
     {
-        new public PageDataSerializer this[string name]
+        new public DataSerializer this[string name]
         {
-            get { return (PageDataSerializer)base[name]; }
+            get { return (DataSerializer)base[name]; }
         }
     }
 }

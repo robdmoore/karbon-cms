@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Karbon.Core.Serialization
 {
-    public class KarbonPageDataSerializer : PageDataSerializer
+    public class KarbonDataSerializer : DataSerializer
     {
-        public override IDictionary<string, string> Deserialize(string pageData)
+        public override IDictionary<string, string> Deserialize(string data)
         {
             throw new NotImplementedException();
         }

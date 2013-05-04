@@ -6,7 +6,7 @@ using Karbon.Web.Model;
 
 namespace TestHarness.Models
 {
-    public class BlogPost : PageModel
+    public class BlogPost : ContentModel
     {
     }
 }

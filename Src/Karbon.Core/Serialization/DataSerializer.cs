@@ -6,17 +6,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Karbon.Core.IO
+namespace Karbon.Core.Serialization
 {
-    public abstract class FileSystem : ProviderBase
+    public abstract class DataSerializer : ProviderBase
     {
-        public override void Initialize(string name, 
+        public string FileExtension { get; private set; }   
+
+        public override void Initialize(string name,
             NameValueCollection config)
         {
             base.Initialize(name, config);
+
+            FileExtension = config["fileExtension"];
+
             Initialize(config);
         }
 
         public virtual void Initialize(NameValueCollection config) { }
+
+        public abstract IDictionary<string, string> Deserialize(string pageData);
     }
 }

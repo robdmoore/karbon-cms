@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Karbon.Web.Model
+namespace Karbon.Core.Models
 {
-    public interface IPageModel
+    public interface IContent
     {
+        string Path { get; }
         string Slug { get; }
         string Url { get; }
+
         DateTime Created { get; }
         DateTime Modified { get; }
+
+        IDictionary<string, string> Data { get; }
     }
 }

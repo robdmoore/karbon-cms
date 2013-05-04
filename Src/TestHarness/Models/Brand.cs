@@ -6,7 +6,7 @@ using Karbon.Web.Model;
 
 namespace TestHarness.Models
 {
-    public class Brand : PageModel
+    public class Brand : ContentModel
     {
     }
 }

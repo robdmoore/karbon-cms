@@ -17,7 +17,7 @@ namespace TestHarness.Controllers
             
         }
 
-        public HomeController(IPageModel model)
+        public HomeController(IContentModel model)
         {
             _model = model as Home;
         }

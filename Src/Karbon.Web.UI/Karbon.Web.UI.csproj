@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Content\Site.txt" />
+    <Content Include="Media\Empty.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup />

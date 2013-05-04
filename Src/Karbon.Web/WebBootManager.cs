@@ -33,7 +33,7 @@ namespace Karbon.Web
         protected virtual void RegisterRoutes()
         {
             RouteTable.Routes.Add("Default_Pages", 
-                new PageRoute(
+                new KarbonRoute(
                     "{*path}",
                     new RouteValueDictionary(new
                     {

@@ -8,7 +8,7 @@ using Karbon.Core.IO;
 
 namespace Karbon.Core.Configuration
 {
-    public class FileSystemsSection : ConfigurationSection
+    public class FileStoresSection : ConfigurationSection
     {
         [ConfigurationProperty("providers", IsDefaultCollection = true, IsRequired = true)]
         public ProviderSettingsCollection Providers

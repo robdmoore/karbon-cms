@@ -12,6 +12,13 @@ namespace Karbon.Core
     public class EnvironmentContext
     {
         private string _rootDir;
+
+        /// <summary>
+        /// Gets the root directory.
+        /// </summary>
+        /// <value>
+        /// The root directory.
+        /// </value>
         public virtual string RootDirectory
         {
             get
@@ -33,6 +40,11 @@ namespace Karbon.Core
             }
         }
 
+        /// <summary>
+        /// Maps the path.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
         public virtual string MapPath(string path)
         {
             var newPath = path.TrimStart('~', '/').Replace('/', Path.DirectorySeparatorChar);

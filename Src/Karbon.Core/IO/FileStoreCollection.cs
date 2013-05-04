@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Karbon.Core.IO
 {
-    public class FileSystemCollection : ProviderCollection
+    public class FileStoreCollection : ProviderCollection
     {
-        new public FileSystem this[string name]
+        new public FileStore this[string name]
         {
-            get { return (FileSystem)base[name]; }
+            get { return (FileStore)base[name]; }
         }
     }
 }

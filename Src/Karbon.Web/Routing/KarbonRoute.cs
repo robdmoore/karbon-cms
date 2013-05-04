@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Routing;
-using Karbon.Web.Model;
+using Karbon.Core.Models;
 
 namespace Karbon.Web.Routing
 {
-    public class PageRoute : Route
+    public class KarbonRoute : Route
     {
         private string _url;
         private IRouteHandler _routeHandler;
@@ -47,7 +47,7 @@ namespace Karbon.Web.Routing
             var controller = DefaultController;
             var action = DefaultAction;
 
-            IPageModel pageModel = null;
+            IContent pageModel = null;
             if (string.IsNullOrEmpty(virtualPath) || string.Equals(virtualPath, "/"))
             {
                 // Homepage request
@@ -62,7 +62,7 @@ namespace Karbon.Web.Routing
 
         public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values)
         {
-            var model = values[PageModelKey] as IPageModel;
+            var model = values[PageModelKey] as IContent;
             if (model == null)
                 return null;
 
@@ -80,7 +80,7 @@ namespace Karbon.Web.Routing
 
         #region Constructors
 
-        public PageRoute(string url, 
+        public KarbonRoute(string url, 
             IRouteHandler routeHandler) 
             : base(url, routeHandler)
         {
@@ -88,7 +88,7 @@ namespace Karbon.Web.Routing
             _routeHandler = routeHandler;
         }
 
-        public PageRoute(string url, 
+        public KarbonRoute(string url, 
             RouteValueDictionary defaults, 
             IRouteHandler routeHandler) 
             : base(url, defaults, routeHandler)
@@ -97,7 +97,7 @@ namespace Karbon.Web.Routing
             _routeHandler = routeHandler;
         }
 
-        public PageRoute(string url, 
+        public KarbonRoute(string url, 
             RouteValueDictionary defaults, 
             RouteValueDictionary constraints, 
             IRouteHandler routeHandler) 
@@ -107,7 +107,7 @@ namespace Karbon.Web.Routing
             _routeHandler = routeHandler;
         }
 
-        public PageRoute(string url, 
+        public KarbonRoute(string url, 
             RouteValueDictionary defaults, 
             RouteValueDictionary constraints, 
             RouteValueDictionary dataTokens, 

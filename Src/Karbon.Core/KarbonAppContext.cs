@@ -10,12 +10,27 @@ namespace Karbon.Core
     {
         #region Factory
 
+        /// <summary>
+        /// Gets the current AppContext.
+        /// </summary>
+        /// <value>
+        /// The current AppContext.
+        /// </value>
         public static KarbonAppContext Current { get; internal set; }
 
         #endregion
 
+        /// <summary>
+        /// Gets or sets the current environment context.
+        /// </summary>
+        /// <value>
+        /// The environment context.
+        /// </value>
         public EnvironmentContext Environment { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KarbonAppContext"/> class.
+        /// </summary>
         internal KarbonAppContext()
         {
             // Setup the default environment behaviour
