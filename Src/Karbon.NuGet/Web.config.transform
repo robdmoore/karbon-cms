@@ -3,7 +3,7 @@
 
   <configSections>
     <sectionGroup name="karbon">
-      <section name="fileStores" type="Karbon.Core.Configuration.FileStoresSection, Karbon.Core, Version=1.0.0.0, Culture=neutral"/>
+      <section name="fileStores" type="Karbon.Core.Configuration.FileStoresSection, Karbon.Core"/>
       <section name="dataSerializers" type="Karbon.Core.Configuration.DataSerializersSection, Karbon.Core"/>
     </sectionGroup>
   </configSections>
@@ -12,9 +12,9 @@
     <fileStores>
       <providers>
         <add name="content" type="Karbon.Core.IO.LocalFileStore, Karbon.Core"
-             virtualRoot="~/App_Data/Content/" />
+             rootPath="~/App_Data/Content/" pathSeperator="/" />
         <add name="media" type="Karbon.Core.IO.LocalFileStore, Karbon.Core"
-             virtualRoot="~/Media/" />
+             rootPath="~/Media/" pathSeperator="/" />
       </providers>
     </fileStores>
     <dataSerializers default="karbon">
