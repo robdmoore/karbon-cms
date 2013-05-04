@@ -25,7 +25,7 @@ namespace Karbon.Tests.Serialization
         public void Can_Deserialize_Stream()
         {
             // Arrange
-            var stream = CreateStream(@"Name: Test Name
+            var stream = CreateStream(@"Name:Test Name
 ----
 Description: Test Description
 ----

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+
+  <configSections>
+    <sectionGroup name="karbon">
+      <section name="fileStores" type="Karbon.Core.Configuration.FileStoresSection, Karbon.Core, Version=1.0.0.0, Culture=neutral"/>
+      <section name="dataSerializers" type="Karbon.Core.Configuration.DataSerializersSection, Karbon.Core"/>
+    </sectionGroup>
+  </configSections>
+
+  <karbon>
+    <fileStores>
+      <providers>
+        <add name="content" type="Karbon.Core.IO.LocalFileStore, Karbon.Core"
+             virtualRoot="~/App_Data/Content/" />
+        <add name="media" type="Karbon.Core.IO.LocalFileStore, Karbon.Core"
+             virtualRoot="~/Media/" />
+      </providers>
+    </fileStores>
+    <dataSerializers default="karbon">
+      <providers>
+        <add name="karbon" type="Karbon.Core.Serialization.KarbonDataSerializer, Karbon.Core"
+             fileExtension="txt" />
+      </providers>
+    </dataSerializers>
+  </karbon>
+
+</configuration>

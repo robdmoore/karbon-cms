@@ -54,7 +54,7 @@ namespace Karbon.Core
 
         public static bool IsAlphaNumeric(this string input)
         {
-            return new Regex(@"^[a-zA-Z0-9]*$").IsMatch(input);
+            return Regex.IsMatch(input, @"^[a-zA-Z0-9]*$");
         }
     }
 }

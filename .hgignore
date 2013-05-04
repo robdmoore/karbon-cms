@@ -58,7 +58,7 @@ _ReSharper.*
 syntax: regexp
 
 # Don't commit project asset folders
-^(Assets|Deploy|Db)/.*
+^(Assets|Deploy|Db|Build)/.*
 
 # Only commit the bin folder in the Web.UI folder
 ^((?!Web.UI).)*/bin/.*$

@@ -1,4 +1,7 @@
-﻿namespace Karbon.Web
+using Karbon.Web;
+
+[assembly: WebActivator.PreApplicationStartMethod(typeof($rootnamespace$.App_Start.KarbonConfig), "Init")]
+namespace $rootnamespace$.App_Start
 {
     public class KarbonConfig
     {

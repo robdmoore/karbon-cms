@@ -1,0 +1,19 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>KarbonCMS</id>
+    <version>1.0.0</version>
+    <title>Karbon CMS</title>
+    <authors>The Outfield</authors>
+    <owners>The Outfield</owners>
+    <projectUrl>http://www.theoutfield.net</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A lightweight, file based CMS for .NET MVC.</description>
+    <summary />
+    <language />
+    <dependencies>
+      <dependency id="WebActivator" version="1.0.0.0" />
+    </dependencies>
+  </metadata>
+  <files />
+</package>

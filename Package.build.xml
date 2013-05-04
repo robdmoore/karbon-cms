@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Package">
+
+  <!-- 
+  	****************************************
+  	* IMPORTS
+	****************************************
+  -->
+  <PropertyGroup>
+  	<MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)\Packages\MSBuildCommunityTasks</MSBuildCommunityTasksPath>
+  	<MSBuildNuGetTasksPath>$(MSBuildProjectDirectory)\Packages\MSBuildNuGetTasks</MSBuildNuGetTasksPath>
+  </PropertyGroup>
+  
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
+  <Import Project="$(MSBuildNuGetTasksPath)\MSBuild.NuGet.Tasks.Targets" />
+
+  <!-- 
+  	****************************************
+  	* PROPERTIES
+	****************************************
+  -->
+  <PropertyGroup>
+	<PackageVersion>1.0.0</PackageVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+	<RootDir>$(MSBuildProjectDirectory)</RootDir>
+	<BuildDir>$(RootDir)\Build</BuildDir>
+	<PackageDir>$(RootDir)\Package</PackageDir>
+  </PropertyGroup>
+  
+  <!-- 
+  	****************************************
+  	* TARGETS
+	****************************************
+  -->
+  
+  <!-- CLEAN -->
+  <Target Name="Clean">
+	<RemoveDir Directories="$(BuildDir)" Condition="Exists('$(BuildDir)')" />
+  	<RemoveDir Directories="$(PackageDir)" Condition="Exists('$(PackageDir)')" />
+	  <MakeDir Directories="$(BuildDir)" />
+  	<MakeDir Directories="$(PackageDir)" />
+  </Target>
+    
+  <!-- PREPAIRE FILES --> 
+  <Target Name="PrepairFiles" DependsOnTargets="Clean">
+	  <ItemGroup>
+      <ContentFiles Include="$(RootDir)\Src\Karbon.NuGet\**\*" />
+      <LibFiles Include="$(RootDir)\Src\Karbon.Core\Bin\**\Karbon.Core.dll" />
+      <LibFiles Include="$(RootDir)\Src\Karbon.Web\Bin\**\Karbon.Web.dll" />
+		  <PackageFiles Include="$(RootDir)\Package.nuspec" /> 
+	  </ItemGroup>
+    <Copy SourceFiles="@(ContentFiles)" DestinationFolder="$(BuildDir)\content\%(RecursiveDir)" />
+    <Copy SourceFiles="@(LibFiles)" DestinationFolder="$(BuildDir)\lib\" />
+	  <Copy SourceFiles="@(PackageFiles)" DestinationFolder="$(BuildDir)\%(RecursiveDir)" />
+  </Target> 
+  
+  <!-- MANIFEST -->
+  <Target Name="Manifest" DependsOnTargets="PrepairFiles">
+	  <ItemGroup>
+      <ManifestFiles Include="$(BuildDir)\**\*" Exclude="$(BuildDir)\Package.nuspec" />
+    </ItemGroup>
+	  <ManifestUpdate 
+		  ManifestFile="$(BuildDir)\Package.nuspec"
+		  WorkingDirectory="$(BuildDir)"
+		  Version="$(PackageVersion)"
+	    Files="@(ManifestFiles)" />
+  </Target> 
+    
+  <!-- PACKAGE -->
+  <Target Name="Package" DependsOnTargets="Manifest">
+	  <Pack NuGetExePath="$(RootDir)\Packages\NuGet\NuGet.exe" 
+		  ManifestFile="$(BuildDir)\Package.nuspec" 
+		  BasePath="$(BuildDir)" 
+		  OutputDirectory="$(PackageDir)" 
+		  Verbose="true" />
+  </Target> 
+  
+</Project>

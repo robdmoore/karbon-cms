@@ -7,9 +7,34 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karbon.Web", "Src\Karbon.We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness", "Src\TestHarness\TestHarness.csproj", "{E5E9C80C-3053-471C-BE13-DB9705BCC059}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karbon.Web.UI", "Src\Karbon.Web.UI\Karbon.Web.UI.csproj", "{7E2D85FD-11ED-41AC-994A-3F2109ED92FD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karbon.Tests", "Src\Karbon.Tests\Karbon.Tests.csproj", "{F3C9D68B-563C-415E-BFDE-B7CF05E5D345}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{F5D644BF-84B9-4561-BA08-64A343809A1A}"
+	ProjectSection(SolutionItems) = preProject
+		Package.build.cmd = Package.build.cmd
+		Package.build.xml = Package.build.xml
+		Package.nuspec = Package.nuspec
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Karbon.NuGet", "Src\Karbon.NuGet\", "{C3513FBB-56FB-48F9-AF3F-3CA81D73ECFD}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/Karbon.NuGet"
+		Debug.AspNetCompiler.PhysicalPath = "Src\Karbon.NuGet\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Karbon.NuGet\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/Karbon.NuGet"
+		Release.AspNetCompiler.PhysicalPath = "Src\Karbon.NuGet\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\Karbon.NuGet\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "49524"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,14 +54,12 @@ Global
 		{E5E9C80C-3053-471C-BE13-DB9705BCC059}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5E9C80C-3053-471C-BE13-DB9705BCC059}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5E9C80C-3053-471C-BE13-DB9705BCC059}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7E2D85FD-11ED-41AC-994A-3F2109ED92FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E2D85FD-11ED-41AC-994A-3F2109ED92FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E2D85FD-11ED-41AC-994A-3F2109ED92FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E2D85FD-11ED-41AC-994A-3F2109ED92FD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F3C9D68B-563C-415E-BFDE-B7CF05E5D345}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F3C9D68B-563C-415E-BFDE-B7CF05E5D345}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3C9D68B-563C-415E-BFDE-B7CF05E5D345}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3C9D68B-563C-415E-BFDE-B7CF05E5D345}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3513FBB-56FB-48F9-AF3F-3CA81D73ECFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3513FBB-56FB-48F9-AF3F-3CA81D73ECFD}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
