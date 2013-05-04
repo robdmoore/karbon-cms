@@ -20,13 +20,14 @@
 	****************************************
   -->
   <PropertyGroup>
-	<PackageVersion>1.0.0</PackageVersion>
+	  <PackageVersion>1.0.0</PackageVersion>
+    <BuildConfig>Debug</BuildConfig>
   </PropertyGroup>
 
   <PropertyGroup>
-	<RootDir>$(MSBuildProjectDirectory)</RootDir>
-	<BuildDir>$(RootDir)\Build</BuildDir>
-	<PackageDir>$(RootDir)\Package</PackageDir>
+	  <RootDir>$(MSBuildProjectDirectory)</RootDir>
+	  <BuildDir>$(RootDir)\Build</BuildDir>
+	  <PackageDir>$(RootDir)\Package</PackageDir>
   </PropertyGroup>
   
   <!-- 
@@ -37,18 +38,45 @@
   
   <!-- CLEAN -->
   <Target Name="Clean">
-	<RemoveDir Directories="$(BuildDir)" Condition="Exists('$(BuildDir)')" />
+	  <RemoveDir Directories="$(BuildDir)" Condition="Exists('$(BuildDir)')" />
   	<RemoveDir Directories="$(PackageDir)" Condition="Exists('$(PackageDir)')" />
 	  <MakeDir Directories="$(BuildDir)" />
   	<MakeDir Directories="$(PackageDir)" />
   </Target>
+
+  <!-- UPDATE ASSEMBLEY VERSION -->
+  <Target Name="UpdateAssemblyInfo" DependsOnTargets="Clean">
+    <ItemGroup>
+      <AssemblyInfoFiles Include="$(RootDir)\Src\Karbon.Core\Properties\AssemblyInfo.cs" />
+      <AssemblyInfoFiles Include="$(RootDir)\Src\Karbon.Web\Properties\AssemblyInfo.cs" />
+    </ItemGroup>
+    <FileUpdate
+          Encoding="ASCII"
+          Files="@(AssemblyInfoFiles)"
+          Regex="AssemblyVersion\(&quot;.*&quot;\)\]"
+          ReplacementText="AssemblyVersion(&quot;$(PackageVersion)&quot;)]" />
+    <FileUpdate
+          Encoding="ASCII"
+          Files="@(AssemblyInfoFiles)"
+          Regex="AssemblyFileVersion\(&quot;.*&quot;\)\]"
+          ReplacementText="AssemblyFileVersion(&quot;$(PackageVersion)&quot;)]" />
+  </Target>
+
+  <!-- COMPILE -->
+  <Target Name="Compile" DependsOnTargets="UpdateAssemblyInfo">
+    <ItemGroup>
+      <ProjectFiles Include="$(RootDir)\Src\Karbon.Core\Karbon.Core.csproj" />
+      <ProjectFiles Include="$(RootDir)\Src\Karbon.Web\Karbon.Web.csproj" />
+    </ItemGroup>
+    <MSBuild Projects="@(ProjectFiles)" Properties="Configuration=$(BuildConfig);" />
+  </Target>
     
   <!-- PREPAIRE FILES --> 
-  <Target Name="PrepairFiles" DependsOnTargets="Clean">
+  <Target Name="PrepairFiles" DependsOnTargets="Compile">
 	  <ItemGroup>
       <ContentFiles Include="$(RootDir)\Src\Karbon.NuGet\**\*" />
-      <LibFiles Include="$(RootDir)\Src\Karbon.Core\Bin\**\Karbon.Core.dll" />
-      <LibFiles Include="$(RootDir)\Src\Karbon.Web\Bin\**\Karbon.Web.dll" />
+      <LibFiles Include="$(RootDir)\Src\Karbon.Core\Bin\$(BuildConfig)\Karbon.Core.dll" />
+      <LibFiles Include="$(RootDir)\Src\Karbon.Web\Bin\$(BuildConfig)\Karbon.Web.dll" />
 		  <PackageFiles Include="$(RootDir)\Package.nuspec" /> 
 	  </ItemGroup>
     <Copy SourceFiles="@(ContentFiles)" DestinationFolder="$(BuildDir)\content\%(RecursiveDir)" />

@@ -135,7 +135,9 @@
     <Content Include="App_Data\Content\home\Home.txt" />
     <Content Include="App_Data\Content\Site.txt" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
