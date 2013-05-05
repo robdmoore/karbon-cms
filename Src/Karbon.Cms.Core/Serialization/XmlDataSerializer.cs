@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Karbon.Core.Serialization
+namespace Karbon.Cms.Core.Serialization
 {
     //public class XmlDataSerializer : DataSerializer
     //{

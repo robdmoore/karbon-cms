@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Karbon.Core;
-using Karbon.Web.Routing;
+using Karbon.Cms.Core;
+using Karbon.Cms.Web.Routing;
 
-namespace Karbon.Web
+namespace Karbon.Cms.Web
 {
     public class WebBootManager : CoreBootManager
     {

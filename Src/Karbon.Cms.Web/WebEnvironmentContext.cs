@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using Karbon.Core;
+using Karbon.Cms.Core;
 
-namespace Karbon.Web
+namespace Karbon.Cms.Web
 {
     public class WebEnvironmentContext : EnvironmentContext
     {

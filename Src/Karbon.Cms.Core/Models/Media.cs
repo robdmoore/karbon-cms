@@ -1,4 +1,4 @@
-﻿namespace Karbon.Core.Models
+﻿namespace Karbon.Cms.Core.Models
 {
     public class Media : Entity, IMedia
     { }

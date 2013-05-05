@@ -47,8 +47,8 @@
   <!-- UPDATE ASSEMBLEY VERSION -->
   <Target Name="UpdateAssemblyInfo" DependsOnTargets="Clean">
     <ItemGroup>
-      <AssemblyInfoFiles Include="$(RootDir)\Src\Karbon.Core\Properties\AssemblyInfo.cs" />
-      <AssemblyInfoFiles Include="$(RootDir)\Src\Karbon.Web\Properties\AssemblyInfo.cs" />
+      <AssemblyInfoFiles Include="$(RootDir)\Src\Karbon.Cms.Core\Properties\AssemblyInfo.cs" />
+      <AssemblyInfoFiles Include="$(RootDir)\Src\Karbon.Cms.Web\Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <FileUpdate
           Encoding="ASCII"
@@ -65,8 +65,8 @@
   <!-- COMPILE -->
   <Target Name="Compile" DependsOnTargets="UpdateAssemblyInfo">
     <ItemGroup>
-      <ProjectFiles Include="$(RootDir)\Src\Karbon.Core\Karbon.Core.csproj" />
-      <ProjectFiles Include="$(RootDir)\Src\Karbon.Web\Karbon.Web.csproj" />
+      <ProjectFiles Include="$(RootDir)\Src\Karbon.Cms.Core\Karbon.Cms.Core.csproj" />
+      <ProjectFiles Include="$(RootDir)\Src\Karbon.Cms.Web\Karbon.Cms.Web.csproj" />
     </ItemGroup>
     <MSBuild Projects="@(ProjectFiles)" Properties="Configuration=$(BuildConfig);" />
   </Target>
@@ -74,9 +74,9 @@
   <!-- PREPAIRE FILES --> 
   <Target Name="PrepairFiles" DependsOnTargets="Compile">
 	  <ItemGroup>
-      <ContentFiles Include="$(RootDir)\Src\Karbon.NuGet\**\*" />
-      <LibFiles Include="$(RootDir)\Src\Karbon.Core\Bin\$(BuildConfig)\Karbon.Core.dll" />
-      <LibFiles Include="$(RootDir)\Src\Karbon.Web\Bin\$(BuildConfig)\Karbon.Web.dll" />
+      <ContentFiles Include="$(RootDir)\Src\Karbon.Cms.NuGet\**\*" />
+      <LibFiles Include="$(RootDir)\Src\Karbon.Cms.Core\Bin\$(BuildConfig)\Karbon.Cms.Core.dll" />
+      <LibFiles Include="$(RootDir)\Src\Karbon.Cms.Web\Bin\$(BuildConfig)\Karbon.Cms.Web.dll" />
 		  <PackageFiles Include="$(RootDir)\Package.nuspec" /> 
 	  </ItemGroup>
     <Copy SourceFiles="@(ContentFiles)" DestinationFolder="$(BuildDir)\content\%(RecursiveDir)" />

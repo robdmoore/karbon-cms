@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Karbon.Core
+namespace Karbon.Cms.Core
 {
     public class TypeFinder
     {

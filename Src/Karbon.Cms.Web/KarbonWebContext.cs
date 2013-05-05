@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using Karbon.Core;
-using Karbon.Web.Routing;
+using Karbon.Cms.Core;
+using Karbon.Cms.Web.Routing;
 
-namespace Karbon.Web
+namespace Karbon.Cms.Web
 {
     public class KarbonWebContext
     {
         #region Factory
 
-        private const string HttpContextItemName = "Karbon.Web.KarbonWebContext";
+        private const string HttpContextItemName = "Karbon.Cms.Web.KarbonWebContext";
         private static readonly object Locker = new object();
 
         private static KarbonWebContext _context;

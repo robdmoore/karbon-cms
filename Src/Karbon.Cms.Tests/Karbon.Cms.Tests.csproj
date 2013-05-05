@@ -7,8 +7,8 @@
     <ProjectGuid>{F3C9D68B-563C-415E-BFDE-B7CF05E5D345}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Karbon.Tests</RootNamespace>
-    <AssemblyName>Karbon.Tests</AssemblyName>
+    <RootNamespace>Karbon.Cms.Tests</RootNamespace>
+    <AssemblyName>Karbon.Cms.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -51,7 +51,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Karbon.Core\Karbon.Core.csproj">
+    <ProjectReference Include="..\Karbon.Cms.Core\Karbon.Cms.Core.csproj">
       <Project>{0CBE1B67-2FB8-40AE-B93F-87FE0BC17246}</Project>
       <Name>Karbon.Core</Name>
     </ProjectReference>

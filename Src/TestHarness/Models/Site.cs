@@ -5,7 +5,7 @@ using System.Web;
 
 namespace TestHarness.Models
 {
-    public class Site : Karbon.Core.Models.Site
+    public class Site : Karbon.Cms.Core.Models.Site
     {
         public string Name { get; set; }
         public string Description { get; set; }

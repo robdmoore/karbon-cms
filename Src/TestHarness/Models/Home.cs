@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Karbon.Core.Models;
+using Karbon.Cms.Core.Models;
 
 namespace TestHarness.Models
 {

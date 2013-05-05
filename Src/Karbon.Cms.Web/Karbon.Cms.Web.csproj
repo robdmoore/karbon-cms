@@ -7,8 +7,8 @@
     <ProjectGuid>{4F7AAB85-3046-4BA4-AD8A-0E3A08BC093C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Karbon.Web</RootNamespace>
-    <AssemblyName>Karbon.Web</AssemblyName>
+    <RootNamespace>Karbon.Cms.Web</RootNamespace>
+    <AssemblyName>Karbon.Cms.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -52,7 +52,7 @@
     <Compile Include="WebEnvironmentContext.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Karbon.Core\Karbon.Core.csproj">
+    <ProjectReference Include="..\Karbon.Cms.Core\Karbon.Cms.Core.csproj">
       <Project>{0CBE1B67-2FB8-40AE-B93F-87FE0BC17246}</Project>
       <Name>Karbon.Core</Name>
     </ProjectReference>

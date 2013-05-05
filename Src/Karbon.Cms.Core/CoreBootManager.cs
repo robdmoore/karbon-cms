@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Karbon.Core.IO;
-using Karbon.Core.Serialization;
-using Karbon.Core.Stores;
+using Karbon.Cms.Core.IO;
+using Karbon.Cms.Core.Serialization;
+using Karbon.Cms.Core.Stores;
 
-namespace Karbon.Core
+namespace Karbon.Cms.Core
 {
     public class CoreBootManager
     {

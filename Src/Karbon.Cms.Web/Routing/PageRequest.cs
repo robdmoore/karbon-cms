@@ -1,4 +1,4 @@
-﻿namespace Karbon.Web.Routing
+﻿namespace Karbon.Cms.Web.Routing
 {
     public class PageRequest
     {

@@ -4,10 +4,10 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Karbon.Core.Serialization;
+using Karbon.Cms.Core.Serialization;
 using NUnit.Framework;
 
-namespace Karbon.Tests.Serialization
+namespace Karbon.Cms.Tests.Serialization
 {
     [TestFixture]
     public class KarbonDataSerializerTests : AbstractDataSerializerTests

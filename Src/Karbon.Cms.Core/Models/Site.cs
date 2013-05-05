@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Karbon.Core.Models
+namespace Karbon.Cms.Core.Models
 {
     public class Site : ISite
     {

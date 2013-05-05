@@ -4,10 +4,10 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Karbon.Core.IO;
-using Karbon.Core.Serialization;
+using Karbon.Cms.Core.IO;
+using Karbon.Cms.Core.Serialization;
 
-namespace Karbon.Core.Configuration
+namespace Karbon.Cms.Core.Configuration
 {
     public class DataSerializersSection : ConfigurationSection
     {

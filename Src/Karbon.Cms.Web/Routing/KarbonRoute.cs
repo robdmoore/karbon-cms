@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Routing;
-using Karbon.Core.Models;
+using Karbon.Cms.Core.Models;
 
-namespace Karbon.Web.Routing
+namespace Karbon.Cms.Web.Routing
 {
     public class KarbonRoute : Route
     {

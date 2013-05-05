@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Karbon.Core.IO
+namespace Karbon.Cms.Core.IO
 {
     public class FileStoreCollection : ProviderCollection
     {

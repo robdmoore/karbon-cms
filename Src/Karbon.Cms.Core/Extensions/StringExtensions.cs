@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Karbon.Core
+namespace Karbon.Cms.Core
 {
     public static class StringExtensions
     {

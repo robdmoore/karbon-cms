@@ -1,6 +1,6 @@
-﻿using Karbon.Core.Models;
+﻿using Karbon.Cms.Core.Models;
 
-namespace Karbon.Core.Stores
+namespace Karbon.Cms.Core.Stores
 {
     public class ContentStore : IContentStore
     {

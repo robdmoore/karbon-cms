@@ -3,23 +3,23 @@
 
   <configSections>
     <sectionGroup name="karbon">
-      <section name="fileStores" type="Karbon.Core.Configuration.FileStoresSection, Karbon.Core"/>
-      <section name="dataSerializers" type="Karbon.Core.Configuration.DataSerializersSection, Karbon.Core"/>
+      <section name="fileStores" type="Karbon.Cms.Core.Configuration.FileStoresSection, Karbon.Cms.Core"/>
+      <section name="dataSerializers" type="Karbon.Cms.Core.Configuration.DataSerializersSection, Karbon.Cms.Core"/>
     </sectionGroup>
   </configSections>
 
   <karbon>
     <fileStores>
       <providers>
-        <add name="content" type="Karbon.Core.IO.LocalFileStore, Karbon.Core"
+        <add name="content" type="Karbon.Cms.Core.IO.LocalFileStore, Karbon.Cms.Core"
              rootPath="~/App_Data/Content/" pathSeperator="/" />
-        <add name="media" type="Karbon.Core.IO.LocalFileStore, Karbon.Core"
+        <add name="media" type="Karbon.Cms.Core.IO.LocalFileStore, Karbon.Cms.Core"
              rootPath="~/Media/" pathSeperator="/" />
       </providers>
     </fileStores>
     <dataSerializers default="karbon">
       <providers>
-        <add name="karbon" type="Karbon.Core.Serialization.KarbonDataSerializer, Karbon.Core"
+        <add name="karbon" type="Karbon.Cms.Core.Serialization.KarbonDataSerializer, Karbon.Cms.Core"
              fileExtension="txt" />
       </providers>
     </dataSerializers>

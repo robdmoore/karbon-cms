@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Karbon.Web
+namespace Karbon.Cms.Web
 {
     public static class DictionaryExtensions
     {

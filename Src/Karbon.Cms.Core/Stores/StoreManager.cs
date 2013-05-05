@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Karbon.Core.Stores
+namespace Karbon.Cms.Core.Stores
 {
     public class StoreManager
     {

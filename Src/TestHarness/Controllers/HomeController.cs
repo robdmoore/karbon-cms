@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Karbon.Core.Models;
+using Karbon.Cms.Core.Models;
 using TestHarness.Models;
 
 namespace TestHarness.Controllers

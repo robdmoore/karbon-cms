@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace Karbon.Web.Controllers
+namespace Karbon.Cms.Web.Controllers
 {
     public class KarbonController : Controller
     {

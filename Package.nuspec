@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>KarbonCMS</id>
+    <id>Karbon.Cms</id>
     <version>0.0.0</version>
     <title>Karbon CMS</title>
     <description>A lightweight, open source, file based CMS for ASP.NET MVC.</description>

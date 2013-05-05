@@ -5,9 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Karbon.Core.IO;
+using Karbon.Cms.Core.IO;
 
-namespace Karbon.Core
+namespace Karbon.Cms.Core
 {
     public class EnvironmentContext
     {

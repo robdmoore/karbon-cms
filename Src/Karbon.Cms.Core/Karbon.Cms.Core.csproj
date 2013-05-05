@@ -7,8 +7,8 @@
     <ProjectGuid>{0CBE1B67-2FB8-40AE-B93F-87FE0BC17246}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Karbon.Core</RootNamespace>
-    <AssemblyName>Karbon.Core</AssemblyName>
+    <RootNamespace>Karbon.Cms.Core</RootNamespace>
+    <AssemblyName>Karbon.Cms.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
