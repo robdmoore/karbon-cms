@@ -36,6 +36,12 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Karbon.NuGet", "Src\Karbon.
 		VWDPort = "49524"
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{8201E907-8254-4A36-AE26-F1A226FAD0D8}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

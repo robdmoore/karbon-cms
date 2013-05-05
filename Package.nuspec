@@ -2,13 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>KarbonCMS</id>
-    <version>1.0.0</version>
+    <version>0.0.0</version>
     <title>Karbon CMS</title>
-    <authors>The Outfield</authors>
-    <owners>The Outfield</owners>
-    <projectUrl>http://www.theoutfield.net</projectUrl>
+    <description>An Open Source, lightweight, file based CMS for ASP.NET MVC.</description>
+    <authors>Matt Brailsford</authors>
+    <projectUrl>http://www.karboncms.com</projectUrl>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A lightweight, file based CMS for .NET MVC.</description>
+    <copyright>Copyright (c) Outfield Digital Ltd 2013</copyright>
     <summary />
     <language />
     <dependencies>

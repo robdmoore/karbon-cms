@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Karbon.Core")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("The Outfield")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Karbon CMS")]
-[assembly: AssemblyCopyright("Copyright The Outfield  2013")]
+[assembly: AssemblyCopyright("Copyright (c) Outfield Digital Ltd 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
