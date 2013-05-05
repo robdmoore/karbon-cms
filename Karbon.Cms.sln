@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karbon.Core", "Src\Karbon.Core\Karbon.Core.csproj", "{0CBE1B67-2FB8-40AE-B93F-87FE0BC17246}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karbon.Cms.Core", "Src\Karbon.Cms.Core\Karbon.Cms.Core.csproj", "{0CBE1B67-2FB8-40AE-B93F-87FE0BC17246}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karbon.Web", "Src\Karbon.Web\Karbon.Web.csproj", "{4F7AAB85-3046-4BA4-AD8A-0E3A08BC093C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karbon.Cms.Web", "Src\Karbon.Cms.Web\Karbon.Cms.Web.csproj", "{4F7AAB85-3046-4BA4-AD8A-0E3A08BC093C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness", "Src\TestHarness\TestHarness.csproj", "{E5E9C80C-3053-471C-BE13-DB9705BCC059}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karbon.Tests", "Src\Karbon.Tests\Karbon.Tests.csproj", "{F3C9D68B-563C-415E-BFDE-B7CF05E5D345}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karbon.Cms.Tests", "Src\Karbon.Cms.Tests\Karbon.Cms.Tests.csproj", "{F3C9D68B-563C-415E-BFDE-B7CF05E5D345}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{F5D644BF-84B9-4561-BA08-64A343809A1A}"
 	ProjectSection(SolutionItems) = preProject
@@ -16,19 +16,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{F5D644BF
 		Package.nuspec = Package.nuspec
 	EndProjectSection
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Karbon.NuGet", "Src\Karbon.NuGet\", "{C3513FBB-56FB-48F9-AF3F-3CA81D73ECFD}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Karbon.Cms.NuGet", "Src\Karbon.Cms.NuGet\", "{C3513FBB-56FB-48F9-AF3F-3CA81D73ECFD}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/Karbon.NuGet"
-		Debug.AspNetCompiler.PhysicalPath = "Src\Karbon.NuGet\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Karbon.NuGet\"
+		Debug.AspNetCompiler.VirtualPath = "/Karbon.Cms.NuGet"
+		Debug.AspNetCompiler.PhysicalPath = "Src\Karbon.Cms.NuGet\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Karbon.Cms.NuGet\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/Karbon.NuGet"
-		Release.AspNetCompiler.PhysicalPath = "Src\Karbon.NuGet\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\Karbon.NuGet\"
+		Release.AspNetCompiler.VirtualPath = "/Karbon.Cms.NuGet"
+		Release.AspNetCompiler.PhysicalPath = "Src\Karbon.Cms.NuGet\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\Karbon.Cms.NuGet\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
