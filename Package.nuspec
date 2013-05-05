@@ -16,5 +16,7 @@
       <dependency id="WebActivatorEx" version="2.0.1" />
     </dependencies>
   </metadata>
-  <files />
+  <files>
+    <file src="..\LICENSE.txt" target="LICENSE.txt" />
+  </files>
 </package>
