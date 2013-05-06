@@ -5,13 +5,14 @@ namespace Karbon.Cms.Core.Models
 {
     public interface IEntity
     {
-        string Path { get; }
-        string Slug { get; }
-        string Url { get; }
+        string Path { get; set; }
+        string Slug { get; set; }
+        string Url { get; set; }
+        int SortOrder { get; set; }
 
-        DateTime Created { get; }
-        DateTime Modified { get; }
+        DateTimeOffset Created { get; set; }
+        DateTimeOffset Modified { get; set; }
 
-        IDictionary<string, string> Data { get; }
+        IDictionary<string, string> Data { get; set; }
     }
 }

@@ -51,5 +51,14 @@ namespace Karbon.Cms.Core
             var mappedPath = RootDirectory + Path.DirectorySeparatorChar + newPath;
             return mappedPath;
         }
+
+        // <summary>
+        // Gets the referenced assemblies.
+        // </summary>
+        // <returns></returns>
+        //public virtual IEnumerable<Assembly> GetReferencedAssemblies()
+        //{
+        //    return AppDomain.CurrentDomain.GetAssemblies().ToList();
+        //}
     }
 }

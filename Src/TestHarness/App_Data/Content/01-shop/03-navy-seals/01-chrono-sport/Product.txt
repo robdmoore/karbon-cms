@@ -1,1 +1,4 @@
-﻿
+﻿Name: Test Product
+----
+Description: Test Description
+----

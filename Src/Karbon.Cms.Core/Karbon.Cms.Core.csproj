@@ -45,7 +45,9 @@
     <Compile Include="Configuration\DataSerializersSection.cs" />
     <Compile Include="CoreBootManager.cs" />
     <Compile Include="EnvironmentContext.cs" />
+    <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Stores\NameInfo.cs" />
     <Compile Include="IO\FileStore.cs" />
     <Compile Include="IO\FileStoreCollection.cs" />
     <Compile Include="IO\FileStoreManager.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="Stores\IStore.cs" />
     <Compile Include="Stores\MediaStore.cs" />
     <Compile Include="Stores\StoreManager.cs" />
+    <Compile Include="Threading\WireLock.cs" />
     <Compile Include="TypeFinder.cs" />
   </ItemGroup>
   <ItemGroup />

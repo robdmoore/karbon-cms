@@ -45,6 +45,11 @@ namespace Karbon.Cms.Core.IO
         public abstract DateTimeOffset GetLastAccessed(string relativePath);
         public abstract string GetAbsolutePath(string relativePath);
 
+        public abstract IEnumerable<string> GetPathParts(string path);
+
+        public abstract string GetName(string path);
+        public abstract string GetNameWithoutExtension(string path);
+
         #endregion
     }
 }

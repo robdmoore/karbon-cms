@@ -13,7 +13,7 @@ namespace Karbon.Cms.Core.IO
     {
         private string _rootPath;
         private string _rootPhysicalPath;
-        private string _pathSeperator;
+        private char _pathSeperator;
 
         public override void Initialize(NameValueCollection config)
         {
@@ -22,7 +22,7 @@ namespace Karbon.Cms.Core.IO
             // Not keen on the fact this is not type safe
             // but it's a requirement of the provider pattern
             _rootPath = config["rootPath"];
-            _pathSeperator = config["pathSeperator"];
+            _pathSeperator = Convert.ToChar(config["pathSeperator"]);
 
             // Allow passing in the root physical path for testing
             _rootPhysicalPath = config.AllKeys.Any(x => x == "rootPhysicalPath")
@@ -131,17 +131,35 @@ namespace Karbon.Cms.Core.IO
             return _rootPath + _pathSeperator + relativePath;
         }
 
+        public override string GetName(string path)
+        {
+            return GetPathParts(path).Last();
+        }
+
+        public override string GetNameWithoutExtension(string path)
+        {
+            var fileName = GetName(path);
+            return fileName == null 
+                ? null 
+                : Path.GetFileNameWithoutExtension(fileName);
+        }
+
+        public override IEnumerable<string> GetPathParts(string path)
+        {
+            return path.Trim(_pathSeperator).Split(_pathSeperator);
+        }
+
         protected virtual string GetRelativePath(string physicalPath)
         {
             return physicalPath
                 .TrimStart(_rootPhysicalPath.EnsureTrailingDirectorySeparator())
-                .Replace(Path.DirectorySeparatorChar.ToString(CultureInfo.InvariantCulture), _pathSeperator);
+                .Replace(Path.DirectorySeparatorChar.ToString(CultureInfo.InvariantCulture), _pathSeperator.ToString(CultureInfo.InvariantCulture));
         }
 
         protected virtual string GetPhysicalPath(string relativePath)
         {
             return _rootPhysicalPath.EnsureTrailingDirectorySeparator() + relativePath
-                .Replace(_pathSeperator, Path.DirectorySeparatorChar.ToString(CultureInfo.InvariantCulture));
+                .Replace(_pathSeperator.ToString(CultureInfo.InvariantCulture), Path.DirectorySeparatorChar.ToString(CultureInfo.InvariantCulture));
         }
 
         protected virtual void EnsureDirectory(string relativePath)
