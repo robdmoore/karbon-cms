@@ -47,6 +47,7 @@
     <Compile Include="EnvironmentContext.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Mapping\DataMapper.cs" />
     <Compile Include="Stores\NameInfo.cs" />
     <Compile Include="IO\FileStore.cs" />
     <Compile Include="IO\FileStoreCollection.cs" />

@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IO\LocalFileStoreTests.cs" />
+    <Compile Include="Mapping\DataMapperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\AbstractDataSerializerTests.cs" />
     <Compile Include="Serialization\KarbonDataSerializerTests.cs" />
