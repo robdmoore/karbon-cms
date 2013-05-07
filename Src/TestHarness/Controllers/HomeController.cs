@@ -26,5 +26,10 @@ namespace TestHarness.Controllers
         {
             return View(_model);
         }
+
+        public ActionResult Test()
+        {
+            return View();
+        }
     }
 }

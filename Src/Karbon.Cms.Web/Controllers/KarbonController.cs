@@ -11,7 +11,12 @@ namespace Karbon.Cms.Web.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var model = ControllerContext.RouteData.Values["currentPage"];
+            var type = model.GetType();
+
+            //TODO: Need to workout valid views?
+
+            return View(type.Name, model);
         }
     }
 }
