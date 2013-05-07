@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Karbon.Cms.Core.IO;
+using Karbon.Cms.Core.Mapping;
 using Karbon.Cms.Core.Models;
 using Karbon.Cms.Core.Serialization;
 
@@ -68,9 +69,10 @@ namespace Karbon.Cms.Core.Stores
             model.Slug = directoryNameInfo.Name;
             model.Url = GetUrlFromPath(path);
             model.SortOrder = directoryNameInfo.SortOrder;
-            model.Data = data;
             model.Created = _fileStore.GetCreated(contentFile);
             model.Modified = _fileStore.GetLastModified(contentFile);
+
+            model = (IContent)new DataMapper().Map(type, model, data);
 
             // Return model
             return model;

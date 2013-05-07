@@ -12,20 +12,35 @@ namespace Karbon.Cms.Core.Mapping
     public class DataMapper
     {
         /// <summary>
-        /// Maps the specified data an entity.
+        /// Maps the specified data to an entity.
         /// </summary>
         /// <typeparam name="TEntityType">The entity type.</typeparam>
         /// <param name="entity">The entity.</param>
         /// <param name="data">The data.</param>
         /// <returns></returns>
         public TEntityType Map<TEntityType>(TEntityType entity, IDictionary<string, string> data)
-            where TEntityType : Entity
+            where TEntityType : IEntity
         {
-            var baseType = typeof (Entity);
+            return (TEntityType) Map(typeof (TEntityType), entity, data);
+        }
+
+        /// <summary>
+        /// Maps the specified data to an entity.
+        /// </summary>
+        /// <param name="entityType">Type of the entity.</param>
+        /// <param name="entity">The entity.</param>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentException">entityType</exception>
+        public object Map(Type entityType, object entity, IDictionary<string, string> data)
+        {
+            if(!typeof(IEntity).IsAssignableFrom(entityType))
+                throw new ArgumentException("entityType");
+
+            var baseType = typeof(IEntity);
             var baseProps = baseType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            
-            var type = typeof (TEntityType);
-            var props = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+
+            var props = entityType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Where(x => baseProps.All(y => y.Name != x.Name));
 
             foreach (var dataKey in data.Keys)
@@ -53,10 +68,10 @@ namespace Karbon.Cms.Core.Mapping
                 else
                 {
                     // No property so add to data collection
-                    if (entity.Data.ContainsKey(dataKey))
-                        entity.Data[dataKey] = data[dataKey];
+                    if (((IEntity)entity).Data.ContainsKey(dataKey))
+                        ((IEntity)entity).Data[dataKey] = data[dataKey];
                     else
-                        entity.Data.Add(dataKey, data[dataKey]);
+                        ((IEntity)entity).Data.Add(dataKey, data[dataKey]);
                 }
             }
 

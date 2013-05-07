@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Routing;
 using Karbon.Cms.Core.Models;
+using Karbon.Cms.Core.Stores;
 
 namespace Karbon.Cms.Web.Routing
 {
@@ -47,15 +48,7 @@ namespace Karbon.Cms.Web.Routing
             var controller = DefaultController;
             var action = DefaultAction;
 
-            IContent pageModel = null;
-            if (string.IsNullOrEmpty(virtualPath) || string.Equals(virtualPath, "/"))
-            {
-                // Homepage request
-            }
-            else
-            {
-                // Content page request
-            }
+            var pageModel = StoreManager.ContentStore.GetByUrl(virtualPath);
 
             return null;
         }

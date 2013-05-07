@@ -75,7 +75,7 @@
     <Compile Include="Stores\IStore.cs" />
     <Compile Include="Stores\MediaStore.cs" />
     <Compile Include="Stores\StoreManager.cs" />
-    <Compile Include="Threading\WireLock.cs" />
+    <Compile Include="Threading\WriteLock.cs" />
     <Compile Include="TypeFinder.cs" />
   </ItemGroup>
   <ItemGroup />

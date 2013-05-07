@@ -1,1 +1,4 @@
-﻿
+﻿Title: Welcome to Karbon
+----
+Description: The lightweight, open source, file based CMS for ASP.NET MVC
+----
