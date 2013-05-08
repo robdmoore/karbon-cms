@@ -5,6 +5,7 @@
       <namespaces>
         <add namespace="Karbon.Cms.Core" />
         <add namespace="Karbon.Cms.Web" />
+        <add namespace="Karbon.Cms.Web.Mvc" />
       </namespaces>
     </pages>
   </system.web.webPages.razor>

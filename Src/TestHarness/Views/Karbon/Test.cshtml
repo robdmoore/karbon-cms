@@ -1,4 +1,4 @@
-﻿@model Karbon.Cms.Core.Models.Content
+﻿@inherits ContentView
 @{
     Layout = null;
 }
@@ -12,7 +12,7 @@
 </head>
 <body>
     <div>
-        TEST PAGE - @Model.Data["Title"]
+        TEST PAGE - @Model.Content.Data["Title"]
     </div>
 </body>
 </html>

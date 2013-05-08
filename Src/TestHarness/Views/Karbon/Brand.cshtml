@@ -1,4 +1,4 @@
-﻿@model TestHarness.Models.Brand
+﻿@inherits ContentView<TestHarness.Models.Brand>
 @{
     Layout = null;
 }
@@ -12,7 +12,7 @@
 </head>
 <body>
     <div>
-        BRAND PAGE - @Model.Slug
+        BRAND PAGE - @Model.Content.Slug
     </div>
 </body>
 </html>

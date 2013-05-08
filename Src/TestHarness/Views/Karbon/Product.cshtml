@@ -1,4 +1,4 @@
-﻿@model TestHarness.Models.Product
+﻿@inherits ContentView<TestHarness.Models.Product>
 @{
     Layout = null;
 }
@@ -12,7 +12,7 @@
 </head>
 <body>
     <div>
-        PRODUCT PAGE - @Model.Name
+        PRODUCT PAGE - @Model.Content.Name
     </div>
 </body>
 </html>
