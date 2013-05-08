@@ -8,7 +8,7 @@ using Karbon.Cms.Core.IO;
 
 namespace Karbon.Cms.Core.Configuration
 {
-    public class FileStoresSection : ConfigurationSection
+    internal class FileStoresSection : ConfigurationSection
     {
         [ConfigurationProperty("providers", IsDefaultCollection = true, IsRequired = true)]
         public ProviderSettingsCollection Providers

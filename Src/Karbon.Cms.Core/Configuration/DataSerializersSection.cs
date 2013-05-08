@@ -9,7 +9,7 @@ using Karbon.Cms.Core.Serialization;
 
 namespace Karbon.Cms.Core.Configuration
 {
-    public class DataSerializersSection : ConfigurationSection
+    internal class DataSerializersSection : ConfigurationSection
     {
         [ConfigurationProperty("providers", IsDefaultCollection = true, IsRequired = true)]
         public ProviderSettingsCollection Providers

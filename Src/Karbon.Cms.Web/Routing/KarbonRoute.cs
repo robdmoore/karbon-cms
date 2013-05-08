@@ -14,7 +14,7 @@ using Karbon.Cms.Core.Stores;
 
 namespace Karbon.Cms.Web.Routing
 {
-    public class KarbonRoute : Route
+    internal class KarbonRoute : Route
     {
         private string _url;
         private IRouteHandler _routeHandler;
