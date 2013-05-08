@@ -15,17 +15,57 @@ namespace Karbon.Cms.Core.Stores
         private FileStore _fileStore;
         private DataSerializer _dataSerializer;
 
+        private IList<IContent> _contentCache = new List<IContent>();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContentStore"/> class.
+        /// </summary>
         public ContentStore()
         {
             _fileStore = FileStoreManager.ContentFileStore;
             _dataSerializer = DataSerializerManager.Default;
+
+            // Cache all the content at startup
+            InitContentCache();
         }
 
+        /// <summary>
+        /// Initializes the content cache.
+        /// </summary>
+        private void InitContentCache()
+        {
+            CacheDirectoryRecursive("");
+        }
+
+        /// <summary>
+        /// Caches the content in a directory recursivly.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        private void CacheDirectoryRecursive(string path)
+        {
+            var dirs = _fileStore.GetDirectories(path);
+            foreach (var dir in dirs)
+            {
+                var content = GetByPath(dir);
+                if (content != null)
+                    _contentCache.Add(content);
+
+                CacheDirectoryRecursive(dir);
+            }
+        }
+
+        /// <summary>
+        /// Gets a content item by URL.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <returns></returns>
         public IContent GetByUrl(string url)
         {
             // Make sure URL isn't null
             if (url == null)
                 return null;
+
+            // TODO: Check the cache
 
             // Get content path from URL
             var contentPath = GetPathFromUrl(url);
@@ -35,8 +75,18 @@ namespace Karbon.Cms.Core.Stores
             return GetByPath(contentPath);
         }
 
+        /// <summary>
+        /// Gets a content item by relative file path.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
         private IContent GetByPath(string path)
         {
+            if (path == null)
+                return null;
+
+            // TODO: Check the cache
+
             // Check directory exists
             if (!_fileStore.DirectoryExists(path))
                 return null;
@@ -79,6 +129,11 @@ namespace Karbon.Cms.Core.Stores
             return model;
         }
 
+        /// <summary>
+        /// Gets a relative file path from URL.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <returns></returns>
         private string GetPathFromUrl(string url)
         {
             // Prepair URL
@@ -86,6 +141,7 @@ namespace Karbon.Cms.Core.Stores
             var urlParts = url.Split('/');
 
             // If a root request, get content from home 
+            // TODO: Not sure if this should be part of this method or not?
             if (urlParts.Length == 1 && urlParts[0] == "")
                 urlParts[0] = "home";
 
@@ -115,6 +171,11 @@ namespace Karbon.Cms.Core.Stores
             return contentPath.TrimEnd('/');
         }
 
+        /// <summary>
+        /// Gets the URL from a relative file path.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
         private string GetUrlFromPath(string path)
         {
             var pathParts = _fileStore.GetPathParts(path);
@@ -127,6 +188,11 @@ namespace Karbon.Cms.Core.Stores
             return string.Join("/", urlParts);
         }
 
+        /// <summary>
+        /// Parses a folder name into it's constituent parts.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
         private NameInfo ParseName(string name)
         {
             var fileNameInfo = new NameInfo { FullName = name };
