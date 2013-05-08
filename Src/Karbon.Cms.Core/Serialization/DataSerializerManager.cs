@@ -9,7 +9,7 @@ using Karbon.Cms.Core.Configuration;
 
 namespace Karbon.Cms.Core.Serialization
 {
-    public class DataSerializerManager
+    internal class DataSerializerManager
     {
         private static DataSerializer _defaultProvider;
         private static DataSerializerCollection _providers;

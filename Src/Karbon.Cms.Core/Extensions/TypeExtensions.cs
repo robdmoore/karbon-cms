@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Karbon.Cms.Core
 {
-    public static class TypeExtensions
+    internal static class TypeExtensions
     {
         /// <summary>
         /// Determines whether the specified type has a given method.

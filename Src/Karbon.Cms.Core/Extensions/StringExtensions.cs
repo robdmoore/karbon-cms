@@ -8,18 +8,35 @@ using System.Threading.Tasks;
 
 namespace Karbon.Cms.Core
 {
-    public static class StringExtensions
+    internal static class StringExtensions
     {
+        /// <summary>
+        /// Ensures a trailing directory separator.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
         public static string EnsureTrailingDirectorySeparator(this string path)
         {
             return EnsureTrailingCharacter(path, Path.DirectorySeparatorChar);
         }
 
+        /// <summary>
+        /// Ensures a trailing forward slash.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
         public static string EnsureTrailingForwardSlash(this string path)
         {
             return EnsureTrailingCharacter(path, '/');
         }
 
+        /// <summary>
+        /// Ensures a trailing character.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="character">The character.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">input</exception>
         public static string EnsureTrailingCharacter(this string input, char character)
         {
             if (input == null)
@@ -30,6 +47,12 @@ namespace Karbon.Cms.Core
                 : input + character;
         }
 
+        /// <summary>
+        /// Trims the start of a string.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="toTrim">To trim.</param>
+        /// <returns></returns>
         public static string TrimStart(this string input, string toTrim)
         {
             if (string.IsNullOrEmpty(input))
@@ -41,6 +64,12 @@ namespace Karbon.Cms.Core
             return input;
         }
 
+        /// <summary>
+        /// Trims the end of a string.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="toTrim">To trim.</param>
+        /// <returns></returns>
         public static string TrimEnd(this string input, string toTrim)
         {
             if (string.IsNullOrEmpty(input)) 
@@ -52,6 +81,13 @@ namespace Karbon.Cms.Core
             return input;
         }
 
+        /// <summary>
+        /// Determines whether the input string is alpha numeric.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <returns>
+        ///   <c>true</c> if the input string is alpha numeric; otherwise, <c>false</c>.
+        /// </returns>
         public static bool IsAlphaNumeric(this string input)
         {
             return Regex.IsMatch(input, @"^[a-zA-Z0-9]*$");

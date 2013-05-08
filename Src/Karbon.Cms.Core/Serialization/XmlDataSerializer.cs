@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Karbon.Cms.Core.Serialization
 {
-    //public class XmlDataSerializer : DataSerializer
+    //internal class XmlDataSerializer : DataSerializer
     //{
     //    public override IDictionary<string, string> Deserialize(string data)
     //    {

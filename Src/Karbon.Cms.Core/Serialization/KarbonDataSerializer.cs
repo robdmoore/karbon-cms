@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Karbon.Cms.Core.Serialization
 {
-    public class KarbonDataSerializer : DataSerializer
+    internal class KarbonDataSerializer : DataSerializer
     {
         private const string KeyTerminator = ":";
         private const string ValueTerminator = "----";

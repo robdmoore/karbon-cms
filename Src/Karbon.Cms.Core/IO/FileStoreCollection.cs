@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Karbon.Cms.Core.IO
 {
-    public class FileStoreCollection : ProviderCollection
+    internal class FileStoreCollection : ProviderCollection
     {
         new public FileStore this[string name]
         {

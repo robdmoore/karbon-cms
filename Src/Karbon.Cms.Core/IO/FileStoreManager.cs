@@ -9,7 +9,7 @@ using Karbon.Cms.Core.Configuration;
 
 namespace Karbon.Cms.Core.IO
 {
-    public class FileStoreManager
+    internal class FileStoreManager
     {
         private static FileStoreCollection _providers;
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Karbon.Cms.Core
 {
-    public class KarbonAppContext
+    internal class KarbonAppContext
     {
         #region Factory
 
@@ -26,7 +26,7 @@ namespace Karbon.Cms.Core
         /// <value>
         /// The environment context.
         /// </value>
-        public EnvironmentContext Environment { get; set; }
+        internal EnvironmentContext Environment { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KarbonAppContext"/> class.

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Karbon.Cms.Core.Serialization
 {
-    public abstract class DataSerializer : ProviderBase
+    internal abstract class DataSerializer : ProviderBase
     {
         /// <summary>
         /// Gets the supported file extension.

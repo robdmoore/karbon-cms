@@ -10,7 +10,7 @@ using Karbon.Cms.Core;
 
 namespace Karbon.Cms.Web
 {
-    public class WebEnvironmentContext : EnvironmentContext
+    internal class WebEnvironmentContext : EnvironmentContext
     {
         private readonly HttpContextWrapper _httpContext;
 
@@ -29,8 +29,6 @@ namespace Karbon.Cms.Web
                 return _rootDir ?? (_rootDir = MapPath("~/"));
             }
         }
-
-        
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WebEnvironmentContext"/> class.

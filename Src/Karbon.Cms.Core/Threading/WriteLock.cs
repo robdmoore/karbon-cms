@@ -13,7 +13,7 @@ namespace Karbon.Cms.Core.Threading
     /// <remarks>
     /// Intended as an infrastructure class.
     /// </remarks>
-    public class WriteLock : IDisposable
+    internal class WriteLock : IDisposable
     {
         private readonly ReaderWriterLockSlim _rwLock;
 
@@ -27,6 +27,9 @@ namespace Karbon.Cms.Core.Threading
             _rwLock.EnterWriteLock();
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         void IDisposable.Dispose()
         {
             _rwLock.ExitWriteLock();

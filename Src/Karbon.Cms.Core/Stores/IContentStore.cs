@@ -2,7 +2,7 @@
 
 namespace Karbon.Cms.Core.Stores
 {
-    public interface IContentStore : IStore<IContent>
+    internal interface IContentStore : IStore<IContent>
     {
 
     }

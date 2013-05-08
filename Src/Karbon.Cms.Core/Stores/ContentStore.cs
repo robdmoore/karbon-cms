@@ -10,7 +10,7 @@ using Karbon.Cms.Core.Serialization;
 
 namespace Karbon.Cms.Core.Stores
 {
-    public class ContentStore : IContentStore
+    internal class ContentStore : IContentStore
     {
         private FileStore _fileStore;
         private DataSerializer _dataSerializer;

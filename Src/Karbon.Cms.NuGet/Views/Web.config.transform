@@ -1,0 +1,11 @@
+﻿<?xml version="1.0"?>
+<configuration>
+  <system.web.webPages.razor>
+    <pages>
+      <namespaces>
+        <add namespace="Karbon.Cms.Core" />
+        <add namespace="Karbon.Cms.Web" />
+      </namespaces>
+    </pages>
+  </system.web.webPages.razor>
+</configuration>

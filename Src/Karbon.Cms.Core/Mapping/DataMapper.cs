@@ -9,7 +9,7 @@ using Karbon.Cms.Core.Models;
 
 namespace Karbon.Cms.Core.Mapping
 {
-    public class DataMapper
+    internal class DataMapper
     {
         /// <summary>
         /// Maps the specified data to an entity.

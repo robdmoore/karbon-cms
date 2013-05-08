@@ -19,7 +19,7 @@ namespace Karbon.Cms.Web
         /// <param name="model">The model.</param>
         /// <param name="defaultControllerName">Default name of the controller.</param>
         /// <returns></returns>
-        public static Type GetController(this IContent model,
+        internal static Type GetController(this IContent model,
             string defaultControllerName = "")
         {
             var contentAttr = model.GetType().GetCustomAttribute<ContentAttribute>();

@@ -9,7 +9,7 @@ using Karbon.Cms.Web.Routing;
 
 namespace Karbon.Cms.Web
 {
-    public class KarbonWebContext
+    internal class KarbonWebContext
     {
         #region Factory
 

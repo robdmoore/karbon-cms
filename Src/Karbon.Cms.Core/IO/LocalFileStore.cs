@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Karbon.Cms.Core.IO
 {
-    public class LocalFileStore : FileStore
+    internal class LocalFileStore : FileStore
     {
         private string _rootPath;
         private string _rootPhysicalPath;

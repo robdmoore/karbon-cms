@@ -2,7 +2,7 @@
 
 namespace Karbon.Cms.Core.Stores
 {
-    public class MediaStore : IMediaStore
+    internal class MediaStore : IMediaStore
     {
         public IMedia GetByUrl(string url)
         {

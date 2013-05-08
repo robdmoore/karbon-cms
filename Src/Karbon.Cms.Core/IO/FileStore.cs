@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Karbon.Cms.Core.IO
 {
-    public abstract class FileStore : ProviderBase
+    internal abstract class FileStore : ProviderBase
     {
         public override void Initialize(string name, 
             NameValueCollection config)

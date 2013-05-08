@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Karbon.Cms.Core
 {
-    public static class AssemblyExtensions
+    internal static class AssemblyExtensions
     {
         /// <summary>
         /// Returns the file info of the assembly

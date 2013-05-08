@@ -1,6 +1,6 @@
 ﻿namespace Karbon.Cms.Core.Stores
 {
-    public class NameInfo
+    internal class NameInfo
     {
         public string FullName { get; set; }
         public string Name { get; set; }

@@ -12,7 +12,7 @@ using Karbon.Cms.Core.Threading;
 
 namespace Karbon.Cms.Core
 {
-    public class TypeFinder
+    internal class TypeFinder
     {
         private static readonly string[] ExcludedAssemblies = new[]
         {

@@ -9,7 +9,7 @@ namespace Karbon.Cms.Web
 {
     public static class DictionaryExtensions
     {
-        public static string ToQueryString(this IEnumerable<KeyValuePair<string, object>> dict)
+        internal static string ToQueryString(this IEnumerable<KeyValuePair<string, object>> dict)
         {
             if (dict == null || !dict.Any())
                 return "";

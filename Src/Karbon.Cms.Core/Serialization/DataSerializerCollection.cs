@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Karbon.Cms.Core.Serialization
 {
-    public class DataSerializerCollection : ProviderCollection
+    internal class DataSerializerCollection : ProviderCollection
     {
         new public DataSerializer this[string name]
         {

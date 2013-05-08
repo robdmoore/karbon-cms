@@ -9,7 +9,7 @@ using Karbon.Cms.Core.IO;
 
 namespace Karbon.Cms.Core
 {
-    public class EnvironmentContext
+    internal class EnvironmentContext
     {
         private string _rootDir;
 

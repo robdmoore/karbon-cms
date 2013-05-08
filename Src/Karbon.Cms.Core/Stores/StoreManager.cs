@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Karbon.Cms.Core.Stores
 {
-    public class StoreManager
+    internal class StoreManager
     {
         /// <summary>
         /// Gets or sets the content store.
