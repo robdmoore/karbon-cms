@@ -23,24 +23,31 @@ namespace Karbon.Cms.Core
         };
 
         private static ReadOnlyCollection<Assembly> _assemblies = null;
-        private static readonly ReaderWriterLockSlim _locker = new ReaderWriterLockSlim();
+        private static IDictionary<string, IEnumerable<Type>> _typeMap = new Dictionary<string, IEnumerable<Type>>();
+
+        private static readonly ReaderWriterLockSlim _assembliesLock = new ReaderWriterLockSlim();
+        private static readonly ReaderWriterLockSlim _typeMapLock = new ReaderWriterLockSlim();
 
         private static IEnumerable<Assembly> GetAssemblies()
         {
             if (_assemblies == null)
             {
-                using (new WriteLock(_locker))
+                using (new WriteLock(_assembliesLock))
                 {
-                    var binFolder = Assembly.GetExecutingAssembly().GetAssemblyFileInfo().Directory;
-                    if(binFolder != null)
+                    if (_assemblies == null)
                     {
-                        var assemblyFiles = Directory.GetFiles(binFolder.FullName, "*.dll", SearchOption.TopDirectoryOnly);
-                        var assemblies = assemblyFiles
-                            .Where(x => ExcludedAssemblies.All(y => !x.StartsWith(y)))
-                            .Select(Assembly.LoadFrom)
-                            .ToList();
+                        var binFolder = Assembly.GetExecutingAssembly().GetAssemblyFileInfo().Directory;
+                        if (binFolder != null)
+                        {
+                            var assemblyFiles = Directory.GetFiles(binFolder.FullName, "*.dll",
+                                                                   SearchOption.TopDirectoryOnly);
+                            var assemblies = assemblyFiles
+                                .Where(x => ExcludedAssemblies.All(y => !x.StartsWith(y)))
+                                .Select(Assembly.LoadFrom)
+                                .ToList();
 
-                        _assemblies = new ReadOnlyCollection<Assembly>(assemblies);
+                            _assemblies = new ReadOnlyCollection<Assembly>(assemblies);
+                        }
                     }
                 }
             }
@@ -51,11 +58,25 @@ namespace Karbon.Cms.Core
         public static IEnumerable<Type> FindTypes<TType>(bool concreteOnly = true)
         {
             var tType = typeof(TType);
+            var mapKey = string.Format("TypeMap_{0}_{1}", tType.FullName, concreteOnly);
 
-            return GetAssemblies()
-                .SelectMany(a => a.GetExportedTypes())
-                .Where(t => !t.IsInterface && tType.IsAssignableFrom(t)
-                    && (!concreteOnly || (t.IsClass && !t.IsAbstract)));
+            if (!_typeMap.ContainsKey(mapKey))
+            {
+                using (new WriteLock(_typeMapLock))
+                {
+                    if (!_typeMap.ContainsKey(mapKey))
+                    {
+                        var types = GetAssemblies()
+                            .SelectMany(a => a.GetExportedTypes())
+                            .Where(t => !t.IsInterface && tType.IsAssignableFrom(t)
+                                        && (!concreteOnly || (t.IsClass && !t.IsAbstract)));
+
+                        _typeMap.Add(mapKey, types);
+                    }
+                }
+            }
+
+            return _typeMap[mapKey];
         }
     }
 }

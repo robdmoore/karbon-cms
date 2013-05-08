@@ -29,9 +29,9 @@ namespace Karbon.Cms.Web.Routing
             get { return "action"; }
         }
 
-        public static string PageModelKey
+        public static string ModelKey
         {
-            get { return "currentPage"; }
+            get { return "content"; }
         }
 
         public static string DefaultController
@@ -46,6 +46,7 @@ namespace Karbon.Cms.Web.Routing
 
         public override RouteData GetRouteData(System.Web.HttpContextBase httpContext)
         {
+            // Setup the route
             var routeData = new RouteData(this, _routeHandler);
             var virtualPath = httpContext.Request.CurrentExecutionFilePath
                 .TrimStart(new[] { '/' });
@@ -54,74 +55,69 @@ namespace Karbon.Cms.Web.Routing
 
             // Try and grab the model for the given URL
             var model = StoreManager.ContentStore.GetByUrl(virtualPath);
-
-            if (model == null && virtualPath.LastIndexOf("/", StringComparison.InvariantCulture) > 0)
-            {
-                // Try to load the page without the last segment of the url and set the last segment as action
-                var index = virtualPath.LastIndexOf("/", StringComparison.InvariantCulture);
-
-                var tmpAction = virtualPath.Substring(index, virtualPath.Length - index).Trim(new[] { '/' });
-                var tmpVirtualPath = virtualPath.Substring(0, index).TrimStart(new[] { '/' });
-
-                model = StoreManager.ContentStore.GetByUrl(tmpVirtualPath);
-                if(model != null)
-                {
-                    virtualPath = tmpVirtualPath;
-                    action = tmpAction;
-                }
-            }
-
-            if(model == null)
-            {
-                // If the model still is empty, let's try to resolve if the start page has an action named (virtualUrl)
-                model = StoreManager.ContentStore.GetByUrl("");
-                if(model != null)
-                {
-                    action = virtualPath;
-                }
-            }
-
             if (model == null)
             {
-                return null;
+                // Try to load the page without the last segment of the url and set the last segment as action
+                if (virtualPath.LastIndexOf("/", StringComparison.InvariantCulture) > 0)
+                {
+                    var index = virtualPath.LastIndexOf("/", StringComparison.InvariantCulture);
+
+                    var tmpAction = virtualPath.Substring(index, virtualPath.Length - index).Trim(new[] {'/'});
+                    var tmpVirtualPath = virtualPath.Substring(0, index).TrimStart(new[] {'/'});
+
+                    model = StoreManager.ContentStore.GetByUrl(tmpVirtualPath);
+                    if (model != null)
+                    {
+                        virtualPath = tmpVirtualPath;
+                        action = tmpAction;
+                    }
+                }
+                else
+                {
+                    model = StoreManager.ContentStore.GetByUrl("");
+                    if (model != null)
+                    {
+                        action = virtualPath;
+                    }
+                }
             }
+
+            // If by now we haven't found a model, let MVC see if there
+            // is a better route registered
+            if (model == null)
+                return null;
 
             // We have a model, so lets work out where to direct the request
-            var contentAttr = model.GetType().GetCustomAttribute<ContentAttribute>();
-            var controllerName = (contentAttr != null && contentAttr.ControllerType != null)
-                ? contentAttr.ControllerType.Name
-                : string.Format("{0}Controller", model.GetType().Name);
-
-            var controllers = TypeFinder.FindTypes<Controller>().ToList();
-            var controller = controllers.SingleOrDefault(x => x.Name == controllerName) ??
-                             controllers.SingleOrDefault(x => x.Name == DefaultController);
-
-            if(controller == null || controller.GetMethods().All(x => x.Name.ToLower() != action.ToLower()))
-            {
+            var controller = model.GetController(DefaultController);
+            if(controller == null || !controller.HasMethod(action))
                 return null;
-            }
 
-            routeData.Values[ControllerKey] = controller.Name.Replace("Controller", "");
+            // Route the request
+            routeData.Values[ControllerKey] = controller.Name.TrimEnd("Controller");
             routeData.Values[ActionKey] = action;
-            routeData.Values[PageModelKey] = model;
+            routeData.Values[ModelKey] = model;
             return routeData;
         }
 
         public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values)
         {
-            var model = values[PageModelKey] as IContent;
+            // Grab the model from the route data collection
+            var model = values[ModelKey] as IContent;
             if (model == null)
                 return null;
 
+            // Create virtual path from model url
             var vpd = new VirtualPathData(this, model.Url);
 
-            var queryParams = values.Where(kvp => !kvp.Key.Equals(PageModelKey) 
+            // Append any other route data values as querystring params
+            var queryParams = values.Where(kvp => !kvp.Key.Equals(ModelKey) 
                 && !kvp.Key.Equals(ControllerKey) 
                 && !kvp.Key.Equals(ActionKey))
                 .ToQueryString();
             
             vpd.VirtualPath += queryParams;
 
+            // Return the virtual path
             return vpd;
         }
 

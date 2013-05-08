@@ -4,32 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Karbon.Cms.Core.Models;
+using Karbon.Cms.Web.Controllers;
 using TestHarness.Models;
 
 namespace TestHarness.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : KarbonController<Home>
     {
-        private Home _model;
-
-        public HomeController()
-        {
-            
-        }
-
-        public HomeController(IContent model)
-        {
-            _model = model as Home;
-        }
-
-        public ActionResult Index()
-        {
-            return View(_model);
-        }
-
-        public ActionResult Test()
-        {
-            return View();
-        }
+        public HomeController(Home model) 
+            : base(model)
+        { }
     }
 }

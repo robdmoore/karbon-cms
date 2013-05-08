@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Karbon.Cms.Core;
+using Karbon.Cms.Web.Mvc;
 using Karbon.Cms.Web.Routing;
 
 namespace Karbon.Cms.Web
@@ -28,6 +29,9 @@ namespace Karbon.Cms.Web
 
             // Register required routes
             RegisterRoutes();
+
+            // Register the karbon controller factory
+            ControllerBuilder.Current.SetControllerFactory(typeof(KarbonControllerFactory));
         }
 
         protected virtual void RegisterRoutes()
