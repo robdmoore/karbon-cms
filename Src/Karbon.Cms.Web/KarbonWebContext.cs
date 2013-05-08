@@ -51,8 +51,6 @@ namespace Karbon.Cms.Web
 
         public HttpContextBase HttpContext { get; private set; }
 
-        public PageRequest PageRequest { get; set; }
-
         internal KarbonWebContext(HttpContextBase httpContext)
         {
             if (httpContext == null) throw new ArgumentNullException("httpContext");

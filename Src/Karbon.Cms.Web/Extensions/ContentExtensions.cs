@@ -25,7 +25,7 @@ namespace Karbon.Cms.Web
             var contentAttr = model.GetType().GetCustomAttribute<ContentAttribute>();
             var controllerName = (contentAttr != null && contentAttr.ControllerType != null)
                 ? contentAttr.ControllerType.Name
-                : string.Format("{0}Controller", model.GetType().Name);
+                : string.Format("{0}Controller", model.TypeName);
 
             var controllers = TypeFinder.FindTypes<IController>().ToList();
             var controller = controllers.SingleOrDefault(x => x.Name == controllerName);

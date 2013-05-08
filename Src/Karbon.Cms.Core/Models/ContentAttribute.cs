@@ -26,7 +26,7 @@ namespace Karbon.Cms.Core.Models
         /// <value>
         /// The allowed views.
         /// </value>
-        public string[] AllowedViews { get; set; }
+        //public string[] AllowedViews { get; set; }
 
         /// <summary>
         /// Gets or sets the default view.
@@ -34,7 +34,7 @@ namespace Karbon.Cms.Core.Models
         /// <value>
         /// The default view.
         /// </value>
-        public string DefaultView { get; set; }
+        //public string DefaultView { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentAttribute"/> class.

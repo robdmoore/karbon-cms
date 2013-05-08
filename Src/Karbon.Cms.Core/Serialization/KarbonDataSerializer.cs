@@ -43,6 +43,7 @@ namespace Karbon.Cms.Core.Serialization
                         if(terminatorIndex > 0)
                         {
                             var possibleKey = line.Substring(0, terminatorIndex);
+                            // Strip non valid chard + replace spaces with underscores
                             if(possibleKey.IsAlphaNumeric())
                             {
                                 currentKey = possibleKey;
