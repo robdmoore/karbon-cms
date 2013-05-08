@@ -132,6 +132,7 @@
     <Content Include="App_Data\Content\02-blog\2013\05\BlogPosts.txt" />
     <Content Include="App_Data\Content\02-blog\2013\BlogPosts.txt" />
     <Content Include="App_Data\Content\02-blog\BlogPosts.txt" />
+    <Content Include="App_Data\Content\03-about-us\Test.txt" />
     <Content Include="App_Data\Content\home\Home.txt" />
     <Content Include="App_Data\Content\Site.txt" />
     <Content Include="Global.asax" />
@@ -148,7 +149,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
-    <Folder Include="App_Data\Content\03-about-us\" />
     <Folder Include="App_Data\Content\04-contact-us\" />
     <Folder Include="Media\" />
   </ItemGroup>
@@ -176,6 +176,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Karbon\Product.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Karbon\Test.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

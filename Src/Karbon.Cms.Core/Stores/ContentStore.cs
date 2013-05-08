@@ -66,6 +66,7 @@ namespace Karbon.Cms.Core.Stores
 
             // Map data to model
             model.Path = path;
+            model.TypeName = fileName;
             model.Slug = directoryNameInfo.Name;
             model.Url = GetUrlFromPath(path);
             model.SortOrder = directoryNameInfo.SortOrder;

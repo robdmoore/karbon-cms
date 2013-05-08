@@ -29,7 +29,7 @@ namespace Karbon.Cms.Web.Controllers
         /// <returns></returns>
         public virtual ActionResult Index()
         {
-            var modelTypeName = Model.GetType().Name;
+            var modelTypeName = Model.TypeName;
             var viewName = ViewExists(modelTypeName)
                 ? modelTypeName
                 : "Index";
@@ -51,6 +51,6 @@ namespace Karbon.Cms.Web.Controllers
         }
     }
 
-    public class KarbonController : KarbonController<IContent>
+    public class KarbonController : KarbonController<Content>
     { }
 }

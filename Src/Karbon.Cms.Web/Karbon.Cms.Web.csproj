@@ -46,7 +46,6 @@
     <Compile Include="Extensions\ContentExtensions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="KarbonWebContext.cs" />
-    <Compile Include="Mvc\KarbonControllerFactory.cs" />
     <Compile Include="Routing\PageRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routing\KarbonRoute.cs" />

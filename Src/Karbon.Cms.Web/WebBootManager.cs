@@ -7,7 +7,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Karbon.Cms.Core;
-using Karbon.Cms.Web.Mvc;
 using Karbon.Cms.Web.Routing;
 
 namespace Karbon.Cms.Web
@@ -38,8 +37,8 @@ namespace Karbon.Cms.Web
                     "{*path}",
                     new RouteValueDictionary(new
                     {
-                        controller = "karbon", 
-                        action = "index"
+                        controller = "Karbon", 
+                        action = "Index"
                     }),
                     new MvcRouteHandler()));
         }
