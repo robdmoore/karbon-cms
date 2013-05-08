@@ -9,6 +9,10 @@ using Karbon.Cms.Web.Routing;
 
 namespace Karbon.Cms.Web.Controllers
 {
+    /// <summary>
+    /// The base class for Karbon based controllers.
+    /// </summary>
+    /// <typeparam name="TModel">The type of the model.</typeparam>
     public class KarbonController<TModel> : Controller
         where TModel : IContent
     {
@@ -20,6 +24,7 @@ namespace Karbon.Cms.Web.Controllers
         /// </value>
         public TModel Model
         {
+            //TODO: Rename Content inline with other aireas?
             get { return (TModel)RouteData.Values[KarbonRoute.ModelKey]; }
         }
 
