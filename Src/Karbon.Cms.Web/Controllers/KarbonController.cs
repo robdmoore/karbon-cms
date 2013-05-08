@@ -12,18 +12,21 @@ namespace Karbon.Cms.Web.Controllers
     public class KarbonController<TModel> : Controller
         where TModel : IContent
     {
-        private readonly TModel _model;
-
+        /// <summary>
+        /// Gets the model.
+        /// </summary>
+        /// <value>
+        /// The model.
+        /// </value>
         public TModel Model
         {
-            get { return _model; }
+            get { return (TModel)RouteData.Values[KarbonRoute.ModelKey]; }
         }
 
-        public KarbonController(TModel model)
-        {
-            _model = model;
-        }
-
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns></returns>
         public virtual ActionResult Index()
         {
             var modelTypeName = Model.GetType().Name;
@@ -31,9 +34,16 @@ namespace Karbon.Cms.Web.Controllers
                 ? modelTypeName
                 : "Index";
 
+            //TODO: Handle allowed views?
+
             return View(viewName, Model);
         }
 
+        /// <summary>
+        /// Determins whether a view exists.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
         private bool ViewExists(string name)
         {
             var result = ViewEngines.Engines.FindView(ControllerContext, name, null);
@@ -42,9 +52,5 @@ namespace Karbon.Cms.Web.Controllers
     }
 
     public class KarbonController : KarbonController<IContent>
-    {
-        public KarbonController(IContent model)
-            : base(model)
-        { }
-    }
+    { }
 }

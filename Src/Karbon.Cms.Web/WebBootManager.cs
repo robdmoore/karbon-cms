@@ -29,9 +29,6 @@ namespace Karbon.Cms.Web
 
             // Register required routes
             RegisterRoutes();
-
-            // Register the karbon controller factory
-            ControllerBuilder.Current.SetControllerFactory(typeof(KarbonControllerFactory));
         }
 
         protected virtual void RegisterRoutes()

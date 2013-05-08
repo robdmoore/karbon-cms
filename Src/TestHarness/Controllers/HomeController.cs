@@ -11,8 +11,6 @@ namespace TestHarness.Controllers
 {
     public class HomeController : KarbonController<Home>
     {
-        public HomeController(Home model) 
-            : base(model)
-        { }
+
     }
 }
