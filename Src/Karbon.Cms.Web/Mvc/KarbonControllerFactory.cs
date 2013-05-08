@@ -32,7 +32,7 @@ namespace Karbon.Cms.Web.Mvc
                 .SingleOrDefault(x => x.Name == controllerName);
             if (controllerType != null)
             {
-                if (controllerType.IsAssignableFromExtended(typeof(KarbonController<>)))
+                if (typeof(KarbonController<>).IsAssignableFromExtended(controllerType))
                 {
                     var model = requestContext.RouteData.Values[KarbonRoute.ModelKey];
                     controllerObject = (IController)Activator.CreateInstance(controllerType, new[]{ model });

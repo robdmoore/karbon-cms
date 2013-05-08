@@ -38,14 +38,14 @@ namespace Karbon.Cms.Core
         }
 
         /// <summary>
-        /// Determines whether =is assignable from extended the specified type.
+        /// Determines whether the given type is assignable from the specified base type.
         /// </summary>
-        /// <param name="extendType">Type of the extend.</param>
-        /// <param name="baseType">Type of the base.</param>
+        /// <param name="baseType">The base type.</param>
+        /// <param name="extendType">The type.</param>
         /// <returns>
-        ///   <c>true</c> if is assignable from the specified type; otherwise, <c>false</c>.
+        ///   <c>true</c> if is assignable from the specified base type; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsAssignableFromExtended(this Type extendType, Type baseType)
+        public static bool IsAssignableFromExtended(this Type baseType, Type extendType)
         {
             while (!baseType.IsAssignableFrom(extendType))
             {
