@@ -13,21 +13,34 @@ namespace Karbon.Cms.Core
 {
     public class CoreBootManager
     {
-        private bool _isInitialized;
+        private bool _appStartingFlag;
+        private bool _appStartedFlag;
 
         /// <summary>
-        /// Initializes this instance.
+        /// Initializes components that need to run before the application has started
         /// </summary>
-        /// <exception cref="System.InvalidOperationException">The boot manager has already been initialized</exception>
-        public virtual void Initialize()
+        public virtual void AppStarting()
         {
-            if (_isInitialized)
-                throw new InvalidOperationException("The boot manager has already been initialized");
+            if (_appStartingFlag)
+                throw new InvalidOperationException("The boot manager has already started");
+
+            _appStartingFlag = true;
+        }
+
+        /// <summary>
+        /// Initializes components that need to run after the application has started
+        /// </summary>
+        public virtual void AppStarted()
+        {
+            if (_appStartedFlag)
+                throw new InvalidOperationException("The boot manager has already started");
 
             KarbonAppContext.Current = new KarbonAppContext();
 
             StoreManager.ContentStore = new ContentStore();
             StoreManager.MediaStore = new MediaStore();
+
+            _appStartedFlag = true;
         }
     }
 }

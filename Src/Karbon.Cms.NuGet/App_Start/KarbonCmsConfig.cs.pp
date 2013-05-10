@@ -1,11 +1,17 @@
-[assembly: WebActivator.PreApplicationStartMethod(typeof($rootnamespace$.App_Start.KarbonCmsConfig), "Start")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof($rootnamespace$.App_Start.KarbonCmsConfig), "AppStarting")]
+[assembly: WebActivatorEx.PostApplicationStartMethod(typeof($rootnamespace$.App_Start.KarbonCmsConfig), "AppStarted")]
 namespace $rootnamespace$.App_Start
 {
     public class KarbonCmsConfig
     {
-        public static void Start()
+        public static void AppStarting()
         {
-            new Karbon.Cms.Web.WebBootManager().Initialize();
+            new WebBootManager().AppStarting();
+        }
+
+        public static void AppStarted()
+        {
+            new WebBootManager().AppStarted();
         }
     }
 }

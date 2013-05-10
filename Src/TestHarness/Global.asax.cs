@@ -17,8 +17,6 @@ namespace TestHarness
         {
             AreaRegistration.RegisterAllAreas();
 
-            KarbonConfig.Init();
-
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
