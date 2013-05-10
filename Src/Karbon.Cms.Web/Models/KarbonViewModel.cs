@@ -8,11 +8,11 @@ using Karbon.Cms.Core.Models;
 namespace Karbon.Cms.Web.Models
 {
     /// <summary>
-    /// The view model class for Karbon based content views.
+    /// The view model class for Karbon based views.
     /// </summary>
     /// <typeparam name="TContentType">The type of the content type.</typeparam>
     /// <typeparam name="TSiteType">The type of the site type.</typeparam>
-    public class ContentViewModel<TContentType, TSiteType>
+    public class KarbonViewModel<TContentType, TSiteType>
         where TContentType : IContent
         where TSiteType : ISite
     {
@@ -33,11 +33,11 @@ namespace Karbon.Cms.Web.Models
         public TSiteType Site { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContentViewModel{TContentType, TSiteType}"/> class.
+        /// Initializes a new instance of the <see cref="KarbonViewModel{TContentType, TSiteType}"/> class.
         /// </summary>
         /// <param name="content">The content.</param>
         /// <param name="site">The site.</param>
-        public ContentViewModel(TContentType content,
+        public KarbonViewModel(TContentType content,
             TSiteType site)
         {
             Content = content;
@@ -46,33 +46,33 @@ namespace Karbon.Cms.Web.Models
     }
 
     /// <summary>
-    /// The view model class for Karbon based content views.
+    /// The view model class for Karbon based views.
     /// </summary>
     /// <typeparam name="TContentType">The type of the content type.</typeparam>
-    public class ContentViewModel<TContentType> : ContentViewModel<TContentType, Site>
+    public class KarbonViewModel<TContentType> : KarbonViewModel<TContentType, Site>
         where TContentType : IContent
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContentViewModel{TContentType}"/> class.
+        /// Initializes a new instance of the <see cref="KarbonViewModel{TContentType}"/> class.
         /// </summary>
         /// <param name="content">The content.</param>
         /// <param name="site">The site.</param>
-        public ContentViewModel(TContentType content, Site site) 
+        public KarbonViewModel(TContentType content, Site site) 
             : base(content, site)
         { }
     }
 
     /// <summary>
-    /// The view model class for Karbon based content views.
+    /// The view model class for Karbon based views.
     /// </summary>
-    public class ContentViewModel : ContentViewModel<Content, Site>
+    public class KarbonViewModel : KarbonViewModel<Content, Site>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContentViewModel"/> class.
+        /// Initializes a new instance of the <see cref="KarbonViewModel"/> class.
         /// </summary>
         /// <param name="content">The content.</param>
         /// <param name="site">The site.</param>
-        public ContentViewModel(Content content, Site site) 
+        public KarbonViewModel(Content content, Site site) 
             : base(content, site)
         { }
     }

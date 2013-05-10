@@ -15,7 +15,7 @@ namespace Karbon.Cms.Core.Stores
         private FileStore _fileStore;
         private DataSerializer _dataSerializer;
 
-        private IList<IContent> _contentCache = new List<IContent>();
+        // private IDictionary<string, IContent> _contentCache = new Dictionary<string, IContent>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentStore"/> class.
@@ -26,33 +26,35 @@ namespace Karbon.Cms.Core.Stores
             _dataSerializer = DataSerializerManager.Default;
 
             // Cache all the content at startup
-            InitContentCache();
+            //InitContentCache();
         }
 
-        /// <summary>
-        /// Initializes the content cache.
-        /// </summary>
-        private void InitContentCache()
-        {
-            CacheDirectoryRecursive("");
-        }
+        ///// <summary>
+        ///// Initializes the content cache.
+        ///// </summary>
+        //private void InitContentCache()
+        //{
+        //    CacheDirectoryRecursive("");
+        //}
 
-        /// <summary>
-        /// Caches the content in a directory recursivly.
-        /// </summary>
-        /// <param name="path">The path.</param>
-        private void CacheDirectoryRecursive(string path)
-        {
-            var dirs = _fileStore.GetDirectories(path);
-            foreach (var dir in dirs)
-            {
-                var content = GetByPath(dir);
-                if (content != null)
-                    _contentCache.Add(content);
+        //// <summary>
+        //// Caches the content in a directory recursivly.
+        //// </summary>
+        //// <param name="path">The path.</param>
+        //private void CacheDirectoryRecursive(string path)
+        //{
+        //    var dirs = _fileStore.GetDirectories(path);
+        //    foreach (var dir in dirs)
+        //    {
+        //        var content = GetByPath(dir);
+        //        if (content != null)
+        //            _contentCache.Add(content.Path, content.Url, content);
 
-                CacheDirectoryRecursive(dir);
-            }
-        }
+        //        CacheDirectoryRecursive(dir);
+
+        //        //var test = _contentCache["shop/navy-seals/chrono-sport"]
+        //    }
+        //}
 
         /// <summary>
         /// Gets a content item by URL.
