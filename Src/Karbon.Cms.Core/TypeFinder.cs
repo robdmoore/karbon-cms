@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -23,7 +24,7 @@ namespace Karbon.Cms.Core
         };
 
         private static ReadOnlyCollection<Assembly> _assemblies = null;
-        private static IDictionary<string, IEnumerable<Type>> _typeMap = new Dictionary<string, IEnumerable<Type>>();
+        private static IDictionary<string, IEnumerable<Type>> _typeMap = new ConcurrentDictionary<string, IEnumerable<Type>>();
 
         private static readonly ReaderWriterLockSlim _assembliesLock = new ReaderWriterLockSlim();
         private static readonly ReaderWriterLockSlim _typeMapLock = new ReaderWriterLockSlim();

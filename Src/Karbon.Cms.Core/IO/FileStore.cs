@@ -11,6 +11,16 @@ namespace Karbon.Cms.Core.IO
 {
     internal abstract class FileStore : ProviderBase
     {
+        public event EventHandler<FileChangedEventArgs> FileChanged;
+
+        public void OnFileChanged(FileChangedEventArgs e)
+        {
+            if (FileChanged != null)
+            {
+                FileChanged(this, e);
+            }
+        }
+
         public override void Initialize(string name, 
             NameValueCollection config)
         {
@@ -43,12 +53,14 @@ namespace Karbon.Cms.Core.IO
         public abstract DateTimeOffset GetLastModified(string relativePath);
         public abstract DateTimeOffset GetCreated(string relativePath);
         public abstract DateTimeOffset GetLastAccessed(string relativePath);
+        public abstract DateTimeOffset GetLastWrite(string relativePath);
         public abstract string GetAbsolutePath(string relativePath);
 
         public abstract IEnumerable<string> GetPathParts(string path);
 
         public abstract string GetName(string path);
         public abstract string GetNameWithoutExtension(string path);
+        public abstract string GetDirectoryName(string path);
 
         #endregion
     }

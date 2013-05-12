@@ -15,6 +15,8 @@ namespace Karbon.Cms.Core.IO
         private string _rootPhysicalPath;
         private char _pathSeperator;
 
+        private FileSystemWatcher _fileSystemWatcher;
+
         public override void Initialize(NameValueCollection config)
         {
             base.Initialize(config);
@@ -28,6 +30,38 @@ namespace Karbon.Cms.Core.IO
             _rootPhysicalPath = config.AllKeys.Any(x => x == "rootPhysicalPath")
                 ? config["rootPhysicalPath"]
                 : IOHelper.MapPath(_rootPath);
+
+            // Setup a file system watcher to keep track of file changes
+            if (Directory.Exists(_rootPhysicalPath))
+            {
+                _fileSystemWatcher = new FileSystemWatcher(_rootPhysicalPath)
+                {
+                    IncludeSubdirectories = true,
+                    EnableRaisingEvents = true
+                };
+                _fileSystemWatcher.Created += FileChangedHandler;
+                _fileSystemWatcher.Changed += FileChangedHandler;
+                _fileSystemWatcher.Renamed += FileChangedHandler;
+                _fileSystemWatcher.Deleted += FileChangedHandler;
+            }
+            else
+            {
+                throw new FileNotFoundException("rootPath not found", _rootPath);
+            }
+        }
+
+        /// <summary>
+        /// The handler for monitoring file changes.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="fileSystemEventArgs">The <see cref="FileSystemEventArgs"/> instance containing the event data.</param>
+        private void FileChangedHandler(object sender, FileSystemEventArgs fileSystemEventArgs)
+        {
+            OnFileChanged(new FileChangedEventArgs
+            {
+                ChangeType = (FileChangeType)Enum.Parse(typeof (FileChangeType), fileSystemEventArgs.ChangeType.ToString()),
+                FilePath = GetRelativePath(fileSystemEventArgs.FullPath)
+            });
         }
 
         #region Directories
@@ -126,6 +160,13 @@ namespace Karbon.Cms.Core.IO
                 : File.GetLastAccessTimeUtc(GetPhysicalPath(relativePath));
         }
 
+        public override DateTimeOffset GetLastWrite(string relativePath)
+        {
+            return DirectoryExists(relativePath)
+                ? Directory.GetLastWriteTimeUtc(GetPhysicalPath(relativePath))
+                : File.GetLastWriteTimeUtc(GetPhysicalPath(relativePath));
+        }
+
         public override string GetAbsolutePath(string relativePath)
         {
             return _rootPath + _pathSeperator + relativePath;
@@ -142,6 +183,11 @@ namespace Karbon.Cms.Core.IO
             return fileName == null 
                 ? null 
                 : Path.GetFileNameWithoutExtension(fileName);
+        }
+
+        public override string GetDirectoryName(string path)
+        {
+            return GetRelativePath(Path.GetDirectoryName(GetAbsolutePath(path)));
         }
 
         public override IEnumerable<string> GetPathParts(string path)

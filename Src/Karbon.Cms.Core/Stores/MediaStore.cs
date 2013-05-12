@@ -8,5 +8,10 @@ namespace Karbon.Cms.Core.Stores
         {
             throw new System.NotImplementedException();
         }
+
+        public void SyncCache()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

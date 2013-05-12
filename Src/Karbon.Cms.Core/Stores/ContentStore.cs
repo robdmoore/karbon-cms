@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using Karbon.Cms.Core.IO;
 using Karbon.Cms.Core.Mapping;
 using Karbon.Cms.Core.Models;
 using Karbon.Cms.Core.Serialization;
+using Karbon.Cms.Core.Threading;
 
 namespace Karbon.Cms.Core.Stores
 {
@@ -15,46 +18,24 @@ namespace Karbon.Cms.Core.Stores
         private FileStore _fileStore;
         private DataSerializer _dataSerializer;
 
-        // private IDictionary<string, IContent> _contentCache = new Dictionary<string, IContent>();
+        private readonly ReaderWriterLockSlim _cacheLock = new ReaderWriterLockSlim();
+        private IDictionary<string, IContent> _contentCache = new ConcurrentDictionary<string, IContent>();
+        private bool _cacheDirty = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentStore"/> class.
         /// </summary>
         public ContentStore()
         {
+            // Setup required components
             _fileStore = FileStoreManager.ContentFileStore;
             _dataSerializer = DataSerializerManager.Default;
 
-            // Cache all the content at startup
-            //InitContentCache();
+            // Setup file store event listener
+            _fileStore.FileChanged += (sender, args) => _cacheDirty = true;
         }
 
-        ///// <summary>
-        ///// Initializes the content cache.
-        ///// </summary>
-        //private void InitContentCache()
-        //{
-        //    CacheDirectoryRecursive("");
-        //}
-
-        //// <summary>
-        //// Caches the content in a directory recursivly.
-        //// </summary>
-        //// <param name="path">The path.</param>
-        //private void CacheDirectoryRecursive(string path)
-        //{
-        //    var dirs = _fileStore.GetDirectories(path);
-        //    foreach (var dir in dirs)
-        //    {
-        //        var content = GetByPath(dir);
-        //        if (content != null)
-        //            _contentCache.Add(content.Path, content.Url, content);
-
-        //        CacheDirectoryRecursive(dir);
-
-        //        //var test = _contentCache["shop/navy-seals/chrono-sport"]
-        //    }
-        //}
+        #region Public API
 
         /// <summary>
         /// Gets a content item by URL.
@@ -67,15 +48,104 @@ namespace Karbon.Cms.Core.Stores
             if (url == null)
                 return null;
 
-            // TODO: Check the cache
-
-            // Get content path from URL
-            var contentPath = GetPathFromUrl(url);
-            if(contentPath == null)
+            if (!_contentCache.ContainsKey(url))
                 return null;
 
-            return GetByPath(contentPath);
+            return _contentCache[url];
         }
+
+        /// <summary>
+        /// Gets the parent content.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public IContent GetParent(IContent content)
+        {
+            if (content.Url.LastIndexOf("/", StringComparison.InvariantCulture) == -1)
+                return null;
+
+            var parentUrl = content.Url.Substring(0, content.Url.LastIndexOf("/", StringComparison.InvariantCulture));
+            if (!_contentCache.ContainsKey(parentUrl))
+                return null;
+
+            return _contentCache[parentUrl];
+        }
+
+        /// <summary>
+        /// Gets the children.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public IEnumerable<IContent> GetChildren(IContent content)
+        {
+            var url = content.Url + "/";
+            return _contentCache
+                .Keys
+                .Where(x => x.StartsWith(url)
+                    && x.TrimStart(url).IndexOf("/", StringComparison.InvariantCulture) == -1)
+                .Select(x => _contentCache[x]);
+        }
+
+        /// <summary>
+        /// Gets all the content pages in the site.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<IContent> GetAll()
+        {
+            return _contentCache.Values;
+        }
+
+        #endregion
+
+        #region Cache Control
+
+        /// <summary>
+        /// Syncs the content cache.
+        /// </summary>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void SyncCache()
+        {
+            if(_cacheDirty)
+            {
+                using (new WriteLock(_cacheLock))
+                {
+                    if(_cacheDirty)
+                    {
+                        var data = ParseContentRecursive();
+                        _contentCache = new Dictionary<string, IContent>(data);
+                        _cacheDirty = false;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Parses all the content recursivly.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
+        private IDictionary<string, IContent> ParseContentRecursive(string path = "", IDictionary<string, IContent> data = null)
+        {
+            if(data == null)
+                data = new Dictionary<string, IContent>();
+
+            var dirs = _fileStore.GetDirectories(path);
+            foreach (var dir in dirs)
+            {
+                var content = GetByPath(dir);
+                if (content != null)
+                    data.Add(content.Url, content);
+
+                ParseContentRecursive(dir, data);
+            }
+
+            return data;
+        }
+
+        #endregion
+
+        #region Helper Methods
 
         /// <summary>
         /// Gets a content item by relative file path.
@@ -86,8 +156,6 @@ namespace Karbon.Cms.Core.Stores
         {
             if (path == null)
                 return null;
-
-            // TODO: Check the cache
 
             // Check directory exists
             if (!_fileStore.DirectoryExists(path))
@@ -131,47 +199,46 @@ namespace Karbon.Cms.Core.Stores
             return model;
         }
 
-        /// <summary>
-        /// Gets a relative file path from URL.
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <returns></returns>
-        private string GetPathFromUrl(string url)
-        {
-            // Prepair URL
-            url = url.ToLower().Trim('/');
-            var urlParts = url.Split('/');
+        ///// <summary>
+        ///// Gets a relative file path from URL.
+        ///// </summary>
+        ///// <param name="url">The URL.</param>
+        ///// <returns></returns>
+        //private string GetPathFromUrl(string url)
+        //{
+        //    // Prepair URL
+        //    url = url.ToLower().Trim('/');
+        //    var urlParts = url.Split('/');
 
-            // If a root request, get content from home 
-            // TODO: Not sure if this should be part of this method or not?
-            if (urlParts.Length == 1 && urlParts[0] == "")
-                urlParts[0] = "home";
+        //    // If a root request, get content from home 
+        //    if (urlParts.Length == 1 && urlParts[0] == "")
+        //        urlParts[0] = Constants.Home;
 
-            var contentPath = "";
+        //    var contentPath = "";
 
-            // Loop URL parts
-            foreach (var urlPart in urlParts)
-            {
-                var dirs = _fileStore.GetDirectories(contentPath).ToList();
-                var possibleMatches = dirs.Where(x => x.ToLower().EndsWith(urlPart)).ToList();
-                var match = possibleMatches.Count == 1
-                    ? possibleMatches[0]
-                    : possibleMatches.SingleOrDefault(x =>
-                        Regex.IsMatch(x.ToLower(), @"^" + contentPath + @"[0-9]+\-" + urlPart));
+        //    // Loop URL parts
+        //    foreach (var urlPart in urlParts)
+        //    {
+        //        var dirs = _fileStore.GetDirectories(contentPath).ToList();
+        //        var possibleMatches = dirs.Where(x => x.ToLower().EndsWith(urlPart)).ToList();
+        //        var match = possibleMatches.Count == 1
+        //            ? possibleMatches[0]
+        //            : possibleMatches.SingleOrDefault(x =>
+        //                Regex.IsMatch(x.ToLower(), @"^" + contentPath + @"[0-9]+\-" + urlPart));
 
-                if (match != null)
-                {
-                    contentPath = match + "/";
-                }
-                else
-                {
-                    return null;
-                }
-            }
+        //        if (match != null)
+        //        {
+        //            contentPath = match + "/";
+        //        }
+        //        else
+        //        {
+        //            return null;
+        //        }
+        //    }
 
-            // Return mapped path
-            return contentPath.TrimEnd('/');
-        }
+        //    // Return mapped path
+        //    return contentPath.TrimEnd('/');
+        //}
 
         /// <summary>
         /// Gets the URL from a relative file path.
@@ -187,7 +254,9 @@ namespace Karbon.Cms.Core.Stores
                 .Select(nameInfo => nameInfo.Name)
                 .ToList();
 
-            return string.Join("/", urlParts);
+            var url = string.Join("/", urlParts);
+
+            return url == Constants.Home ? "" : url;
         }
 
         /// <summary>
@@ -218,5 +287,7 @@ namespace Karbon.Cms.Core.Stores
 
             return fileNameInfo;
         }
+
+        #endregion
     }
 }

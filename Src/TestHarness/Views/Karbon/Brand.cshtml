@@ -1,4 +1,5 @@
-﻿@inherits KarbonView<TestHarness.Models.Brand>
+﻿@using TestHarness.Models
+@inherits KarbonView<TestHarness.Models.Brand>
 @{
     Layout = null;
 }
@@ -13,6 +14,12 @@
 <body>
     <div>
         BRAND PAGE - @Model.Content.Slug
+        <ul>
+            @foreach(var child in Model.Content.Children<Product>(x => x.IsVisible))
+            {
+                <li>@child.Name</li>
+            }
+        </ul>
     </div>
 </body>
 </html>
