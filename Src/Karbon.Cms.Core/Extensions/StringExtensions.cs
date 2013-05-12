@@ -55,7 +55,7 @@ namespace Karbon.Cms.Core
         /// <returns></returns>
         public static string TrimStart(this string input, string toTrim)
         {
-            if (string.IsNullOrEmpty(input))
+            if (string.IsNullOrEmpty(input) || string.IsNullOrEmpty(toTrim))
                 return input;
 
             while (input.StartsWith(toTrim, StringComparison.InvariantCultureIgnoreCase))

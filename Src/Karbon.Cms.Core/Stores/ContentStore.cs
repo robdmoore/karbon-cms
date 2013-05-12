@@ -19,7 +19,7 @@ namespace Karbon.Cms.Core.Stores
         private DataSerializer _dataSerializer;
 
         private readonly ReaderWriterLockSlim _cacheLock = new ReaderWriterLockSlim();
-        private IDictionary<string, IContent> _contentCache = new ConcurrentDictionary<string, IContent>();
+        private IDictionary<string, IContent> _contentCache = new Dictionary<string, IContent>();
         private bool _cacheDirty = true;
 
         /// <summary>
@@ -78,28 +78,17 @@ namespace Karbon.Cms.Core.Stores
         /// <returns></returns>
         public IEnumerable<IContent> GetChildren(IContent content)
         {
-            if(content.IsHomePage())
-            {
-                // Homepage
-                return Enumerable.Empty<IContent>();
-            }
-            else
-            {
-                var url = content.Url + "/";
-                return _contentCache.Keys
-                    .Where(x => x.StartsWith(url)
-                        && x.TrimStart(url).IndexOf("/", StringComparison.InvariantCulture) == -1)
-                    .Select(x => _contentCache[x]);
-            }
-        }
+            var url = content.Url + "/";
+            if (url == "/")
+                url = "";
 
-        /// <summary>
-        /// Gets all the content pages in the site.
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<IContent> GetAll()
-        {
-            return _contentCache.Values;
+            var children = _contentCache.Keys
+                .Where(x =>  x.StartsWith(url)
+                    && x.TrimStart(url).IndexOf("/", StringComparison.InvariantCulture) == -1)
+                .Select(x => _contentCache[x])
+                .ToList();
+
+            return children;
         }
 
         #endregion
@@ -118,8 +107,7 @@ namespace Karbon.Cms.Core.Stores
                 {
                     if(_cacheDirty)
                     {
-                        var data = ParseContentRecursive();
-                        _contentCache = new Dictionary<string, IContent>(data);
+                        _contentCache = ParseContent();
                         _cacheDirty = false;
                     }
                 }
@@ -127,24 +115,30 @@ namespace Karbon.Cms.Core.Stores
         }
 
         /// <summary>
-        /// Parses all the content recursivly.
+        /// Parses the content.
         /// </summary>
-        /// <param name="path">The path.</param>
+        /// <returns></returns>
+        private IDictionary<string, IContent> ParseContent()
+        {
+            return ParseContentDirectories(new[] {""}, new Dictionary<string, IContent>());
+        }
+
+
+        /// <summary>
+        /// Parses the content directories.
+        /// </summary>
+        /// <param name="dirs">The dirs.</param>
         /// <param name="data">The data.</param>
         /// <returns></returns>
-        private IDictionary<string, IContent> ParseContentRecursive(string path = "", IDictionary<string, IContent> data = null)
+        private IDictionary<string, IContent> ParseContentDirectories(IEnumerable<string> dirs, IDictionary<string, IContent> data)
         {
-            if(data == null)
-                data = new Dictionary<string, IContent>();
-
-            var dirs = _fileStore.GetDirectories(path);
             foreach (var dir in dirs)
             {
                 var content = GetByPath(dir);
                 if (content != null)
                     data.Add(content.Url, content);
 
-                ParseContentRecursive(dir, data);
+                ParseContentDirectories(_fileStore.GetDirectories(dir), data);
             }
 
             return data;
@@ -174,12 +168,12 @@ namespace Karbon.Cms.Core.Stores
             // Grab first content file
             var contentFile = _fileStore.GetFiles(path)
                 .FirstOrDefault();
-
-            if (contentFile == null)
-                return null;
-
+            
             // Create model object based on file name
-            var fileName = _fileStore.GetNameWithoutExtension(contentFile);
+            var fileName = contentFile != null 
+                ? _fileStore.GetNameWithoutExtension(contentFile) 
+                : "Content";
+
             var type = TypeFinder.FindTypes<Content>()
                            .SingleOrDefault(x => x.Name == fileName)
                        ?? typeof(Content);
@@ -189,7 +183,9 @@ namespace Karbon.Cms.Core.Stores
                 return null;
 
             // Deserialize data
-            var data = _dataSerializer.Deserialize(_fileStore.OpenFile(contentFile));
+            var data = contentFile != null 
+                ? _dataSerializer.Deserialize(_fileStore.OpenFile(contentFile))
+                : new Dictionary<string, string>();
 
             // Map data to model
             model.Path = path;
@@ -197,9 +193,9 @@ namespace Karbon.Cms.Core.Stores
             model.Slug = directoryNameInfo.Name;
             model.Url = GetUrlFromPath(path);
             model.SortOrder = directoryNameInfo.SortOrder;
-            model.Created = _fileStore.GetCreated(contentFile);
-            model.Modified = _fileStore.GetLastModified(contentFile);
-            model.Depth = model.Url.Count(chr => chr == '/');
+            model.Created = _fileStore.GetCreated(contentFile ?? path);
+            model.Modified = _fileStore.GetLastModified(contentFile ?? path);
+            model.Depth = model.Url == "" ? 1 : model.Url.Count(x => x == '/') + 2;
 
             model = (IContent)new DataMapper().Map(type, model, data);
 
@@ -255,11 +251,8 @@ namespace Karbon.Cms.Core.Stores
         /// <returns></returns>
         private string GetUrlFromPath(string path)
         {
-            if (string.IsNullOrEmpty(path))
+            if (path == null)
                 return null;
-
-            if (path == Constants.HomeContentPath)
-                return "";
 
             var pathParts = _fileStore.GetPathParts(path);
             var urlParts = pathParts

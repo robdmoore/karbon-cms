@@ -29,7 +29,7 @@ namespace Karbon.Cms.Core
         public static TContentType Parent<TContentType>(this IContent content)
             where TContentType : IContent
         {
-            return (TContentType)content.Parent();
+            return (TContentType) content.Parent();
         }
 
         /// <summary>
@@ -72,10 +72,22 @@ namespace Karbon.Cms.Core
         /// <param name="content">The content.</param>
         /// <param name="filter">The filter.</param>
         /// <returns></returns>
-        public static IEnumerable<TContentType> Children<TContentType>(this IContent content, Func<TContentType, bool> filter)
+        public static IEnumerable<TContentType> Children<TContentType>(this IContent content,
+                                                                       Func<TContentType, bool> filter)
             where TContentType : IContent
         {
             return content.Children().Cast<TContentType>().Where(filter);
+        }
+
+        /// <summary>
+        /// Finds content.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static IEnumerable<IContent> Find(this IContent content, Func<IContent, bool> filter)
+        {
+            return Enumerable.Empty<IContent>();
         }
 
         /// <summary>
@@ -99,19 +111,7 @@ namespace Karbon.Cms.Core
         /// </returns>
         public static bool IsHomePage(this IContent content)
         {
-            return content.Path == Constants.HomeContentPath;
-        }
-
-        /// <summary>
-        /// Determines whether the specified content is the error page.
-        /// </summary>
-        /// <param name="content">The content.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified content is the error page; otherwise, <c>false</c>.
-        /// </returns>
-        public static bool IsErrorPage(this IContent content)
-        {
-            return content.Path == Constants.ErrorContentPath;
+            return content.Depth == 1;
         }
     }
 }

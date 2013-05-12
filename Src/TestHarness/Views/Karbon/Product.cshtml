@@ -1,11 +1,9 @@
 ﻿@using TestHarness.Models
-@inherits KarbonView<TestHarness.Models.Product>
+@inherits KarbonView<Product, Home>
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -13,7 +11,7 @@
 </head>
 <body>
     <div>
-        @(Model.Content.Parent<Brand>().Title) - @Model.Content.pa
+        @(Model.CurrentPage.Parent<Brand>().Title) - @Model.CurrentPage.Name - @Model.CurrentPage.Depth
     </div>
 </body>
 </html>

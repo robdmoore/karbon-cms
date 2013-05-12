@@ -121,7 +121,6 @@
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Home.cs" />
     <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\Site.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -136,8 +135,7 @@
     <Content Include="App_Data\Content\02-blog\2013\BlogPosts.txt" />
     <Content Include="App_Data\Content\02-blog\BlogPosts.txt" />
     <Content Include="App_Data\Content\03-about-us\Test.txt" />
-    <Content Include="App_Data\Content\home\Home.txt" />
-    <Content Include="App_Data\Content\Site.txt" />
+    <Content Include="App_Data\Content\Home.txt" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

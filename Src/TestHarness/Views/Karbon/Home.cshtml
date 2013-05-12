@@ -1,8 +1,6 @@
 ﻿@inherits KarbonView<TestHarness.Models.Home>
 @{
     Layout = null;
-
-    var children = Model.Content.Children();
 }
 
 <!DOCTYPE html>
@@ -14,10 +12,10 @@
 </head>
 <body>
     <div>
-        TEST PAGE - @Model.Content.Depth
-        @foreach(var child in Model.Content.Children())
+        HOME PAGE - @Model.CurrentPage.Depth
+        @foreach (var child in Model.CurrentPage.Children())
         {
-            @child.TypeName<br />
+            @child.Url<br />
         }
     </div>
 </body>
