@@ -13,9 +13,9 @@
 </head>
 <body>
     <div>
-        BRAND PAGE - @Model.Content.Slug
+        BRAND PAGE - @Model.Content.Slug - @Model.Content.Depth
         <ul>
-            @foreach(var child in Model.Content.Children<Product>(x => x.IsVisible))
+            @foreach(var child in Model.Content.Children<Product>(x => x.IsVisible()))
             {
                 <li>@child.Name</li>
             }

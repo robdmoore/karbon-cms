@@ -9,8 +9,8 @@ using TestHarness.Models;
 
 namespace TestHarness.Controllers
 {
-    public class HomeController : KarbonController<Home>
-    {
+    //public class HomeController : KarbonController<Home>
+    //{
         
-    }
+    //}
 }

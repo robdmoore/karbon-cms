@@ -78,12 +78,19 @@ namespace Karbon.Cms.Core.Stores
         /// <returns></returns>
         public IEnumerable<IContent> GetChildren(IContent content)
         {
-            var url = content.Url + "/";
-            return _contentCache
-                .Keys
-                .Where(x => x.StartsWith(url)
-                    && x.TrimStart(url).IndexOf("/", StringComparison.InvariantCulture) == -1)
-                .Select(x => _contentCache[x]);
+            if(content.IsHomePage())
+            {
+                // Homepage
+                return Enumerable.Empty<IContent>();
+            }
+            else
+            {
+                var url = content.Url + "/";
+                return _contentCache.Keys
+                    .Where(x => x.StartsWith(url)
+                        && x.TrimStart(url).IndexOf("/", StringComparison.InvariantCulture) == -1)
+                    .Select(x => _contentCache[x]);
+            }
         }
 
         /// <summary>
@@ -192,6 +199,7 @@ namespace Karbon.Cms.Core.Stores
             model.SortOrder = directoryNameInfo.SortOrder;
             model.Created = _fileStore.GetCreated(contentFile);
             model.Modified = _fileStore.GetLastModified(contentFile);
+            model.Depth = model.Url.Count(chr => chr == '/');
 
             model = (IContent)new DataMapper().Map(type, model, data);
 
@@ -247,16 +255,19 @@ namespace Karbon.Cms.Core.Stores
         /// <returns></returns>
         private string GetUrlFromPath(string path)
         {
-            var pathParts = _fileStore.GetPathParts(path);
+            if (string.IsNullOrEmpty(path))
+                return null;
 
+            if (path == Constants.HomeContentPath)
+                return "";
+
+            var pathParts = _fileStore.GetPathParts(path);
             var urlParts = pathParts
                 .Select(ParseName)
                 .Select(nameInfo => nameInfo.Name)
                 .ToList();
 
-            var url = string.Join("/", urlParts);
-
-            return url == Constants.Home ? "" : url;
+            return string.Join("/", urlParts);
         }
 
         /// <summary>

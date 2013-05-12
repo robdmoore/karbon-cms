@@ -181,7 +181,10 @@
     <Content Include="Views\Karbon\Product.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Karbon\Test.cshtml" />
+    <Content Include="Views\Karbon\Home.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Karbon\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,24 @@
+﻿@inherits KarbonView<TestHarness.Models.Home>
+@{
+    Layout = null;
+
+    var children = Model.Content.Children();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        TEST PAGE - @Model.Content.Depth
+        @foreach(var child in Model.Content.Children())
+        {
+            @child.TypeName<br />
+        }
+    </div>
+</body>
+</html>

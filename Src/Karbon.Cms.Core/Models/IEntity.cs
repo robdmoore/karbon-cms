@@ -10,6 +10,7 @@ namespace Karbon.Cms.Core.Models
         string Slug { get; set; }
         string Url { get; set; }
         int SortOrder { get; set; }
+        int Depth { get; set; }
 
         DateTimeOffset Created { get; set; }
         DateTimeOffset Modified { get; set; }

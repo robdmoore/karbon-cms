@@ -11,7 +11,7 @@ using Karbon.Cms.Web.Routing;
 
 namespace Karbon.Cms.Web
 {
-    public static class ContentExtensions
+    internal static class ContentExtensions
     {
         /// <summary>
         /// Gets the controller for the given content model.
@@ -19,7 +19,7 @@ namespace Karbon.Cms.Web
         /// <param name="model">The model.</param>
         /// <param name="defaultControllerName">Default name of the controller.</param>
         /// <returns></returns>
-        internal static Type GetController(this IContent model,
+        public static Type GetController(this IContent model,
             string defaultControllerName = "")
         {
             var contentAttr = model.GetType().GetCustomAttribute<ContentAttribute>();

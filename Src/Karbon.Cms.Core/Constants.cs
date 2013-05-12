@@ -8,7 +8,8 @@ namespace Karbon.Cms.Core
 {
     internal class Constants
     {
-        public const string Home = "home";
-        public const string Error = "error";
+        // TODO: Make these configurable as they are dependant on the filestore used
+        public const string HomeContentPath = "home";
+        public const string ErrorContentPath = "error";
     }
 }

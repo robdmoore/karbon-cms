@@ -47,6 +47,7 @@
     <Compile Include="CoreBootManager.cs" />
     <Compile Include="EnvironmentContext.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
+    <Compile Include="Extensions\ContentApiExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="IO\FileChangedEventArgs.cs" />
