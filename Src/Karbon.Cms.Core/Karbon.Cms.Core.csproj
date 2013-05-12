@@ -64,9 +64,7 @@
     <Compile Include="Models\IContent.cs" />
     <Compile Include="Models\IEntity.cs" />
     <Compile Include="Models\IMedia.cs" />
-    <Compile Include="Models\ISite.cs" />
     <Compile Include="Models\Media.cs" />
-    <Compile Include="Models\Site.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\DataSerializer.cs" />
     <Compile Include="Serialization\KarbonDataSerializer.cs" />
