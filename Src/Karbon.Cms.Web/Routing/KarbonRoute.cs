@@ -91,7 +91,7 @@ namespace Karbon.Cms.Web.Routing
             var action = DefaultAction;
 
             // Try and grab the model for the given URL
-            var model = StoreManager.ContentStore.GetByUrl(virtualPath);
+            var model = StoreManager.ContentStore.GetByUrl("~/" + virtualPath);
             if (model == null)
             {
                 // Try to load the page without the last segment of the url and set the last segment as action
@@ -102,7 +102,7 @@ namespace Karbon.Cms.Web.Routing
                     var tmpAction = virtualPath.Substring(index, virtualPath.Length - index).Trim(new[] {'/'});
                     var tmpVirtualPath = virtualPath.Substring(0, index).TrimStart(new[] {'/'});
 
-                    model = StoreManager.ContentStore.GetByUrl(tmpVirtualPath);
+                    model = StoreManager.ContentStore.GetByUrl("~/" + tmpVirtualPath);
                     if (model != null)
                     {
                         virtualPath = tmpVirtualPath;
@@ -111,7 +111,7 @@ namespace Karbon.Cms.Web.Routing
                 }
                 else
                 {
-                    model = StoreManager.ContentStore.GetByUrl("");
+                    model = StoreManager.ContentStore.GetByUrl("~/");
                     if (model != null)
                     {
                         action = virtualPath;
@@ -152,7 +152,7 @@ namespace Karbon.Cms.Web.Routing
                 return null;
 
             // Create virtual path from model url
-            var vpd = new VirtualPathData(this, model.Url);
+            var vpd = new VirtualPathData(this, model.RelativeUrl.TrimStart("~/"));
 
             // Append any other route data values as querystring params
             var queryParams = values.Where(kvp => !kvp.Key.Equals(ModelKey) 

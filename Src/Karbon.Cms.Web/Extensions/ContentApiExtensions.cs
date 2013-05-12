@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Karbon.Cms.Core.Models;
 
 namespace Karbon.Cms.Web
@@ -21,8 +22,21 @@ namespace Karbon.Cms.Web
         /// </returns>
         public static bool IsOpen(this IContent content)
         {
-            // TODO: Parse URL or check current route
-            return false;
+            var contentUrl = content.Url();
+            var currentUrl = HttpContext.Current.Request.Url.LocalPath;
+            return currentUrl == contentUrl || currentUrl.StartsWith(contentUrl + "/");
+            // NOTE: This currently reports homepage as closed if a sub page is open
+            // need to decide if this is the desired effect, or whether homepage should be open too
+        }
+
+        /// <summary>
+        /// Gets the absolute url for the given content.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static string Url(this IContent content)
+        {
+            return VirtualPathUtility.ToAbsolute(content.RelativeUrl);
         }
     }
 }

@@ -2,6 +2,8 @@
 @inherits KarbonView<Product, Home>
 @{
     Layout = null;
+
+    var url = Request.Url;
 }
 <!DOCTYPE html>
 <html>
@@ -11,7 +13,10 @@
 </head>
 <body>
     <div>
-        @(Model.CurrentPage.Parent<Brand>().Title) - @Model.CurrentPage.Name - @Model.CurrentPage.Depth
+        @(Model.CurrentPage.Parent<Brand>().Title) - @Model.CurrentPage.Name - @Model.CurrentPage.Depth<br />
+        @Model.CurrentPage.IsOpen()<br />
+        @Model.CurrentPage.Parent().IsOpen()<br />
+        @Model.HomePage.IsOpen()
     </div>
 </body>
 </html>

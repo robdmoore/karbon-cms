@@ -51,7 +51,8 @@ namespace Karbon.Cms.Core
         public static IEnumerable<TContentType> Children<TContentType>(this IContent content)
             where TContentType : IContent
         {
-            return content.Children().Cast<TContentType>();
+            return content.Children(x => x.GetType() == typeof(TContentType))
+                .Cast<TContentType>();
         }
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace Karbon.Cms.Core
         /// <returns></returns>
         public static IEnumerable<IContent> Children(this IContent content, Func<IContent, bool> filter)
         {
-            return StoreManager.ContentStore.GetChildren(content).Where(filter);
+            return content.Children().Where(filter);
         }
 
         /// <summary>
@@ -72,22 +73,47 @@ namespace Karbon.Cms.Core
         /// <param name="content">The content.</param>
         /// <param name="filter">The filter.</param>
         /// <returns></returns>
-        public static IEnumerable<TContentType> Children<TContentType>(this IContent content,
-                                                                       Func<TContentType, bool> filter)
+        public static IEnumerable<TContentType> Children<TContentType>(this IContent content, Func<TContentType, bool> filter)
             where TContentType : IContent
         {
-            return content.Children().Cast<TContentType>().Where(filter);
+            return content.Children<TContentType>()
+                .Where(filter);
         }
 
         /// <summary>
-        /// Finds content.
+        /// Finds descendant content filtered by the supplied filter function.
         /// </summary>
         /// <param name="content">The content.</param>
         /// <param name="filter">The filter.</param>
         /// <returns></returns>
         public static IEnumerable<IContent> Find(this IContent content, Func<IContent, bool> filter)
         {
-            return Enumerable.Empty<IContent>();
+            return StoreManager.ContentStore.GetDescendants(content)
+                .Where(filter);
+        }
+
+        /// <summary>
+        /// Finds descendant content of the given type.
+        /// </summary>
+        /// <typeparam name="TContentType">The type of the content type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static IEnumerable<TContentType> Find<TContentType>(this IContent content)
+        {
+            return content.Find(x => x.GetType() == typeof(TContentType)).Cast<TContentType>();
+        }
+
+        /// <summary>
+        /// Finds descendant content of the given type filtered by the supplied filter function.
+        /// </summary>
+        /// <typeparam name="TContentType">The type of the content type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static IEnumerable<TContentType> Find<TContentType>(this IContent content, Func<TContentType, bool> filter)
+        {
+            return content.Find<TContentType>()
+                .Where(filter);
         }
 
         /// <summary>

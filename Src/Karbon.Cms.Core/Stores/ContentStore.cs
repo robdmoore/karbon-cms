@@ -61,10 +61,10 @@ namespace Karbon.Cms.Core.Stores
         /// <returns></returns>
         public IContent GetParent(IContent content)
         {
-            if (content.Url.LastIndexOf("/", StringComparison.InvariantCulture) == -1)
+            if (content.RelativeUrl.LastIndexOf("/", StringComparison.InvariantCulture) <= 2)
                 return null;
 
-            var parentUrl = content.Url.Substring(0, content.Url.LastIndexOf("/", StringComparison.InvariantCulture));
+            var parentUrl = content.RelativeUrl.Substring(0, content.RelativeUrl.LastIndexOf("/", StringComparison.InvariantCulture));
             if (!_contentCache.ContainsKey(parentUrl))
                 return null;
 
@@ -78,17 +78,36 @@ namespace Karbon.Cms.Core.Stores
         /// <returns></returns>
         public IEnumerable<IContent> GetChildren(IContent content)
         {
-            var url = content.Url + "/";
-            if (url == "/")
-                url = "";
+            var url = content.RelativeUrl + "/";
+            if (url == "~//")
+                url = "~/";
 
             var children = _contentCache.Keys
-                .Where(x =>  x.StartsWith(url)
+                .Where(x => x != url && x.StartsWith(url)
                     && x.TrimStart(url).IndexOf("/", StringComparison.InvariantCulture) == -1)
                 .Select(x => _contentCache[x])
                 .ToList();
 
             return children;
+        }
+
+        /// <summary>
+        /// Gets the descendants.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public IEnumerable<IContent> GetDescendants(IContent content)
+        {
+            var url = content.RelativeUrl + "/";
+            if (url == "~//")
+                url = "~/";
+
+            var descendants = _contentCache.Keys
+                .Where(x => x != url && x.StartsWith(url))
+                .Select(x => _contentCache[x])
+                .ToList();
+
+            return descendants;
         }
 
         #endregion
@@ -136,7 +155,7 @@ namespace Karbon.Cms.Core.Stores
             {
                 var content = GetByPath(dir);
                 if (content != null)
-                    data.Add(content.Url, content);
+                    data.Add(content.RelativeUrl, content);
 
                 ParseContentDirectories(_fileStore.GetDirectories(dir), data);
             }
@@ -188,14 +207,14 @@ namespace Karbon.Cms.Core.Stores
                 : new Dictionary<string, string>();
 
             // Map data to model
-            model.Path = path;
+            model.RelativePath = path;
             model.TypeName = fileName;
             model.Slug = directoryNameInfo.Name;
-            model.Url = GetUrlFromPath(path);
+            model.RelativeUrl = GetUrlFromPath(path);
             model.SortOrder = directoryNameInfo.SortOrder;
             model.Created = _fileStore.GetCreated(contentFile ?? path);
             model.Modified = _fileStore.GetLastModified(contentFile ?? path);
-            model.Depth = model.Url == "" ? 1 : model.Url.Count(x => x == '/') + 2;
+            model.Depth = model.RelativeUrl == "~/" ? 1 : model.RelativeUrl.Count(x => x == '/') + 1;
 
             model = (IContent)new DataMapper().Map(type, model, data);
 
@@ -260,7 +279,7 @@ namespace Karbon.Cms.Core.Stores
                 .Select(nameInfo => nameInfo.Name)
                 .ToList();
 
-            return string.Join("/", urlParts);
+            return "~/" + string.Join("/", urlParts);
         }
 
         /// <summary>

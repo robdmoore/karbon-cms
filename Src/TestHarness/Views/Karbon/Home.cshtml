@@ -1,4 +1,5 @@
-﻿@inherits KarbonView<TestHarness.Models.Home>
+﻿@using TestHarness.Models
+@inherits KarbonView<TestHarness.Models.Home>
 @{
     Layout = null;
 }
@@ -13,10 +14,20 @@
 <body>
     <div>
         HOME PAGE - @Model.CurrentPage.Depth
+        <br />
         @foreach (var child in Model.CurrentPage.Children())
         {
-            @child.Url<br />
+            @(child.RelativeUrl) <br /> @(child.Url())<br />
         }
+        
+        <h2>Products</h2>
+        <ul>
+            @foreach(var product in Model.HomePage.Find<Product>(x => x.IsVisible()))
+            {
+                <li>@product.Name</li>
+            }
+        </ul>
+        @Model.CurrentPage.IsOpen()<br />
     </div>
 </body>
 </html>

@@ -5,10 +5,10 @@ namespace Karbon.Cms.Core.Models
 {
     public interface IEntity
     {
-        string Path { get; set; }
+        string RelativePath { get; set; }
         string TypeName { get; set; }
         string Slug { get; set; }
-        string Url { get; set; }
+        string RelativeUrl { get; set; }
         int SortOrder { get; set; }
         int Depth { get; set; }
 
