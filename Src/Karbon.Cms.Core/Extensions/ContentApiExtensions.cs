@@ -29,7 +29,7 @@ namespace Karbon.Cms.Core
         public static TContentType Parent<TContentType>(this IContent content)
             where TContentType : IContent
         {
-            return (TContentType) content.Parent();
+            return (TContentType)content.Parent();
         }
 
         /// <summary>
@@ -101,6 +101,55 @@ namespace Karbon.Cms.Core
         public static IEnumerable<TContentType> Find<TContentType>(this IContent content)
         {
             return content.Find(x => x.GetType() == typeof(TContentType)).Cast<TContentType>();
+        }
+
+        /// <summary>
+        /// Gets the sibling content.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static IEnumerable<IContent> Siblings(this IContent content)
+        {
+            if (content.IsHomePage())
+                return Enumerable.Empty<IContent>();
+
+            return content.Parent().Children(x => x.RelativeUrl != content.RelativeUrl);
+        }
+
+        /// <summary>
+        /// Gets the sibling content filtered by the supplied filter function
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static IEnumerable<IContent> Siblings(this IContent content, Func<IContent, bool> filter)
+        {
+            return content.Siblings().Where(filter);
+        }
+
+        /// <summary>
+        /// Gets the sibling content of the given type.
+        /// </summary>
+        /// <typeparam name="TContentType">The type of the content type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static IEnumerable<TContentType> Siblings<TContentType>(this IContent content)
+        {
+            return content.Siblings(x => x.GetType() == typeof (TContentType))
+                .Cast<TContentType>();
+        }
+
+        /// <summary>
+        /// Gets the sibling content of the given type filtered by the supplied filter function.
+        /// </summary>
+        /// <typeparam name="TContentType">The type of the content type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static IEnumerable<TContentType> Siblings<TContentType>(this IContent content, Func<TContentType, bool> filter)
+        {
+            return content.Siblings<TContentType>()
+                .Where(filter);
         }
 
         /// <summary>

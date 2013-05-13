@@ -34,20 +34,29 @@ namespace Karbon.Cms.Core.IO
             // Setup a file system watcher to keep track of file changes
             if (Directory.Exists(_rootPhysicalPath))
             {
-                _fileSystemWatcher = new FileSystemWatcher(_rootPhysicalPath)
-                {
-                    IncludeSubdirectories = true,
-                    EnableRaisingEvents = true
-                };
-                _fileSystemWatcher.Created += FileChangedHandler;
-                _fileSystemWatcher.Changed += FileChangedHandler;
-                _fileSystemWatcher.Renamed += FileChangedHandler;
-                _fileSystemWatcher.Deleted += FileChangedHandler;
+                RegisterFileSystemWatcher();
             }
             else
             {
                 throw new FileNotFoundException("rootPath not found", _rootPath);
             }
+        }
+
+        /// <summary>
+        /// Registers the file system watcher.
+        /// </summary>
+        private void RegisterFileSystemWatcher()
+        {
+            _fileSystemWatcher = new FileSystemWatcher(_rootPhysicalPath)
+            {
+                IncludeSubdirectories = true,
+                EnableRaisingEvents = true
+            };
+            _fileSystemWatcher.Created += FileChangedHandler;
+            _fileSystemWatcher.Changed += FileChangedHandler;
+            _fileSystemWatcher.Renamed += FileChangedHandler;
+            _fileSystemWatcher.Deleted += FileChangedHandler;
+            _fileSystemWatcher.Error += (sender, args) => RegisterFileSystemWatcher();
         }
 
         /// <summary>

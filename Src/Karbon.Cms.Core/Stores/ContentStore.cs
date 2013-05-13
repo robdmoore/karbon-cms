@@ -19,7 +19,7 @@ namespace Karbon.Cms.Core.Stores
         private DataSerializer _dataSerializer;
 
         private readonly ReaderWriterLockSlim _cacheLock = new ReaderWriterLockSlim();
-        private IDictionary<string, IContent> _contentCache = new Dictionary<string, IContent>();
+        private IDictionary<string, IContent> _contentCache = new ConcurrentDictionary<string, IContent>();
         private bool _cacheDirty = true;
 
         /// <summary>
@@ -126,7 +126,8 @@ namespace Karbon.Cms.Core.Stores
                 {
                     if(_cacheDirty)
                     {
-                        _contentCache = ParseContent();
+                        var data = ParseContent();
+                        _contentCache = new ConcurrentDictionary<string, IContent>(data);
                         _cacheDirty = false;
                     }
                 }
