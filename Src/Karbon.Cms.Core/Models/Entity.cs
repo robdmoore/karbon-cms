@@ -7,12 +7,11 @@ namespace Karbon.Cms.Core.Models
     {
         public virtual string RelativePath { get; set; }
         public virtual string TypeName { get; set; }
-        public virtual string Slug { get; set; }
-        public virtual string RelativeUrl { get; set; }
         public virtual int SortOrder { get; set; }
-        public virtual int Depth { get; set; }
+
         public virtual DateTimeOffset Created { get; set; }
         public virtual DateTimeOffset Modified { get; set; }
+
         public virtual IDictionary<string, string> Data { get; set; }
 
         protected Entity()

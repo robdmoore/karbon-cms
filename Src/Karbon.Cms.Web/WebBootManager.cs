@@ -51,8 +51,9 @@ namespace Karbon.Cms.Web
         /// </summary>
         protected virtual void RegisterRoutes()
         {
+            // Add the content route
             RouteTable.Routes.Insert(0, 
-                new KarbonRoute(
+                new KarbonContentRoute(
                     "{*path}",
                     new RouteValueDictionary(new
                     {
@@ -60,6 +61,12 @@ namespace Karbon.Cms.Web
                         action = "Index"
                     }),
                     new MvcRouteHandler()));
+
+            // Add the media route
+            RouteTable.Routes.Insert(0,
+                new Route("media/{*path}", 
+                    new KarbonMediaHandler()));
+
         }
 
         /// <summary>

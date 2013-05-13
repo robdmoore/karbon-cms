@@ -1,5 +1,5 @@
 ﻿namespace Karbon.Cms.Core.Models
 {
-    public class Media : Entity, IMedia
+    public class File : Entity, IFile
     { }
 }

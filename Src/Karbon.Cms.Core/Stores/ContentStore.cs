@@ -223,47 +223,6 @@ namespace Karbon.Cms.Core.Stores
             return model;
         }
 
-        ///// <summary>
-        ///// Gets a relative file path from URL.
-        ///// </summary>
-        ///// <param name="url">The URL.</param>
-        ///// <returns></returns>
-        //private string GetPathFromUrl(string url)
-        //{
-        //    // Prepair URL
-        //    url = url.ToLower().Trim('/');
-        //    var urlParts = url.Split('/');
-
-        //    // If a root request, get content from home 
-        //    if (urlParts.Length == 1 && urlParts[0] == "")
-        //        urlParts[0] = Constants.Home;
-
-        //    var contentPath = "";
-
-        //    // Loop URL parts
-        //    foreach (var urlPart in urlParts)
-        //    {
-        //        var dirs = _fileStore.GetDirectories(contentPath).ToList();
-        //        var possibleMatches = dirs.Where(x => x.ToLower().EndsWith(urlPart)).ToList();
-        //        var match = possibleMatches.Count == 1
-        //            ? possibleMatches[0]
-        //            : possibleMatches.SingleOrDefault(x =>
-        //                Regex.IsMatch(x.ToLower(), @"^" + contentPath + @"[0-9]+\-" + urlPart));
-
-        //        if (match != null)
-        //        {
-        //            contentPath = match + "/";
-        //        }
-        //        else
-        //        {
-        //            return null;
-        //        }
-        //    }
-
-        //    // Return mapped path
-        //    return contentPath.TrimEnd('/');
-        //}
-
         /// <summary>
         /// Gets the URL from a relative file path.
         /// </summary>

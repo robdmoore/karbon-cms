@@ -2,7 +2,7 @@
 
 namespace Karbon.Cms.Core.Stores
 {
-    internal interface IMediaStore : IStore<IMedia>
+    internal interface IMediaStore : IStore<IFile>
     {
 
     }

@@ -4,7 +4,7 @@ namespace Karbon.Cms.Core.Stores
 {
     internal class MediaStore : IMediaStore
     {
-        public IMedia GetByUrl(string url)
+        public IFile GetByUrl(string url)
         {
             throw new System.NotImplementedException();
         }
