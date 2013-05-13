@@ -15,5 +15,12 @@ namespace Karbon.Cms.Core.Configuration
         {
             get { return ((ProviderSettingsCollection)base["providers"]); }
         }
+
+        [ConfigurationProperty("default", DefaultValue = "local")]
+        public string Default
+        {
+            get { return ((string)base["default"]); }
+            set { base["default"] = value; }
+        }
     }
 }

@@ -38,7 +38,6 @@ namespace Karbon.Cms.Core
             KarbonAppContext.Current = new KarbonAppContext();
 
             StoreManager.ContentStore = new ContentStore();
-            StoreManager.MediaStore = new MediaStore();
 
             _appStartedFlag = true;
         }

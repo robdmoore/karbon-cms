@@ -15,13 +15,5 @@ namespace Karbon.Cms.Core.Stores
         /// The content store.
         /// </value>
         public static IContentStore ContentStore { get; set; }
-
-        /// <summary>
-        /// Gets or sets the media store.
-        /// </summary>
-        /// <value>
-        /// The media store.
-        /// </value>
-        public static IMediaStore MediaStore { get; set; }
     }
 }

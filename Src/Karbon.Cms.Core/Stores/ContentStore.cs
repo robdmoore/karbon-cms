@@ -28,7 +28,7 @@ namespace Karbon.Cms.Core.Stores
         public ContentStore()
         {
             // Setup required components
-            _fileStore = FileStoreManager.ContentFileStore;
+            _fileStore = FileStoreManager.Default;
             _dataSerializer = DataSerializerManager.Default;
 
             // Setup file store event listener

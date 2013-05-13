@@ -2,7 +2,7 @@
 
 namespace Karbon.Cms.Core.Models
 {
-    public interface IContent : IEntity
+    public interface IContent : IRoutableEntity
     {
         IEnumerable<IFile> Files { get; set; }
     }

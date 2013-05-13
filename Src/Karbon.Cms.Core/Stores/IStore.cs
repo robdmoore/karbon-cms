@@ -3,8 +3,6 @@
 namespace Karbon.Cms.Core.Stores
 {
     internal interface IStore<TEntity>
-        where TEntity : IRoutableEntity
-    {
-        TEntity GetByUrl(string url);
-    }
+        where TEntity : IEntity
+    { }
 }

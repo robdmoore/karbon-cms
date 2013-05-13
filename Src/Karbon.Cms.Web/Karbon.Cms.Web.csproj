@@ -57,7 +57,7 @@
     <Compile Include="Mvc\KarbonView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routing\KarbonMediaHandler.cs" />
-    <Compile Include="Routing\KarbonRoute.cs" />
+    <Compile Include="Routing\KarbonContentRoute.cs" />
     <Compile Include="WebBootManager.cs" />
     <Compile Include="WebEnvironmentContext.cs" />
   </ItemGroup>
