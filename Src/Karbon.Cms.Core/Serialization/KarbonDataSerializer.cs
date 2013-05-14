@@ -38,6 +38,10 @@ namespace Karbon.Cms.Core.Serialization
                 {
                     if(string.IsNullOrEmpty(currentKey))
                     {
+                        // Ignore comments
+                        if(line.TrimStart().StartsWith("#"))
+                            continue;
+
                         // Look for key
                         var terminatorIndex = line.IndexOf(KeyTerminator, StringComparison.InvariantCulture);
                         if(terminatorIndex > 0)
