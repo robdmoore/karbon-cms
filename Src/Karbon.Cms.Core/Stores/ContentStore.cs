@@ -349,6 +349,8 @@ namespace Karbon.Cms.Core.Stores
                 TypeName = "File"
             };
 
+            var ext = System.IO.Path.GetExtension(name);
+
             var nameParts = name.Split('.');
             if(nameParts.Length > 2)
             {
@@ -358,18 +360,18 @@ namespace Karbon.Cms.Core.Stores
             int parsedSortOrder;
             if (nameParts[0].IndexOf('-') > 0)
             {
-                var hyphenIndex = name.IndexOf('-');
-                var possibleSortOrder = name.Substring(0, hyphenIndex);
+                var hyphenIndex = nameParts[0].IndexOf('-');
+                var possibleSortOrder = nameParts[0].Substring(0, hyphenIndex);
 
                 if (int.TryParse(possibleSortOrder, out parsedSortOrder))
                 {
-                    fileNameInfo.Name = name.Substring(hyphenIndex + 1);
+                    fileNameInfo.Name = nameParts[0].Substring(hyphenIndex + 1) + ext;
                     fileNameInfo.SortOrder = parsedSortOrder;
                 }
             }
             else
             {
-                fileNameInfo.Name = nameParts[0];
+                fileNameInfo.Name = nameParts[0] + ext;
                 if(int.TryParse(nameParts[0], out parsedSortOrder))
                 {
                     fileNameInfo.SortOrder = parsedSortOrder;

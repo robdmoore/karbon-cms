@@ -23,4 +23,8 @@
     </dataSerializers>
   </karbon>
 
+  <system.webServer>
+    <modules runAllManagedModulesForAllRequests="true" />
+  </system.webServer>
+  
 </configuration>

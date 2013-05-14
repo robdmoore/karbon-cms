@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Routing;
+using Karbon.Cms.Core.IO;
+using Karbon.Cms.Core.Stores;
 
 namespace Karbon.Cms.Web.Routing
 {
@@ -20,8 +23,57 @@ namespace Karbon.Cms.Web.Routing
         /// <exception cref="System.NotImplementedException"></exception>
         public void ProcessRequest(HttpContext context)
         {
-            // TODO: Parse URL and return media item
-            throw new NotImplementedException();
+            // Parse URL and return media item
+            var url = context.Request.Url.LocalPath;
+            var fileRelativeUrl = url.Substring(url.LastIndexOf("/media/") + 7);
+            var fileSlug = fileRelativeUrl;
+            var contentRelativeUrl = "";
+
+            if(fileRelativeUrl.LastIndexOf('/') > -1)
+            {
+                fileSlug = fileRelativeUrl.Substring(fileRelativeUrl.LastIndexOf('/') + 1);
+                contentRelativeUrl = fileRelativeUrl.Substring(0, fileRelativeUrl.LastIndexOf('/'));
+            }
+
+            var content = StoreManager.ContentStore.GetByUrl("~/" + contentRelativeUrl);
+            if(content == null)
+            {
+                context.Response.StatusCode = 404;
+                context.Response.End();
+                return;
+            }
+
+            var file = content.AllFiles.SingleOrDefault(x => x.Slug == fileSlug);
+            if(file == null)
+            {
+                context.Response.StatusCode = 404;
+                context.Response.End();
+                return;
+            }
+
+            var fileStream = FileStoreManager.Default.OpenFile(file.RelativePath);
+            var fileStreamLength = (int)fileStream.Length;
+            var bytes = fileStreamLength;
+
+            context.Response.Buffer = false;
+            //TODO Work out content type
+            context.Response.ContentType = "application/octet-stream";
+            context.Response.AppendHeader("content-length", fileStreamLength.ToString());
+
+            var buffer = new byte[1024];
+
+            while (fileStreamLength > 0 && (bytes =
+                fileStream.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                context.Response.OutputStream.Write(buffer, 0, bytes);
+                context.Response.Flush();
+                fileStreamLength -= bytes;
+            }
+
+            fileStream.Close();
+
+            context.Response.Close();
+            context.Response.End();
         }
 
         /// <summary>

@@ -19,9 +19,9 @@
         @Model.HomePage.IsOpen()
         <br /><br />
         <h4>Files</h4>
-        @foreach(var file in Model.CurrentPage.Files<Image>())
+        @foreach(var file in Model.CurrentPage.Files())
         {
-            <p>@file.Url()</p>
+            <p><img src="@file.Url()" alt=""/></p>
         }
     </div>
 </body>
