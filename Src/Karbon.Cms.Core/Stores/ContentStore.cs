@@ -275,6 +275,8 @@ namespace Karbon.Cms.Core.Stores
                     ? _dataSerializer.Deserialize(_fileStore.OpenFile(contentFilePath))
                     : new Dictionary<string, string>();
 
+                // TODO: Make this bit provider driven so people 
+                // can retreive their own data from a file
                 if(model.IsImage())
                 {
                     // TODO: Parse width height

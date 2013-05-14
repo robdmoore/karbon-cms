@@ -14,6 +14,7 @@
     <language />
     <dependencies>
       <dependency id="WebActivatorEx" version="2.0.1" />
+      <dependency id="MarkdownSharp" version="1.13.0.0" />
     </dependencies>
   </metadata>
   <files>
