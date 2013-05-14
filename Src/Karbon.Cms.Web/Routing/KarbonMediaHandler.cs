@@ -38,7 +38,7 @@ namespace Karbon.Cms.Web.Routing
             var fileSlug = fileRelativeUrl;
             var contentRelativeUrl = "";
 
-            if(fileRelativeUrl.LastIndexOf('/') > -1)
+            if (fileRelativeUrl.LastIndexOf('/') > -1)
             {
                 fileSlug = fileRelativeUrl.Substring(fileRelativeUrl.LastIndexOf('/') + 1);
                 contentRelativeUrl = fileRelativeUrl.Substring(0, fileRelativeUrl.LastIndexOf('/'));
@@ -46,7 +46,7 @@ namespace Karbon.Cms.Web.Routing
 
             // Find the content
             var content = _contentStore.GetByUrl("~/" + contentRelativeUrl);
-            if(content == null)
+            if (content == null)
             {
                 context.Response.StatusCode = 404;
                 context.Response.End();
@@ -55,7 +55,7 @@ namespace Karbon.Cms.Web.Routing
 
             // Find the file
             var file = content.AllFiles.SingleOrDefault(x => x.Slug == fileSlug);
-            if(file == null)
+            if (file == null)
             {
                 context.Response.StatusCode = 404;
                 context.Response.End();
@@ -64,16 +64,17 @@ namespace Karbon.Cms.Web.Routing
 
             // Stream the file
             var fileStream = _fileStore.OpenFile(file.RelativePath);
-            var fileStreamLength = (int)fileStream.Length;
+            var fileStreamLength = (int) fileStream.Length;
             var bytes = fileStreamLength;
 
             context.Response.Buffer = false;
-            //TODO Work out content type
-            context.Response.ContentType = "application/octet-stream";
+            context.Response.ContentType = IOHelper.MimeTypes.ContainsKey(file.Extension)
+                ? IOHelper.MimeTypes[file.Extension] 
+                : "application/octet-stream";
+
             context.Response.AppendHeader("content-length", fileStreamLength.ToString());
 
             var buffer = new byte[1024];
-
             while (fileStreamLength > 0 && (bytes =
                 fileStream.Read(buffer, 0, buffer.Length)) > 0)
             {

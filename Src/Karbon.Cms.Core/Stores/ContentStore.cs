@@ -267,6 +267,7 @@ namespace Karbon.Cms.Core.Stores
                 model.Slug = fileNameInfo.Name;
                 model.RelativeUrl = "~/media/" + contentUrl.TrimStart("~/") + "/" + model.Slug;
                 model.SortOrder = fileNameInfo.SortOrder;
+                model.Extension = System.IO.Path.GetExtension(model.Slug);
                 model.Created = _fileStore.GetCreated(noneContentFilePath);
                 model.Modified = _fileStore.GetLastModified(noneContentFilePath);
 
@@ -274,7 +275,10 @@ namespace Karbon.Cms.Core.Stores
                     ? _dataSerializer.Deserialize(_fileStore.OpenFile(contentFilePath))
                     : new Dictionary<string, string>();
 
-                // TODO: Handle images (Width / Height)
+                if(model.IsImage())
+                {
+                    // TODO: Parse width height
+                }
 
                 model = (IFile)_dataMapper.Map(type, model, data);
 
