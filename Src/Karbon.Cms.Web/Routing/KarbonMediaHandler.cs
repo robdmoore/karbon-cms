@@ -16,6 +16,15 @@ namespace Karbon.Cms.Web.Routing
     /// </summary>
     public class KarbonMediaHandler : IHttpHandler, IRouteHandler
     {
+        private IContentStore _contentStore;
+        private FileStore _fileStore; 
+
+        public KarbonMediaHandler()
+        {
+            _contentStore = StoreManager.ContentStore;
+            _fileStore = FileStoreManager.Default;
+        }
+
         /// <summary>
         /// Enables processing of HTTP Web requests by a custom HttpHandler that implements the <see cref="T:System.Web.IHttpHandler" /> interface.
         /// </summary>
@@ -23,7 +32,7 @@ namespace Karbon.Cms.Web.Routing
         /// <exception cref="System.NotImplementedException"></exception>
         public void ProcessRequest(HttpContext context)
         {
-            // Parse URL and return media item
+            // Parse the url
             var url = context.Request.Url.LocalPath;
             var fileRelativeUrl = url.Substring(url.LastIndexOf("/media/") + 7);
             var fileSlug = fileRelativeUrl;
@@ -35,7 +44,8 @@ namespace Karbon.Cms.Web.Routing
                 contentRelativeUrl = fileRelativeUrl.Substring(0, fileRelativeUrl.LastIndexOf('/'));
             }
 
-            var content = StoreManager.ContentStore.GetByUrl("~/" + contentRelativeUrl);
+            // Find the content
+            var content = _contentStore.GetByUrl("~/" + contentRelativeUrl);
             if(content == null)
             {
                 context.Response.StatusCode = 404;
@@ -43,6 +53,7 @@ namespace Karbon.Cms.Web.Routing
                 return;
             }
 
+            // Find the file
             var file = content.AllFiles.SingleOrDefault(x => x.Slug == fileSlug);
             if(file == null)
             {
@@ -51,7 +62,8 @@ namespace Karbon.Cms.Web.Routing
                 return;
             }
 
-            var fileStream = FileStoreManager.Default.OpenFile(file.RelativePath);
+            // Stream the file
+            var fileStream = _fileStore.OpenFile(file.RelativePath);
             var fileStreamLength = (int)fileStream.Length;
             var bytes = fileStreamLength;
 
