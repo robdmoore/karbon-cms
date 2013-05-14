@@ -30,6 +30,10 @@ namespace Karbon.Cms.Tests.Serialization
 Description: Test Description
 ----
 
+#################
+# Test Comment
+#################
+
 Body:
 
 Test Body
