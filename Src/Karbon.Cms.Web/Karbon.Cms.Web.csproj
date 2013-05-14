@@ -51,6 +51,7 @@
     <Compile Include="Extensions\ContentApiExtensions.cs" />
     <Compile Include="Extensions\ContentExtensions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Extensions\FileApiExtensions.cs" />
     <Compile Include="KarbonWebContext.cs" />
     <Compile Include="Models\KarbonViewModel.cs" />
     <Compile Include="Modules\KarbonRequestModule.cs" />

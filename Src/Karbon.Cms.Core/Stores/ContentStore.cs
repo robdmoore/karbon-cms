@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -17,6 +16,7 @@ namespace Karbon.Cms.Core.Stores
     {
         private FileStore _fileStore;
         private DataSerializer _dataSerializer;
+        private DataMapper _dataMapper;
 
         private readonly ReaderWriterLockSlim _cacheLock = new ReaderWriterLockSlim();
         private IDictionary<string, IContent> _contentCache = new ConcurrentDictionary<string, IContent>();
@@ -30,6 +30,7 @@ namespace Karbon.Cms.Core.Stores
             // Setup required components
             _fileStore = FileStoreManager.Default;
             _dataSerializer = DataSerializerManager.Default;
+            _dataMapper = new DataMapper();
 
             // Setup file store event listener
             _fileStore.FileChanged += (sender, args) => _cacheDirty = true;
@@ -183,15 +184,19 @@ namespace Karbon.Cms.Core.Stores
                 return null;
 
             // Parse directory name
-            var directoryNameInfo = ParseName(_fileStore.GetName(path));
+            var directoryNameInfo = ParseDirectoryName(_fileStore.GetName(path));
 
-            // Grab first content file
-            var contentFile = _fileStore.GetFiles(path)
-                .FirstOrDefault();
+            // Grab a files
+            var filePaths = _fileStore.GetFiles(path).ToList();
+
+            // Find the content file
+            var contentFilePath = filePaths
+                .FirstOrDefault(x => x.Count(y => y == '.') == 1 
+                    && x.EndsWith("." + _dataSerializer.FileExtension));
             
             // Create model object based on file name
-            var fileName = contentFile != null 
-                ? _fileStore.GetNameWithoutExtension(contentFile) 
+            var fileName = contentFilePath != null
+                ? _fileStore.GetNameWithoutExtension(contentFilePath) 
                 : "Content";
 
             var type = TypeFinder.FindTypes<Content>()
@@ -203,8 +208,8 @@ namespace Karbon.Cms.Core.Stores
                 return null;
 
             // Deserialize data
-            var data = contentFile != null 
-                ? _dataSerializer.Deserialize(_fileStore.OpenFile(contentFile))
+            var data = contentFilePath != null
+                ? _dataSerializer.Deserialize(_fileStore.OpenFile(contentFilePath))
                 : new Dictionary<string, string>();
 
             // Map data to model
@@ -213,14 +218,71 @@ namespace Karbon.Cms.Core.Stores
             model.Slug = directoryNameInfo.Name;
             model.RelativeUrl = GetUrlFromPath(path);
             model.SortOrder = directoryNameInfo.SortOrder;
-            model.Created = _fileStore.GetCreated(contentFile ?? path);
-            model.Modified = _fileStore.GetLastModified(contentFile ?? path);
+            model.Created = _fileStore.GetCreated(contentFilePath ?? path);
+            model.Modified = _fileStore.GetLastModified(contentFilePath ?? path);
             model.Depth = model.RelativeUrl == "~/" ? 1 : model.RelativeUrl.Count(x => x == '/') + 1;
 
-            model = (IContent)new DataMapper().Map(type, model, data);
+            model = (IContent)_dataMapper.Map(type, model, data);
+
+            // Parse files
+            model.AllFiles = ParseFiles(filePaths.Where(x => x != contentFilePath), model.RelativeUrl);
 
             // Return model
             return model;
+        }
+
+        /// <summary>
+        /// Parses the files from the file paths list provided.
+        /// </summary>
+        /// <param name="filePaths">The file paths.</param>
+        /// <param name="contentUrl">The content relative URL.</param>
+        /// <returns></returns>
+        private IList<IFile> ParseFiles(IEnumerable<string> filePaths, string contentUrl)
+        {
+            var files = new List<IFile>();
+
+            var noneContentFilePaths = filePaths.Where(x => !x.EndsWith("." + _dataSerializer.FileExtension));
+            foreach (var noneContentFilePath in noneContentFilePaths)
+            {
+                // Parse file nae info
+                var fileNameInfo = ParseFileName(_fileStore.GetName(noneContentFilePath));
+
+                // See if there is a meta data file
+                var contentFilePath =
+                    filePaths.SingleOrDefault(x => x == noneContentFilePath + "." + _dataSerializer.FileExtension);
+
+                // Find type for the file
+                var type = TypeFinder.FindTypes<File>()
+                           .SingleOrDefault(x => x.Name == fileNameInfo.TypeName)
+                       ?? typeof(File);
+
+                // Create the file
+                var model = Activator.CreateInstance(type) as IFile;
+                if (model == null)
+                    continue;
+
+                // Map data to the file
+                model.RelativePath = noneContentFilePath;
+                model.TypeName = fileNameInfo.TypeName;
+                model.Slug = fileNameInfo.Name;
+                model.RelativeUrl = "~/media/" + contentUrl.TrimStart("~/") + "/" + model.Slug;
+                model.SortOrder = fileNameInfo.SortOrder;
+                model.Created = _fileStore.GetCreated(noneContentFilePath);
+                model.Modified = _fileStore.GetLastModified(noneContentFilePath);
+
+                var data = contentFilePath != null
+                    ? _dataSerializer.Deserialize(_fileStore.OpenFile(contentFilePath))
+                    : new Dictionary<string, string>();
+
+                // TODO: Handle images (Width / Height)
+
+                model = (IFile)_dataMapper.Map(type, model, data);
+
+                // Return the file
+                files.Add(model);
+            }
+
+            return files;
         }
 
         /// <summary>
@@ -235,7 +297,7 @@ namespace Karbon.Cms.Core.Stores
 
             var pathParts = _fileStore.GetPathParts(path);
             var urlParts = pathParts
-                .Select(ParseName)
+                .Select(ParseDirectoryName)
                 .Select(nameInfo => nameInfo.Name)
                 .ToList();
 
@@ -243,13 +305,18 @@ namespace Karbon.Cms.Core.Stores
         }
 
         /// <summary>
-        /// Parses a folder name into it's constituent parts.
+        /// Parses a directory name into it's constituent parts.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <returns></returns>
-        private NameInfo ParseName(string name)
+        private DirectoryNameInfo ParseDirectoryName(string name)
         {
-            var fileNameInfo = new NameInfo { FullName = name };
+            var dirNameInfo = new DirectoryNameInfo
+            {
+                FullName = name,
+                Name = name,
+                SortOrder = -1
+            };
 
             if (name.IndexOf('-') > 0)
             {
@@ -259,15 +326,57 @@ namespace Karbon.Cms.Core.Stores
                 int parsedSortOrder;
                 if(int.TryParse(possibleSortOrder, out parsedSortOrder))
                 {
-                    fileNameInfo.Name = name.Substring(hyphenIndex + 1);
-                    fileNameInfo.SortOrder = parsedSortOrder;
-                    return fileNameInfo;
+                    dirNameInfo.Name = name.Substring(hyphenIndex + 1);
+                    dirNameInfo.SortOrder = parsedSortOrder;
+                    return dirNameInfo;
                 }
             }
 
-            fileNameInfo.Name = name;
-            fileNameInfo.SortOrder = -1;
+            return dirNameInfo;
+        }
 
+        /// <summary>
+        /// Parses a file name into it's constituent parts.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
+        private FileNameInfo ParseFileName(string name)
+        {
+            var fileNameInfo = new FileNameInfo
+            {
+                FullName = name,
+                SortOrder = -1,
+                TypeName = "File"
+            };
+
+            var nameParts = name.Split('.');
+            if(nameParts.Length > 2)
+            {
+                fileNameInfo.TypeName = nameParts[1];
+            }
+
+            int parsedSortOrder;
+            if (nameParts[0].IndexOf('-') > 0)
+            {
+                var hyphenIndex = name.IndexOf('-');
+                var possibleSortOrder = name.Substring(0, hyphenIndex);
+
+                if (int.TryParse(possibleSortOrder, out parsedSortOrder))
+                {
+                    fileNameInfo.Name = name.Substring(hyphenIndex + 1);
+                    fileNameInfo.SortOrder = parsedSortOrder;
+                }
+            }
+            else
+            {
+                fileNameInfo.Name = nameParts[0];
+                if(int.TryParse(nameParts[0], out parsedSortOrder))
+                {
+                    fileNameInfo.SortOrder = parsedSortOrder;
+                }
+            }
+            
+               
             return fileNameInfo;
         }
 

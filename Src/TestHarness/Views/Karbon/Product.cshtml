@@ -17,6 +17,12 @@
         @Model.CurrentPage.IsOpen()<br />
         @Model.CurrentPage.Parent().IsOpen()<br />
         @Model.HomePage.IsOpen()
+        <br /><br />
+        <h4>Files</h4>
+        @foreach(var file in Model.CurrentPage.Files<Image>())
+        {
+            <p>@file.Url()</p>
+        }
     </div>
 </body>
 </html>

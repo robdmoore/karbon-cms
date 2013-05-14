@@ -52,9 +52,8 @@
     <Compile Include="IO\FileChangedEventArgs.cs" />
     <Compile Include="Mapping\DataMapper.cs" />
     <Compile Include="Models\ContentAttribute.cs" />
-    <Compile Include="Models\IRoutableEntity.cs" />
-    <Compile Include="Models\RoutableEntity.cs" />
-    <Compile Include="Stores\NameInfo.cs" />
+    <Compile Include="Stores\FileNameInfo.cs" />
+    <Compile Include="Stores\DirectoryNameInfo.cs" />
     <Compile Include="IO\FileStore.cs" />
     <Compile Include="IO\FileStoreCollection.cs" />
     <Compile Include="IO\FileStoreManager.cs" />

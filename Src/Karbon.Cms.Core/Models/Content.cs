@@ -2,8 +2,10 @@
 
 namespace Karbon.Cms.Core.Models
 {
-    public class Content : RoutableEntity, IContent
+    public class Content : Entity, IContent
     {
-        public IEnumerable<IFile> Files { get; set; }
+        public virtual int Depth { get; set; }
+
+        public IEnumerable<IFile> AllFiles { get; set; }
     }
 }

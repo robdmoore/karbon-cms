@@ -99,6 +99,7 @@ namespace Karbon.Cms.Core
         /// <param name="content">The content.</param>
         /// <returns></returns>
         public static IEnumerable<TContentType> Find<TContentType>(this IContent content)
+            where TContentType : IContent
         {
             return content.Find(x => x.GetType() == typeof(TContentType)).Cast<TContentType>();
         }
@@ -134,6 +135,7 @@ namespace Karbon.Cms.Core
         /// <param name="content">The content.</param>
         /// <returns></returns>
         public static IEnumerable<TContentType> Siblings<TContentType>(this IContent content)
+            where TContentType : IContent
         {
             return content.Siblings(x => x.GetType() == typeof (TContentType))
                 .Cast<TContentType>();
@@ -147,6 +149,7 @@ namespace Karbon.Cms.Core
         /// <param name="filter">The filter.</param>
         /// <returns></returns>
         public static IEnumerable<TContentType> Siblings<TContentType>(this IContent content, Func<TContentType, bool> filter)
+            where TContentType : IContent
         {
             return content.Siblings<TContentType>()
                 .Where(filter);
@@ -160,6 +163,7 @@ namespace Karbon.Cms.Core
         /// <param name="filter">The filter.</param>
         /// <returns></returns>
         public static IEnumerable<TContentType> Find<TContentType>(this IContent content, Func<TContentType, bool> filter)
+            where TContentType : IContent
         {
             return content.Find<TContentType>()
                 .Where(filter);
@@ -187,6 +191,53 @@ namespace Karbon.Cms.Core
         public static bool IsHomePage(this IContent content)
         {
             return content.Depth == 1;
+        }
+
+        /// <summary>
+        /// Gets the files for the specified content.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static IEnumerable<IFile> Files(this IContent content)
+        {
+            return content.AllFiles;
+        }
+
+        /// <summary>
+        /// Gets the files of a given type for the specified content.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static IEnumerable<TFileType> Files<TFileType>(this IContent content)
+            where TFileType : IFile
+        {
+            return content.AllFiles.Where(x => x.GetType() == typeof (TFileType))
+                .Cast<TFileType>();
+        }
+
+        /// <summary>
+        /// Gets the files for the specified content filtered by the specified filter function.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static IEnumerable<IFile> Files(this IContent content, Func<IFile, bool> filter)
+        {
+            return content.AllFiles.Where(filter);
+        }
+
+        /// <summary>
+        /// Gets the files of a given type for the specified content filtered by the specified filter function.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static IEnumerable<TFileType> Files<TFileType>(this IContent content, Func<TFileType, bool> filter)
+            where TFileType : IFile
+        {
+            return content.Files<TFileType>().Where(filter);
         }
     }
 }
