@@ -286,5 +286,146 @@ namespace Karbon.Cms.Core
         {
             return content.Images<TFileType>().Where(filter);
         }
+
+        /// <summary>
+        /// Gets the video files for the specified content.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static IEnumerable<IVideoFile> Videos(this IContent content)
+        {
+            return content.Files<IVideoFile>(x => x.IsVideo());
+        }
+
+        /// <summary>
+        /// Gets the video files of a given type for the specified content.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static IEnumerable<TFileType> Videos<TFileType>(this IContent content)
+            where TFileType : IVideoFile
+        {
+            return content.Videos().Where(x => typeof(TFileType).IsAssignableFromExtended(x.GetType()))
+                .Cast<TFileType>();
+        }
+
+        /// <summary>
+        /// Gets the video files for the specified content filtered by the specified filter function.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static IEnumerable<IVideoFile> Images(this IContent content, Func<IVideoFile, bool> filter)
+        {
+            return content.Videos().Where(filter);
+        }
+
+        /// <summary>
+        /// Gets the video files of a given type for the specified content filtered by the specified filter function.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static IEnumerable<TFileType> Videos<TFileType>(this IContent content, Func<TFileType, bool> filter)
+            where TFileType : IVideoFile
+        {
+            return content.Videos<TFileType>().Where(filter);
+        }
+
+        /// <summary>
+        /// Gets the sound files for the specified content.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static IEnumerable<ISoundFile> Sounds(this IContent content)
+        {
+            return content.Files<ISoundFile>(x => x.IsSound());
+        }
+
+        /// <summary>
+        /// Gets the sound files of a given type for the specified content.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static IEnumerable<TFileType> Sounds<TFileType>(this IContent content)
+            where TFileType : ISoundFile
+        {
+            return content.Sounds().Where(x => typeof(TFileType).IsAssignableFromExtended(x.GetType()))
+                .Cast<TFileType>();
+        }
+
+        /// <summary>
+        /// Gets the sound files for the specified content filtered by the specified filter function.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static IEnumerable<ISoundFile> Sounds(this IContent content, Func<ISoundFile, bool> filter)
+        {
+            return content.Sounds().Where(filter);
+        }
+
+        /// <summary>
+        /// Gets the sound files of a given type for the specified content filtered by the specified filter function.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static IEnumerable<TFileType> Sounds<TFileType>(this IContent content, Func<TFileType, bool> filter)
+            where TFileType : ISoundFile
+        {
+            return content.Sounds<TFileType>().Where(filter);
+        }
+
+        /// <summary>
+        /// Gets the document files for the specified content.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static IEnumerable<IDocumentFile> Documents(this IContent content)
+        {
+            return content.Files<IDocumentFile>(x => x.IsDocument());
+        }
+
+        /// <summary>
+        /// Gets the document files of a given type for the specified content.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static IEnumerable<TFileType> Documents<TFileType>(this IContent content)
+            where TFileType : IDocumentFile
+        {
+            return content.Documents().Where(x => typeof(TFileType).IsAssignableFromExtended(x.GetType()))
+                .Cast<TFileType>();
+        }
+
+        /// <summary>
+        /// Gets the document files for the specified content filtered by the specified filter function.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static IEnumerable<IDocumentFile> Documents(this IContent content, Func<IDocumentFile, bool> filter)
+        {
+            return content.Documents().Where(filter);
+        }
+
+        /// <summary>
+        /// Gets the document files of a given type for the specified content filtered by the specified filter function.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static IEnumerable<TFileType> Documents<TFileType>(this IContent content, Func<TFileType, bool> filter)
+            where TFileType : IDocumentFile
+        {
+            return content.Documents<TFileType>().Where(filter);
+        }
     }
 }

@@ -2,6 +2,7 @@
 {
     public class File : Entity, IFile
     {
+        public string ContentRelativeUrl { get; set; }
         public string Extension { get; set; }
     }
 }

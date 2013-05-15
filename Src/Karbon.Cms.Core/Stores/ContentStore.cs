@@ -267,6 +267,7 @@ namespace Karbon.Cms.Core.Stores
                 model.TypeName = fileNameInfo.TypeName;
                 model.Slug = fileNameInfo.Name;
                 model.RelativeUrl = "~/media/" + contentUrl.TrimStart("~/") + "/" + model.Slug;
+                model.ContentRelativeUrl = contentUrl;
                 model.SortOrder = fileNameInfo.SortOrder;
                 model.Extension = fileNameInfo.Extension;
                 model.Created = _fileStore.GetCreated(noneContentFilePath);

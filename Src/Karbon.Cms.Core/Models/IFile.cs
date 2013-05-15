@@ -2,6 +2,7 @@
 {
     public interface IFile : IEntity
     {
+        string ContentRelativeUrl { get; set; }
         string Extension { get; set; }
     }
 }
