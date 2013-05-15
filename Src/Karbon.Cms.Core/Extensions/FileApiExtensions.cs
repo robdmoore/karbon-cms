@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Karbon.Cms.Core.IO;
 using Karbon.Cms.Core.Models;
+using Karbon.Cms.Core.Stores;
 
 namespace Karbon.Cms.Core
 {
@@ -83,6 +84,155 @@ namespace Karbon.Cms.Core
             return IOHelper.MimeTypes.ContainsKey(file.Extension.ToLower())
                 ? IOHelper.MimeTypes[file.Extension.ToLower()]
                 : "application/octet-stream";
+        }
+
+        /// <summary>
+        /// Gets the file size in a readable format.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns></returns>
+        public static string NiceSize(this IFile file)
+        {
+            var suf = new []{ "B", "KB", "MB", "GB", "TB", "PB", "EB" };
+
+            if (file.Size == 0)
+                return "0" + suf[0];
+
+            var bytes = Math.Abs(file.Size);
+            var sufIdx = Convert.ToInt32(Math.Floor(Math.Log(bytes, 1024)));
+            var newSize = Math.Round(bytes / Math.Pow(1024, sufIdx), 1);
+
+            return (Math.Sign(file.Size) * newSize).ToString("0.##") + suf[sufIdx];
+        }
+
+        /// <summary>
+        /// Determines whether the specified file has a next sibling.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified file has a next sibling; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool HasNext<TFileType>(this TFileType file)
+            where TFileType : IFile
+        {
+            return file.HasNext(x => true);
+        }
+
+        /// <summary>
+        /// Determines whether the specified file has a next sibling.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="file">The file.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified file has a next sibling; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool HasNext<TFileType>(this TFileType file, Func<TFileType, bool> filter)
+            where TFileType : IFile
+        {
+            var content = StoreManager.ContentStore.GetByUrl(file.ContentRelativeUrl);
+            var files = content.Files(filter).ToList();
+            var idx = files.FindIndex(f => f.RelativePath == file.RelativePath);
+            return idx + 1 < files.Count();
+        }
+
+        /// <summary>
+        /// Determines whether the specified file has a previous sibling.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified file has a previous sibling; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool HasPrev<TFileType>(this TFileType file)
+            where TFileType : IFile
+        {
+            return file.HasPrev(x => true);
+        }
+
+        /// <summary>
+        /// Determines whether the specified file has a previous sibling.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="file">The file.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified file has a previous sibling; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool HasPrev<TFileType>(this TFileType file, Func<TFileType, bool> filter)
+            where TFileType : IFile
+        {
+            var content = StoreManager.ContentStore.GetByUrl(file.ContentRelativeUrl);
+            var files = content.Files<TFileType>().ToList();
+            var idx = files.FindIndex(f => f.RelativePath == file.RelativePath);
+            return idx - 1 >= 0;
+        }
+
+        /// <summary>
+        /// Gets the next sibling.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="file">The file.</param>
+        /// <returns>
+        /// The next sibling.
+        /// </returns>
+        public static TFileType Next<TFileType>(this TFileType file)
+            where TFileType : IFile
+        {
+            return file.Next(x => true);
+        }
+
+        /// <summary>
+        /// Gets the next sibling.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="file">The file.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns>
+        /// The next sibling.
+        /// </returns>
+        public static TFileType Next<TFileType>(this TFileType file, Func<TFileType, bool> filter)
+            where TFileType : IFile
+        {
+            var content = StoreManager.ContentStore.GetByUrl(file.ContentRelativeUrl);
+            var files = content.Files(filter).ToList();
+            var idx = files.FindIndex(f => f.RelativePath == file.RelativePath);
+            return idx + 1 < files.Count()
+                ? files[idx + 1]
+                : default(TFileType);
+        }
+
+        /// <summary>
+        /// Gets the previous sibling.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="file">The file.</param>
+        /// <returns>
+        /// The previous sibling.
+        /// </returns>
+        public static TFileType Prev<TFileType>(this TFileType file)
+            where TFileType : IFile
+        {
+            return file.Prev(x => true);
+        }
+
+        /// <summary>
+        /// Gets the previous sibling.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="file">The file.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns>
+        ///   The previous sibling.
+        /// </returns>
+        public static TFileType Prev<TFileType>(this TFileType file, Func<TFileType, bool> filter)
+            where TFileType : IFile
+        {
+            var content = StoreManager.ContentStore.GetByUrl(file.ContentRelativeUrl);
+            var files = content.Files<TFileType>().ToList();
+            var idx = files.FindIndex(f => f.RelativePath == file.RelativePath);
+            return idx - 1 >= 0
+                ? files[idx - 1]
+                : default(TFileType);
         }
 
         #endregion

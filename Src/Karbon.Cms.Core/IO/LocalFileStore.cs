@@ -176,6 +176,13 @@ namespace Karbon.Cms.Core.IO
                 : File.GetLastWriteTimeUtc(GetPhysicalPath(relativePath));
         }
 
+        public override long GetSize(string relativePath)
+        {
+            return DirectoryExists(relativePath)
+                ? 0
+                : new FileInfo(GetPhysicalPath(relativePath)).Length;
+        }
+
         public override string GetAbsolutePath(string relativePath)
         {
             return _rootPath + _pathSeperator + relativePath;

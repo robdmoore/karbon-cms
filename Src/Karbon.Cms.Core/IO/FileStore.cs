@@ -54,6 +54,7 @@ namespace Karbon.Cms.Core.IO
         public abstract DateTimeOffset GetCreated(string relativePath);
         public abstract DateTimeOffset GetLastAccessed(string relativePath);
         public abstract DateTimeOffset GetLastWrite(string relativePath);
+        public abstract long GetSize(string relativePath);
         public abstract string GetAbsolutePath(string relativePath);
 
         public abstract IEnumerable<string> GetPathParts(string path);

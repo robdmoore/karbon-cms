@@ -4,5 +4,6 @@
     {
         string ContentRelativeUrl { get; set; }
         string Extension { get; set; }
+        long Size { get; set; }
     }
 }

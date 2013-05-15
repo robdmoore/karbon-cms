@@ -88,6 +88,7 @@ namespace Karbon.Cms.Core.Stores
                 .Where(x => x != url && x.StartsWith(url)
                     && x.TrimStart(url).IndexOf("/", StringComparison.InvariantCulture) == -1)
                 .Select(x => _contentCache[x])
+                .OrderBy(x => x.SortOrder).ThenBy(x => x.Slug)
                 .ToList();
 
             return children;
@@ -107,6 +108,7 @@ namespace Karbon.Cms.Core.Stores
             var descendants = _contentCache.Keys
                 .Where(x => x != url && x.StartsWith(url))
                 .Select(x => _contentCache[x])
+                .OrderBy(x => x.SortOrder).ThenBy(x => x.Slug)
                 .ToList();
 
             return descendants;
@@ -238,7 +240,7 @@ namespace Karbon.Cms.Core.Stores
         /// <param name="filePaths">The file paths.</param>
         /// <param name="contentUrl">The content relative URL.</param>
         /// <returns></returns>
-        private IList<IFile> ParseFiles(IEnumerable<string> filePaths, string contentUrl)
+        private IEnumerable<IFile> ParseFiles(IEnumerable<string> filePaths, string contentUrl)
         {
             var files = new List<IFile>();
 
@@ -272,6 +274,7 @@ namespace Karbon.Cms.Core.Stores
                 model.Extension = fileNameInfo.Extension;
                 model.Created = _fileStore.GetCreated(noneContentFilePath);
                 model.Modified = _fileStore.GetLastModified(noneContentFilePath);
+                model.Size = _fileStore.GetSize(noneContentFilePath);
 
                 var data = contentFilePath != null
                     ? _dataSerializer.Deserialize(_fileStore.OpenFile(contentFilePath))
