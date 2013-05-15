@@ -247,7 +247,7 @@ namespace Karbon.Cms.Core
         /// <returns></returns>
         public static IEnumerable<IImageFile> Images(this IContent content)
         {
-            return content.Files<IImageFile>();
+            return content.Files<IImageFile>(x => x.IsImage());
         }
 
         /// <summary>
