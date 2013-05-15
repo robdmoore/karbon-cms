@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -275,11 +276,17 @@ namespace Karbon.Cms.Core.Stores
                     ? _dataSerializer.Deserialize(_fileStore.OpenFile(contentFilePath))
                     : new Dictionary<string, string>();
 
-                // TODO: Make this bit provider driven so people 
-                // can retreive their own data from a file
+                // TODO: Make this bit provider driven so people can retreive their own data from a file
                 if(model.IsImage())
                 {
-                    // TODO: Parse width height
+                    // Parse width height
+                    var imageSize = GetImageSize(noneContentFilePath);
+                    if(imageSize != Size.Empty)
+                    {
+                        data.Add("Width", imageSize.Width.ToString());
+                        data.Add("Height", imageSize.Height.ToString());
+                    }
+
                 }
 
                 model = (IFile)_dataMapper.Map(type, model, data);
@@ -409,6 +416,24 @@ namespace Karbon.Cms.Core.Stores
                 return typeof(DocumentFile);
 
             return typeof (File);
+        }
+
+        /// <summary>
+        /// Gets the size of the image.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
+        private Size GetImageSize(string path)
+        {
+            if (!string.IsNullOrEmpty(path) && _fileStore.FileExists(path))
+            {
+                using (var img = Image.FromStream(_fileStore.OpenFile(path)))
+                {
+                    return img.Size;
+                }
+            }
+
+            return Size.Empty;
         }
 
         #endregion
