@@ -33,6 +33,54 @@ namespace Karbon.Cms.Core
         }
 
         /// <summary>
+        /// Gets the parent/ancestors of the specified content.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        internal static IEnumerable<IContent> Parents(this IContent content)
+        {
+            return StoreManager.ContentStore.GetAncestors(content);
+        }
+
+        /// <summary>
+        /// Gets the parent ancestor content cast to the specified type.
+        /// </summary>
+        /// <typeparam name="TContentType">The type of the content type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        internal static IEnumerable<TContentType> Parents<TContentType>(this IContent content)
+            where TContentType : IContent
+        {
+            return content.Parents(x => x.GetType() == typeof(TContentType))
+                .Cast<TContentType>();
+        }
+
+        /// <summary>
+        /// Gets the parent ancestor content filtered by the provided filter function.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        internal static IEnumerable<IContent> Parents(this IContent content, Func<IContent, bool> filter)
+        {
+            return content.Parents().Where(filter);
+        }
+
+        /// <summary>
+        /// Gets the parent ancestor content filtered by the provided filter function, cast to the specified type.
+        /// </summary>
+        /// <typeparam name="TContentType">The type of the content type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        internal static IEnumerable<TContentType> Parents<TContentType>(this IContent content, Func<TContentType, bool> filter)
+            where TContentType : IContent
+        {
+            return content.Parents<TContentType>()
+                .Where(filter);
+        }
+
+        /// <summary>
         /// Gets the child content.
         /// </summary>
         /// <param name="content">The content.</param>
