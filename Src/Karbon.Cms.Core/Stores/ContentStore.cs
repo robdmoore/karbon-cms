@@ -81,18 +81,8 @@ namespace Karbon.Cms.Core.Stores
         /// <returns></returns>
         public IEnumerable<IContent> GetChildren(IContent content)
         {
-            var url = content.RelativeUrl + "/";
-            if (url == "~//")
-                url = "~/";
-
-            var children = _contentCache.Keys
-                .Where(x => x != url && x.StartsWith(url)
-                    && x.TrimStart(url).IndexOf("/", StringComparison.InvariantCulture) == -1)
-                .Select(x => _contentCache[x])
+            return GetDescendants(content).Where(x => x.Depth == content.Depth + 1);
                 .OrderBy(x => x.SortOrder).ThenBy(x => x.Slug)
-                .ToList();
-
-            return children;
         }
 
         /// <summary>
@@ -106,13 +96,10 @@ namespace Karbon.Cms.Core.Stores
             if (url == "~//")
                 url = "~/";
 
-            var descendants = _contentCache.Keys
+            return _contentCache.Keys
                 .Where(x => x != url && x.StartsWith(url))
-                .Select(x => _contentCache[x])
+                .Select(x => _contentCache[x]);
                 .OrderBy(x => x.SortOrder).ThenBy(x => x.Slug)
-                .ToList();
-
-            return descendants;
         }
 
         #endregion
