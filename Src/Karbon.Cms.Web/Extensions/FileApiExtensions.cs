@@ -16,11 +16,23 @@ namespace Karbon.Cms.Web
 
         #region Images
 
+        /// <summary>
+        /// Fits the specified image with a max width / height of size.
+        /// </summary>
+        /// <param name="image">The image.</param>
+        /// <param name="size">The size.</param>
+        /// <returns></returns>
         public static IFilteredImage Fit(this IImageFile image, int size)
         {
             return new FilteredImage(image).Fit(size);
         }
 
+        /// <summary>
+        /// Fits the specified image with a max width / height of size.
+        /// </summary>
+        /// <param name="image">The image.</param>
+        /// <param name="size">The size.</param>
+        /// <returns></returns>
         public static IFilteredImage Fit(this IFilteredImage image, int size)
         {
             image.Filters.Add("w", size);
@@ -29,6 +41,11 @@ namespace Karbon.Cms.Web
             return image;
         }
 
+        /// <summary>
+        /// Gets the absolute url for the given image.
+        /// </summary>
+        /// <param name="image">The image.</param>
+        /// <returns></returns>
         public static string Url(this IFilteredImage image)
         {
             return image.Image.Url() + image.Filters.ToQueryString();
