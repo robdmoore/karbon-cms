@@ -68,10 +68,20 @@ namespace Karbon.Cms.Web
         /// <param name="image">The image.</param>
         /// <param name="maxWidthHeight">max width / height.</param>
         /// <param name="fitMode">The fit mode.</param>
+        /// <param name="scaleMode">The scale mode.</param>
+        /// <param name="alignMode">The align mode.</param>
+        /// <param name="format">The format.</param>
+        /// <param name="quality">The quality.</param>
+        /// <param name="colors">The colors.</param>
+        /// <param name="bgColor">Color of the background.</param>
         /// <returns></returns>
-        public static IFilteredImage Fit(this IImageFile image, int maxWidthHeight, FitMode fitMode = FitMode.Pad)
+        public static IFilteredImage Fit(this IImageFile image, int maxWidthHeight, 
+            FitMode fitMode = FitMode.Pad, ScaleMode scaleMode = ScaleMode.Down,
+            AlignMode alignMode = AlignMode.MiddleCenter, ImageFormat format = ImageFormat.Auto,
+            int quality = 90, int colors = 256, string bgColor = "")
         {
-            return image.Fit(maxWidthHeight, maxWidthHeight, fitMode);
+            return image.Fit(maxWidthHeight, maxWidthHeight, fitMode, scaleMode, alignMode, 
+                format, quality, colors, bgColor);
         }
 
         /// <summary>
@@ -80,10 +90,20 @@ namespace Karbon.Cms.Web
         /// <param name="image">The image.</param>
         /// <param name="maxWidthHeight">max width / height.</param>
         /// <param name="fitMode">The fit mode.</param>
+        /// <param name="scaleMode">The scale mode.</param>
+        /// <param name="alignMode">The align mode.</param>
+        /// <param name="format">The format.</param>
+        /// <param name="quality">The quality.</param>
+        /// <param name="colors">The colors.</param>
+        /// <param name="bgColor">Color of the background.</param>
         /// <returns></returns>
-        public static IFilteredImage Fit(this IFilteredImage image, int maxWidthHeight, FitMode fitMode = FitMode.Pad)
+        public static IFilteredImage Fit(this IFilteredImage image, int maxWidthHeight, 
+            FitMode fitMode = FitMode.Pad, ScaleMode scaleMode = ScaleMode.Down,
+            AlignMode alignMode = AlignMode.MiddleCenter, ImageFormat format = ImageFormat.Auto,
+            int quality = 90, int colors = 256, string bgColor = "")
         {
-            return image.Fit(maxWidthHeight, maxWidthHeight, fitMode);
+            return image.Fit(maxWidthHeight, maxWidthHeight, fitMode, scaleMode, alignMode, 
+                format, quality, colors, bgColor);
         }
 
         /// <summary>
@@ -93,10 +113,20 @@ namespace Karbon.Cms.Web
         /// <param name="maxWidth">Width of the max.</param>
         /// <param name="maxHeight">Height of the max.</param>
         /// <param name="fitMode">The fit mode.</param>
+        /// <param name="scaleMode">The scale mode.</param>
+        /// <param name="alignMode">The align mode.</param>
+        /// <param name="format">The format.</param>
+        /// <param name="quality">The quality.</param>
+        /// <param name="colors">The colors.</param>
+        /// <param name="bgColor">Color of the background.</param>
         /// <returns></returns>
-        public static IFilteredImage Fit(this IImageFile image, int maxWidth, int maxHeight, FitMode fitMode = FitMode.Pad)
+        public static IFilteredImage Fit(this IImageFile image, int maxWidth, int maxHeight, 
+            FitMode fitMode = FitMode.Pad, ScaleMode scaleMode = ScaleMode.Down,
+            AlignMode alignMode = AlignMode.MiddleCenter, ImageFormat format = ImageFormat.Auto,
+            int quality = 90, int colors = 256, string bgColor = "")
         {
-            return new FilteredImage(image).Fit(maxWidth, maxHeight, fitMode);
+            return new FilteredImage(image).Fit(maxWidth, maxHeight, fitMode, scaleMode, alignMode, 
+                format, quality, colors, bgColor);
         }
 
         /// <summary>
@@ -106,14 +136,41 @@ namespace Karbon.Cms.Web
         /// <param name="maxWidth">Width of the max.</param>
         /// <param name="maxHeight">Height of the max.</param>
         /// <param name="fitMode">The fit mode.</param>
+        /// <param name="scaleMode">The scale mode.</param>
+        /// <param name="alignMode">The align mode.</param>
+        /// <param name="format">The format.</param>
+        /// <param name="quality">The quality.</param>
+        /// <param name="colors">The colors.</param>
+        /// <param name="bgColor">Color of the background.</param>
         /// <returns></returns>
-        public static IFilteredImage Fit(this IFilteredImage image, int maxWidth, int maxHeight, FitMode fitMode = FitMode.Pad)
+        public static IFilteredImage Fit(this IFilteredImage image, int maxWidth, int maxHeight, 
+            FitMode fitMode = FitMode.Pad, ScaleMode scaleMode = ScaleMode.Down, 
+            AlignMode alignMode = AlignMode.MiddleCenter, ImageFormat format = ImageFormat.Auto,
+            int quality = 90, int colors = 256, string bgColor = "")
         {
             image.Filters.Add("w", maxWidth);
             image.Filters.Add("h", maxHeight);
 
             if(fitMode != FitMode.Pad)
                 image.Filters.Add("mode", fitMode.ToString().ToLower());
+
+            if(scaleMode != ScaleMode.Down)
+                image.Filters.Add("scale", scaleMode.ToString().ToLower());
+
+            if(alignMode != AlignMode.MiddleCenter)
+                image.Filters.Add("anchor", alignMode.ToString().ToLower());
+
+            if(format != ImageFormat.Auto)
+                image.Filters.Add("format", format.ToString().ToLower());
+
+            if(quality != 90)
+                image.Filters.Add("quality", Math.Min(100, Math.Max(0, quality)));
+
+            if (colors != 256)
+                image.Filters.Add("colors", Math.Min(256, Math.Max(2, quality)));
+
+            if (!string.IsNullOrEmpty(bgColor))
+                image.Filters.Add("bgcolor", bgColor);
 
             return image;
         }
@@ -175,6 +232,34 @@ namespace Karbon.Cms.Web
         Crop,
         Stretch,
         Carve
+    }
+
+    public enum ScaleMode
+    {
+        Down,
+        Both,
+        Canvas
+    }
+
+    public enum AlignMode
+    {
+        TopLeft, 
+        TopCenter, 
+        TopRight, 
+        MiddleLeft, 
+        MiddleCenter, 
+        MiddleRight, 
+        BottomLeft, 
+        BottomCenter, 
+        BottomRight
+    }
+
+    public enum ImageFormat
+    {
+        Auto,
+        Jpg,
+        Gif,
+        Png
     }
 
     #endregion
