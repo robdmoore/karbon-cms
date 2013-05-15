@@ -17,7 +17,10 @@
         <br />
         @foreach (var child in Model.CurrentPage.Children())
         {
-            @(child.RelativeUrl) <br /> @(child.Url())<br />
+            @(child.RelativeUrl) <br /> 
+            @(child.Url())<br />
+            @child.IsChildOf(Model.CurrentPage)<br />
+            @Model.CurrentPage.IsAncestorOf(child)<br />
         }
         
         <h2>Products</h2>

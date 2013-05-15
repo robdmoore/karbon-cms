@@ -427,5 +427,44 @@ namespace Karbon.Cms.Core
         {
             return content.Documents<TFileType>().Where(filter);
         }
+
+        /// <summary>
+        /// Determines whether this content is a child of the specified content.
+        /// </summary>
+        /// <param name="child">The child.</param>
+        /// <param name="content">The content.</param>
+        /// <returns>
+        ///   <c>true</c> if this content is a child of the specified content; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsChildOf(this IContent child, IContent content)
+        {
+            return child.RelativeUrl == content.RelativeUrl.TrimEnd("/") + "/" + child.Slug; 
+        }
+
+        /// <summary>
+        /// Determines whether this content is an ancestor of the specified content.
+        /// </summary>
+        /// <param name="ancestor">The ancestor.</param>
+        /// <param name="content">The content.</param>
+        /// <returns>
+        ///   <c>true</c> if this content is an ancestor of the specified content; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsAncestorOf(this IContent ancestor, IContent content)
+        {
+            return content.RelativeUrl.StartsWith(ancestor.RelativeUrl.TrimEnd("/") + "/");
+        }
+
+        /// <summary>
+        /// Determines whether this content is a descendant of the specified content.
+        /// </summary>
+        /// <param name="descendant">The descendant.</param>
+        /// <param name="content">The content.</param>
+        /// <returns>
+        ///   <c>true</c> if this content is a descendant of the specified content; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsDescendantOf(this IContent descendant, IContent content)
+        {
+            return content.IsAncestorOf(descendant);
+        }
     }
 }
