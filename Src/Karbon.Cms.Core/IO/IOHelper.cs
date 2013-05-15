@@ -895,6 +895,109 @@ namespace Karbon.Cms.Core.IO
 			{ ".zmm", "application/vnd.handheld-entertainment+xml" },
 		};
 
+        /// <summary>
+        /// Determines whether the specified file extension is an image.
+        /// </summary>
+        /// <param name="ext">The ext.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified file extension is an image; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsImageExtension(string ext)
+        {
+            switch (ext.ToLower())
+            {
+                case ".jpg":
+                case ".jpeg":
+                case ".gif":
+                case ".png":
+                case ".bmp":
+                case ".tif":
+                case ".tiff":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the specified file extension is a video.
+        /// </summary>
+        /// <param name="ext">The ext.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified file extension is a video; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsVideoExtension(string ext)
+        {
+            switch (ext.ToLower())
+            {
+                case ".ogg":
+                case ".ogv":
+                case ".webm":
+                case ".mp4":
+                case ".mov":
+                case ".avi":
+                case ".flv":
+                case ".swf":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the specified file extension is a sound.
+        /// </summary>
+        /// <param name="ext">The ext.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified file extension is a sound; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsSoundExtension(string ext)
+        {
+            switch (ext.ToLower())
+            {
+                case ".mp3":
+                case ".wav":
+                case ".wma":
+                case ".mid":
+                case ".ra":
+                case ".ram":
+                case ".rm":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the specified file extension is a document.
+        /// </summary>
+        /// <param name="ext">The ext.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified file extension is a document; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsDocumentExtension(string ext)
+        {
+            switch (ext.ToLower())
+            {
+                case ".pdf":
+                case ".doc":
+                case ".docx":
+                case ".xls":
+                case ".xlsx":
+                case ".ppt":
+                case ".pptx":
+                case ".rtf":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// Maps the path.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
         public static string MapPath(string path)
         {
             return KarbonAppContext.Current.Environment.MapPath(path);

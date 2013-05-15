@@ -267,7 +267,7 @@ namespace Karbon.Cms.Core.Stores
                 model.Slug = fileNameInfo.Name;
                 model.RelativeUrl = "~/media/" + contentUrl.TrimStart("~/") + "/" + model.Slug;
                 model.SortOrder = fileNameInfo.SortOrder;
-                model.Extension = System.IO.Path.GetExtension(model.Slug);
+                model.Extension = fileNameInfo.Extension;
                 model.Created = _fileStore.GetCreated(noneContentFilePath);
                 model.Modified = _fileStore.GetLastModified(noneContentFilePath);
 
@@ -348,14 +348,15 @@ namespace Karbon.Cms.Core.Stores
         /// <returns></returns>
         private FileNameInfo ParseFileName(string name)
         {
+            var ext = System.IO.Path.GetExtension(name);
+
             var fileNameInfo = new FileNameInfo
             {
                 FullName = name,
                 SortOrder = -1,
-                TypeName = "File"
+                Extension = ext,
+                TypeName = GetDefaultFileType(ext).Name
             };
-
-            var ext = System.IO.Path.GetExtension(name);
 
             var nameParts = name.Split('.');
             if(nameParts.Length > 2)
@@ -371,13 +372,13 @@ namespace Karbon.Cms.Core.Stores
 
                 if (int.TryParse(possibleSortOrder, out parsedSortOrder))
                 {
-                    fileNameInfo.Name = nameParts[0].Substring(hyphenIndex + 1) + ext;
+                    fileNameInfo.Name = nameParts[0].Substring(hyphenIndex + 1) + fileNameInfo.Extension;
                     fileNameInfo.SortOrder = parsedSortOrder;
                 }
             }
             else
             {
-                fileNameInfo.Name = nameParts[0] + ext;
+                fileNameInfo.Name = nameParts[0] + fileNameInfo.Extension;
                 if(int.TryParse(nameParts[0], out parsedSortOrder))
                 {
                     fileNameInfo.SortOrder = parsedSortOrder;
@@ -386,6 +387,28 @@ namespace Karbon.Cms.Core.Stores
             
                
             return fileNameInfo;
+        }
+
+        /// <summary>
+        /// Gets the default type of the file based on the supplied file extension.
+        /// </summary>
+        /// <param name="ext">The ext.</param>
+        /// <returns></returns>
+        private Type GetDefaultFileType(string ext)
+        {
+            if (IOHelper.IsImageExtension(ext))
+                return typeof (ImageFile);
+
+            if (IOHelper.IsVideoExtension(ext))
+                return typeof(VideoFile);
+
+            if (IOHelper.IsSoundExtension(ext))
+                return typeof(SoundFile);
+
+            if (IOHelper.IsDocumentExtension(ext))
+                return typeof(DocumentFile);
+
+            return typeof (File);
         }
 
         #endregion

@@ -51,7 +51,7 @@ namespace Karbon.Cms.Core
         public static IEnumerable<TContentType> Children<TContentType>(this IContent content)
             where TContentType : IContent
         {
-            return content.Children(x => x.GetType() == typeof(TContentType))
+            return content.Children(x => typeof(TContentType).IsAssignableFromExtended(x.GetType()))
                 .Cast<TContentType>();
         }
 
@@ -101,7 +101,7 @@ namespace Karbon.Cms.Core
         public static IEnumerable<TContentType> Find<TContentType>(this IContent content)
             where TContentType : IContent
         {
-            return content.Find(x => x.GetType() == typeof(TContentType)).Cast<TContentType>();
+            return content.Find(x => typeof(TContentType).IsAssignableFromExtended(x.GetType())).Cast<TContentType>();
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Karbon.Cms.Core
         public static IEnumerable<TContentType> Siblings<TContentType>(this IContent content)
             where TContentType : IContent
         {
-            return content.Siblings(x => x.GetType() == typeof (TContentType))
+            return content.Siblings(x => typeof(TContentType).IsAssignableFromExtended(x.GetType()))
                 .Cast<TContentType>();
         }
 
@@ -212,7 +212,7 @@ namespace Karbon.Cms.Core
         public static IEnumerable<TFileType> Files<TFileType>(this IContent content)
             where TFileType : IFile
         {
-            return content.AllFiles.Where(x => x.GetType() == typeof (TFileType))
+            return content.AllFiles.Where(x => typeof(TFileType).IsAssignableFromExtended(x.GetType()))
                 .Cast<TFileType>();
         }
 
@@ -238,6 +238,53 @@ namespace Karbon.Cms.Core
             where TFileType : IFile
         {
             return content.Files<TFileType>().Where(filter);
+        }
+
+        /// <summary>
+        /// Gets the image files for the specified content.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static IEnumerable<IImageFile> Images(this IContent content)
+        {
+            return content.Files<IImageFile>();
+        }
+
+        /// <summary>
+        /// Gets the image files of a given type for the specified content.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static IEnumerable<TFileType> Images<TFileType>(this IContent content)
+            where TFileType : IImageFile
+        {
+            return content.Images().Where(x => typeof(TFileType).IsAssignableFromExtended(x.GetType()))
+                .Cast<TFileType>();
+        }
+
+        /// <summary>
+        /// Gets the image files for the specified content filtered by the specified filter function.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static IEnumerable<IImageFile> Images(this IContent content, Func<IImageFile, bool> filter)
+        {
+            return content.Images().Where(filter);
+        }
+
+        /// <summary>
+        /// Gets the image files of a given type for the specified content filtered by the specified filter function.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static IEnumerable<TFileType> Images<TFileType>(this IContent content, Func<TFileType, bool> filter)
+            where TFileType : IImageFile
+        {
+            return content.Images<TFileType>().Where(filter);
         }
     }
 }

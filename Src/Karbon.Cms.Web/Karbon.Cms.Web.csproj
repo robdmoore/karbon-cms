@@ -54,6 +54,7 @@
     <Compile Include="Extensions\ContentApiExtensions.cs" />
     <Compile Include="Extensions\ContentExtensions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Extensions\EntityApiExtensions.cs" />
     <Compile Include="Extensions\FileApiExtensions.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Hosting\MediaVirtualFile.cs" />

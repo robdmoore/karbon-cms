@@ -6,5 +6,6 @@
         public string Name { get; set; }
         public int SortOrder { get; set; }
         public string TypeName { get; set; }
+        public string Extension { get; set; }
     }
 }

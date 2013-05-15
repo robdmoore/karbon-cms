@@ -53,6 +53,14 @@
     <Compile Include="IO\FileChangedEventArgs.cs" />
     <Compile Include="Mapping\DataMapper.cs" />
     <Compile Include="Models\ContentAttribute.cs" />
+    <Compile Include="Models\DocumentFile.cs" />
+    <Compile Include="Models\IDocumentFile.cs" />
+    <Compile Include="Models\IImageFile.cs" />
+    <Compile Include="Models\ImageFile.cs" />
+    <Compile Include="Models\ISoundFile.cs" />
+    <Compile Include="Models\IVideoFile.cs" />
+    <Compile Include="Models\SoundFile.cs" />
+    <Compile Include="Models\VideoFile.cs" />
     <Compile Include="Stores\FileNameInfo.cs" />
     <Compile Include="Stores\DirectoryNameInfo.cs" />
     <Compile Include="IO\FileStore.cs" />

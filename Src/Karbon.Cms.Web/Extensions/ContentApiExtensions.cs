@@ -28,15 +28,5 @@ namespace Karbon.Cms.Web
             // NOTE: This currently reports homepage as closed if a sub page is open
             // need to decide if this is the desired effect, or whether homepage should be open too
         }
-
-        /// <summary>
-        /// Gets the absolute url for the given content.
-        /// </summary>
-        /// <param name="content">The content.</param>
-        /// <returns></returns>
-        public static string Url(this IContent content)
-        {
-            return VirtualPathUtility.ToAbsolute(content.RelativeUrl);
-        }
     }
 }

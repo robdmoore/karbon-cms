@@ -4,12 +4,15 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Karbon.Cms.Core.IO;
 using Karbon.Cms.Core.Models;
 
 namespace Karbon.Cms.Core
 {
     public static class FileApiExtensions
     {
+        #region Files
+
         /// <summary>
         /// Determines whether the specified file is an image.
         /// </summary>
@@ -22,19 +25,7 @@ namespace Karbon.Cms.Core
             if (file.Extension == null)
                 return false;
 
-            switch (file.Extension.ToLower())
-            {
-                case ".jpg":
-                case ".jpeg":
-                case ".gif":
-                case ".png":
-                case ".bmp":
-                case ".tif":
-                case ".tiff":
-                    return true;
-                default:
-                    return false;
-            }
+            return IOHelper.IsImageExtension(file.Extension.ToLower());
         }
 
         /// <summary>
@@ -49,20 +40,7 @@ namespace Karbon.Cms.Core
             if (file.Extension == null)
                 return false;
 
-            switch (file.Extension.ToLower())
-            {
-                case ".ogg":
-                case ".ogv":
-                case ".webm":
-                case ".mp4":
-                case ".mov":
-                case ".avi":
-                case ".flv":
-                case ".swf":
-                    return true;
-                default:
-                    return false;
-            }
+            return IOHelper.IsVideoExtension(file.Extension.ToLower());
         }
 
         /// <summary>
@@ -77,19 +55,7 @@ namespace Karbon.Cms.Core
             if (file.Extension == null)
                 return false;
 
-            switch (file.Extension.ToLower())
-            {
-                case ".mp3":
-                case ".wav":
-                case ".wma":
-                case ".mid":
-                case ".ra":
-                case ".ram":
-                case ".rm":
-                    return true;
-                default:
-                    return false;
-            }
+            return IOHelper.IsSoundExtension(file.Extension.ToLower());
         }
 
         /// <summary>
@@ -104,20 +70,21 @@ namespace Karbon.Cms.Core
             if (file.Extension == null)
                 return false;
 
-            switch (file.Extension.ToLower())
-            {
-                case ".pdf":
-                case ".doc":
-                case ".docx":
-                case ".xls":
-                case ".xlsx":
-                case ".ppt":
-                case ".pptx":
-                case ".rtf":
-                    return true;
-                default:
-                    return false;
-            }
+            return IOHelper.IsDocumentExtension(file.Extension.ToLower());
         }
+
+        /// <summary>
+        /// Gets the mime type for the specified file.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns></returns>
+        public static string MimeType(this IFile file)
+        {
+            return IOHelper.MimeTypes.ContainsKey(file.Extension.ToLower())
+                ? IOHelper.MimeTypes[file.Extension.ToLower()]
+                : "application/octet-stream";
+        }
+
+        #endregion
     }
 }
