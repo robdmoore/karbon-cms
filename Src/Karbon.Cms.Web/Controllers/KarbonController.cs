@@ -25,7 +25,7 @@ namespace Karbon.Cms.Web.Controllers
         public TModel Model
         {
             //TODO: Rename Content inline with other aireas?
-            get { return (TModel)RouteData.Values[KarbonContentRoute.ModelKey]; }
+            get { return (TModel)RouteData.Values[KarbonRoute.ModelKey]; }
         }
 
         /// <summary>

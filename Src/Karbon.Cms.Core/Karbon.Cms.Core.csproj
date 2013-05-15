@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="Configuration\FileStoresSection.cs" />
     <Compile Include="Configuration\DataSerializersSection.cs" />
-    <Compile Include="Configuration\MimeTypesSection.cs" />
     <Compile Include="CoreBootManager.cs" />
     <Compile Include="EnvironmentContext.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />

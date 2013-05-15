@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Karbon.Cms.Core;
+using Karbon.Cms.Web.Hosting;
 using Karbon.Cms.Web.Modules;
 using Karbon.Cms.Web.Routing;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
@@ -42,6 +44,9 @@ namespace Karbon.Cms.Web
             // Reset the environment context
             KarbonAppContext.Current.Environment = new WebEnvironmentContext(httpContextBase);
 
+            // Register the media VPP
+            HostingEnvironment.RegisterVirtualPathProvider(new MediaVirtualPathProvider());
+
             // Register required routes
             RegisterRoutes();
         }
@@ -53,7 +58,7 @@ namespace Karbon.Cms.Web
         {
             // Add the content route
             RouteTable.Routes.Insert(0, 
-                new KarbonContentRoute(
+                new KarbonRoute(
                     "{*path}",
                     new RouteValueDictionary(new
                     {
@@ -62,10 +67,8 @@ namespace Karbon.Cms.Web
                     }),
                     new MvcRouteHandler()));
 
-            // Add the media route
-            RouteTable.Routes.Insert(0,
-                new Route("media/{*path}", 
-                    new KarbonMediaHandler()));
+            // Ignore media routes, these will be handled by the media VPP
+            RouteTable.Routes.Ignore("media/{*path}");
 
         }
 
