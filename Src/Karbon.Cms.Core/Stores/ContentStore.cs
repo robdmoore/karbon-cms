@@ -99,9 +99,7 @@ namespace Karbon.Cms.Core.Stores
         /// <returns></returns>
         public IEnumerable<IContent> GetDescendants(IContent content)
         {
-            var url = content.RelativeUrl + "/";
-            if (url == "~//")
-                url = "~/";
+            var url = content.RelativeUrl.EnsureTrailingForwardSlash();
 
             var descendants = _contentCache.Keys
                 .Where(x => x != url && x.StartsWith(url))

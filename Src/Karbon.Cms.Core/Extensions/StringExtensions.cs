@@ -27,7 +27,11 @@ namespace Karbon.Cms.Core
         /// <returns></returns>
         public static string EnsureTrailingForwardSlash(this string path)
         {
-            return EnsureTrailingCharacter(path, '/');
+            var url = EnsureTrailingCharacter(path, '/');
+            if (url == "~//")
+                url = "~/";
+
+            return url;
         }
 
         /// <summary>
