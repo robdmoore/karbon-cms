@@ -1,0 +1,15 @@
+﻿@inherits KarbonView
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Model.CurrentPage.Data["Title"]</title>
+</head>
+<body>
+    <div>
+        <h1>@Model.CurrentPage.Data["Title"]</h1>
+        @Html.Md(Model.CurrentPage.Data["Content"])
+    </div>
+</body>
+</html>
