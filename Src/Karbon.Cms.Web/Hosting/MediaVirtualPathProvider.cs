@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Specialized;
+using System.Linq;
 using System.Web;
 using System.Web.Hosting;
+using Karbon.Cms.Core;
 using Karbon.Cms.Core.IO;
+using Karbon.Cms.Core.Models;
 using Karbon.Cms.Core.Stores;
 
 namespace Karbon.Cms.Web.Hosting
@@ -27,8 +30,7 @@ namespace Karbon.Cms.Web.Hosting
         /// </returns>
         public override bool FileExists(string virtualPath)
         {
-            var exists = IsMediaPath(virtualPath) || base.FileExists(virtualPath);
-            return exists;
+            return IsMediaPath(virtualPath) || base.FileExists(virtualPath);
         }
 
         /// <summary>
@@ -42,30 +44,10 @@ namespace Karbon.Cms.Web.Hosting
         {
             if(IsMediaPath(virtualPath))
             {
-                // Trim the media prefix
-                var fileRelativeUrl = virtualPath.Substring(virtualPath.LastIndexOf("/media/") + 7);
-                
-                // Workout content url + file slug
-                var fileSlug = fileRelativeUrl;
-                var contentRelativeUrl = "";
-
-                if (fileRelativeUrl.LastIndexOf('/') > -1)
-                {
-                    fileSlug = fileRelativeUrl.Substring(fileRelativeUrl.LastIndexOf('/') + 1);
-                    contentRelativeUrl = fileRelativeUrl.Substring(0, fileRelativeUrl.LastIndexOf('/'));
-                }
-
-                // Find the content
-                var content = _contentStore.GetByUrl("~/" + contentRelativeUrl);
-                if (content == null)
-                    return null;
-
-                // Find the file
-                var file = content.AllFiles.SingleOrDefault(x => x.Slug == fileSlug);
-                if (file == null)
-                    return null;
-
-                return new MediaVirtualFile(file.RelativePath);
+                var file = GetFileFromVirtualPath(virtualPath);
+                return file != null 
+                    ? new MediaVirtualFile(file.RelativePath)
+                    : null;
             }
             
             return base.GetFile(virtualPath);
@@ -81,6 +63,39 @@ namespace Karbon.Cms.Web.Hosting
         private bool IsMediaPath(string virtualPath)
         {
             return VirtualPathUtility.ToAppRelative(virtualPath).StartsWith("~/media/");
+        }
+
+        /// <summary>
+        /// Gets the file from virtual path.
+        /// </summary>
+        /// <param name="virtualPath">The virtual path.</param>
+        /// <returns></returns>
+        private IFile GetFileFromVirtualPath(string virtualPath)
+        {
+            // Trim the media prefix
+            var fileRelativeUrl = virtualPath.Substring(virtualPath.LastIndexOf("/media/") + 7);
+
+            // Workout content url + file slug
+            var fileSlug = fileRelativeUrl;
+            var contentRelativeUrl = "";
+
+            if (fileRelativeUrl.LastIndexOf('/') > -1)
+            {
+                fileSlug = fileRelativeUrl.Substring(fileRelativeUrl.LastIndexOf('/') + 1);
+                contentRelativeUrl = fileRelativeUrl.Substring(0, fileRelativeUrl.LastIndexOf('/'));
+            }
+
+            // Find the content
+            var content = _contentStore.GetByUrl("~/" + contentRelativeUrl);
+            if (content == null)
+                return null;
+
+            // Find the file
+            var file = content.AllFiles.SingleOrDefault(x => x.Slug == fileSlug);
+            if (file == null)
+                return null;
+
+            return file;
         }
     }
 }

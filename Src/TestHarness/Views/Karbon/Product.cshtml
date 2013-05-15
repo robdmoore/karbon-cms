@@ -21,7 +21,7 @@
         <h4>Files</h4>
         @foreach(var file in Model.CurrentPage.Files())
         {
-            <p><img src="@file.Url()" alt=""/></p>
+            <p><img src="@file.Url()?width=100" alt=""/></p>
         }
     </div>
 </body>
