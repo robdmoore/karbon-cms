@@ -299,7 +299,7 @@ namespace Karbon.Cms.Core.Stores
                 files.Add(model);
             }
 
-            return files;
+            return files.OrderBy(x => x.SortOrder).ThenBy(x => x.Slug);
         }
 
         /// <summary>
