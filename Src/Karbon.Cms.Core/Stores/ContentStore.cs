@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -219,6 +220,7 @@ namespace Karbon.Cms.Core.Stores
             model.RelativePath = path;
             model.TypeName = fileName;
             model.Slug = directoryNameInfo.Name;
+            model.Name = GetNameFromSlug(directoryNameInfo.Name);
             model.RelativeUrl = GetUrlFromPath(path);
             model.SortOrder = directoryNameInfo.SortOrder;
             model.Created = _fileStore.GetCreated(contentFilePath ?? path);
@@ -268,6 +270,7 @@ namespace Karbon.Cms.Core.Stores
                 model.RelativePath = noneContentFilePath;
                 model.TypeName = fileNameInfo.TypeName;
                 model.Slug = fileNameInfo.Name;
+                model.Name = GetNameFromSlug(_fileStore.GetNameWithoutExtension(fileNameInfo.Name));
                 model.RelativeUrl = "~/media/" + contentUrl.TrimStart("~/") + "/" + model.Slug;
                 model.ContentRelativeUrl = contentUrl;
                 model.SortOrder = fileNameInfo.SortOrder;
@@ -398,6 +401,18 @@ namespace Karbon.Cms.Core.Stores
             
                
             return fileNameInfo;
+        }
+
+        /// <summary>
+        /// Gets the name from slug.
+        /// </summary>
+        /// <param name="slug">The slug.</param>
+        /// <returns></returns>
+        private string GetNameFromSlug(string slug)
+        {
+            var spaced = string.Join(" ", slug.Split('-', '_'));
+            var titleCased = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(spaced);
+            return titleCased;
         }
 
         /// <summary>

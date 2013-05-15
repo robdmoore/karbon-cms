@@ -6,8 +6,9 @@ namespace Karbon.Cms.Core.Models
     public interface IEntity
     {
         string RelativePath { get; set; }
-        string Slug { get; set; }
         string RelativeUrl { get; set; }
+        string Slug { get; set; }
+        string Name { get; set; }
         string TypeName { get; set; }
         int SortOrder { get; set; }
 

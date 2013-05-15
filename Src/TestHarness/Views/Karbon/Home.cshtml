@@ -13,7 +13,7 @@
 </head>
 <body>
     <div>
-        HOME PAGE - @Model.CurrentPage.Depth
+        HOME PAGE - @Model.CurrentPage.Name - @Model.CurrentPage.Depth
         <br />
         @foreach (var child in Model.CurrentPage.Children())
         {

@@ -6,8 +6,9 @@ namespace Karbon.Cms.Core.Models
     public abstract class Entity : IEntity
     {
         public virtual string RelativePath { get; set; }
-        public virtual string Slug { get; set; }
         public virtual string RelativeUrl { get; set; }
+        public virtual string Slug { get; set; }
+        public virtual string Name { get; set; }
         public virtual string TypeName { get; set; }
         public virtual int SortOrder { get; set; }
 

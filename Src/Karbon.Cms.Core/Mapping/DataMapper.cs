@@ -37,11 +37,7 @@ namespace Karbon.Cms.Core.Mapping
             if(!typeof(IEntity).IsAssignableFrom(entityType))
                 throw new ArgumentException("entityType");
 
-            var baseType = typeof(IEntity);
-            var baseProps = baseType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-            var props = entityType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(x => baseProps.All(y => y.Name != x.Name));
+            var props = entityType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             foreach (var dataKey in data.Keys)
             {

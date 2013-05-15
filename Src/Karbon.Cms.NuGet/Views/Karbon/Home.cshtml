@@ -4,11 +4,11 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@Model.CurrentPage.Data["Title"]</title>
+    <title>@Model.CurrentPage.Name</title>
 </head>
 <body>
     <div>
-        <h1>@Model.CurrentPage.Data["Title"]</h1>
+        <h1>@Model.CurrentPage.Name</h1>
         @Html.Md(Model.CurrentPage.Data["Content"])
     </div>
 </body>

@@ -13,7 +13,7 @@
 </head>
 <body>
     <div>
-        BRAND PAGE - @Model.CurrentPage.Slug - @Model.CurrentPage.Depth
+        BRAND PAGE - @Model.CurrentPage.Name - @Model.CurrentPage.Slug - @Model.CurrentPage.Depth
         <ul>
             @foreach (var child in Model.CurrentPage.Children<Product>(x => x.IsVisible()))
             {

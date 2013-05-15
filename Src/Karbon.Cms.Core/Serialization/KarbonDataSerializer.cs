@@ -60,7 +60,7 @@ namespace Karbon.Cms.Core.Serialization
                     }
                     else
                     {
-                        if (line != ValueTerminator)
+                        if (!line.StartsWith(ValueTerminator))
                         {
                             // Append line to value
                             currentValue.AppendLine(line.Trim());
