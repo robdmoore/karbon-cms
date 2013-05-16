@@ -17,10 +17,12 @@
         <br />
         @foreach (var child in Model.CurrentPage.Children())
         {
-            @(child.RelativeUrl) <br /> 
-            @(child.Url())<br />
-            @child.IsChildOf(Model.CurrentPage)<br />
-            @Model.CurrentPage.IsAncestorOf(child)<br />
+            <br />
+            <span>RelativeUrl:</span> @(child.RelativeUrl) <br /> 
+            <span>Url:</span> @(child.Url())<br />
+            <span>IsChildOf:</span> @child.IsChildOf(Model.CurrentPage)<br />
+            <span>IsAncestorOf:</span> @Model.CurrentPage.IsAncestorOf(child)<br />
+            <span>Parents:</span> @(string.Join(", ", child.Parents().Select(x => x.TypeName)))<br />
         }
         
         <h2>Products</h2>

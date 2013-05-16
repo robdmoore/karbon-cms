@@ -37,7 +37,7 @@ namespace Karbon.Cms.Core
         /// </summary>
         /// <param name="content">The content.</param>
         /// <returns></returns>
-        internal static IEnumerable<IContent> Parents(this IContent content)
+        public static IEnumerable<IContent> Parents(this IContent content)
         {
             return StoreManager.ContentStore.GetAncestors(content);
         }
@@ -48,7 +48,7 @@ namespace Karbon.Cms.Core
         /// <typeparam name="TContentType">The type of the content type.</typeparam>
         /// <param name="content">The content.</param>
         /// <returns></returns>
-        internal static IEnumerable<TContentType> Parents<TContentType>(this IContent content)
+        public static IEnumerable<TContentType> Parents<TContentType>(this IContent content)
             where TContentType : IContent
         {
             return content.Parents(x => x.GetType() == typeof(TContentType))
@@ -61,7 +61,7 @@ namespace Karbon.Cms.Core
         /// <param name="content">The content.</param>
         /// <param name="filter">The filter.</param>
         /// <returns></returns>
-        internal static IEnumerable<IContent> Parents(this IContent content, Func<IContent, bool> filter)
+        public static IEnumerable<IContent> Parents(this IContent content, Func<IContent, bool> filter)
         {
             return content.Parents().Where(filter);
         }
@@ -73,7 +73,7 @@ namespace Karbon.Cms.Core
         /// <param name="content">The content.</param>
         /// <param name="filter">The filter.</param>
         /// <returns></returns>
-        internal static IEnumerable<TContentType> Parents<TContentType>(this IContent content, Func<TContentType, bool> filter)
+        public static IEnumerable<TContentType> Parents<TContentType>(this IContent content, Func<TContentType, bool> filter)
             where TContentType : IContent
         {
             return content.Parents<TContentType>()
