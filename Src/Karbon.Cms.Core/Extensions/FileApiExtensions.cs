@@ -115,7 +115,20 @@ namespace Karbon.Cms.Core
         public static bool HasNext<TFileType>(this TFileType file)
             where TFileType : IFile
         {
-            return file.HasNext(x => true);
+            return ((IFile)file).HasNext<TFileType>();
+        }
+
+        /// <summary>
+        /// Determines whether the specified file has a next sibling.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified file has a next sibling; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool HasNext<TFileType>(this IFile file)
+            where TFileType : IFile
+        {
+            return file.HasNext<TFileType>(x => true);
         }
 
         /// <summary>
@@ -128,6 +141,21 @@ namespace Karbon.Cms.Core
         ///   <c>true</c> if the specified file has a next sibling; otherwise, <c>false</c>.
         /// </returns>
         public static bool HasNext<TFileType>(this TFileType file, Func<TFileType, bool> filter)
+            where TFileType : IFile
+        {
+            return ((IFile)file).HasNext<TFileType>(filter);
+        }
+
+        /// <summary>
+        /// Determines whether the specified file has a next sibling.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="file">The file.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified file has a next sibling; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool HasNext<TFileType>(this IFile file, Func<TFileType, bool> filter)
             where TFileType : IFile
         {
             var content = StoreManager.ContentStore.GetByUrl(file.ContentRelativeUrl);
@@ -146,7 +174,20 @@ namespace Karbon.Cms.Core
         public static bool HasPrev<TFileType>(this TFileType file)
             where TFileType : IFile
         {
-            return file.HasPrev(x => true);
+            return ((IFile)file).HasPrev<TFileType>();
+        }
+
+        /// <summary>
+        /// Determines whether the specified file has a previous sibling.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified file has a previous sibling; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool HasPrev<TFileType>(this IFile file)
+            where TFileType : IFile
+        {
+            return file.HasPrev<TFileType>(x => true);
         }
 
         /// <summary>
@@ -159,6 +200,21 @@ namespace Karbon.Cms.Core
         ///   <c>true</c> if the specified file has a previous sibling; otherwise, <c>false</c>.
         /// </returns>
         public static bool HasPrev<TFileType>(this TFileType file, Func<TFileType, bool> filter)
+            where TFileType : IFile
+        {
+            return ((IFile)file).HasPrev<TFileType>(filter);
+        }
+
+        /// <summary>
+        /// Determines whether the specified file has a previous sibling.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="file">The file.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified file has a previous sibling; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool HasPrev<TFileType>(this IFile file, Func<TFileType, bool> filter)
             where TFileType : IFile
         {
             var content = StoreManager.ContentStore.GetByUrl(file.ContentRelativeUrl);
@@ -178,7 +234,21 @@ namespace Karbon.Cms.Core
         public static TFileType Next<TFileType>(this TFileType file)
             where TFileType : IFile
         {
-            return file.Next(x => true);
+            return ((IFile)file).Next<TFileType>();
+        }
+
+        /// <summary>
+        /// Gets the next sibling.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="file">The file.</param>
+        /// <returns>
+        /// The next sibling.
+        /// </returns>
+        public static TFileType Next<TFileType>(this IFile file)
+            where TFileType : IFile
+        {
+            return file.Next<TFileType>(x => true);
         }
 
         /// <summary>
@@ -191,6 +261,21 @@ namespace Karbon.Cms.Core
         /// The next sibling.
         /// </returns>
         public static TFileType Next<TFileType>(this TFileType file, Func<TFileType, bool> filter)
+            where TFileType : IFile
+        {
+            return ((IFile) file).Next<TFileType>(filter);
+        }
+
+        /// <summary>
+        /// Gets the next sibling.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="file">The file.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns>
+        /// The next sibling.
+        /// </returns>
+        public static TFileType Next<TFileType>(this IFile file, Func<TFileType, bool> filter)
             where TFileType : IFile
         {
             var content = StoreManager.ContentStore.GetByUrl(file.ContentRelativeUrl);
@@ -212,7 +297,21 @@ namespace Karbon.Cms.Core
         public static TFileType Prev<TFileType>(this TFileType file)
             where TFileType : IFile
         {
-            return file.Prev(x => true);
+            return ((IFile)file).Prev<TFileType>();
+        }
+
+        /// <summary>
+        /// Gets the previous sibling.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="file">The file.</param>
+        /// <returns>
+        /// The previous sibling.
+        /// </returns>
+        public static TFileType Prev<TFileType>(this IFile file)
+            where TFileType : IFile
+        {
+            return file.Prev<TFileType>(x => true);
         }
 
         /// <summary>
@@ -225,6 +324,21 @@ namespace Karbon.Cms.Core
         ///   The previous sibling.
         /// </returns>
         public static TFileType Prev<TFileType>(this TFileType file, Func<TFileType, bool> filter)
+            where TFileType : IFile
+        {
+            return ((IFile) file).Prev<TFileType>(filter);
+        }
+
+        /// <summary>
+        /// Gets the previous sibling.
+        /// </summary>
+        /// <typeparam name="TFileType">The type of the file type.</typeparam>
+        /// <param name="file">The file.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns>
+        ///   The previous sibling.
+        /// </returns>
+        public static TFileType Prev<TFileType>(this IFile file, Func<TFileType, bool> filter)
             where TFileType : IFile
         {
             var content = StoreManager.ContentStore.GetByUrl(file.ContentRelativeUrl);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using Karbon.Cms.Core.Models;
 using Karbon.Cms.Core.Stores;
 
@@ -550,6 +551,54 @@ namespace Karbon.Cms.Core
         public static bool IsDescendantOf(this IContent descendant, IContent content)
         {
             return content.IsAncestorOf(descendant);
+        }
+
+        public static bool HasNext(this IContent content)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool HasNext<TContentType>(this IContent content)
+            where TContentType : IContent
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool HasNext(this IContent content, Func<IContent, bool> filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool HasNext<TContentType>(this IContent content, Func<TContentType, bool> filter)
+            where TContentType : IContent
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool HasNext<TKey>(this IContent content, 
+            Func<IContent, TKey> sort, SortDirection sortDirection)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool HasNext<TContentType, TKey>(this IContent content,
+            Func<IContent, TKey> sort, SortDirection sortDirection)
+            where TContentType : IContent
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool HasNext<TKey>(this IContent content, Func<IContent, bool> filter,
+            Func<IContent, TKey> sort, SortDirection sortDirection)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool HasNext<TContentType, TKey>(this IContent content, Func<TContentType, bool> filter,
+            Func<IContent, TKey> sort, SortDirection sortDirection)
+            where TContentType : IContent
+        {
+            throw new NotImplementedException();
         }
     }
 }
