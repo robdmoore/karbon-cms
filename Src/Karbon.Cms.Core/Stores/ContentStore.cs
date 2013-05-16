@@ -80,13 +80,12 @@ namespace Karbon.Cms.Core.Stores
         /// <returns></returns>
         public IContent GetParent(IContent content)
         {
-            var segments = content.RelativeUrl.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            if (segments.Count < 2)
+            if (content.IsHomePage())
                 return null;
 
-            segments.RemoveAt(segments.Count - 1);
+            var parentUrl = content.RelativeUrl.Substring(0, 
+                content.RelativeUrl.LastIndexOf("/", StringComparison.InvariantCulture));
 
-            var parentUrl = string.Join("/", segments).EnsureTrailingForwardSlash();
             if (!_contentCache.ContainsKey(parentUrl))
                 return null;
 

@@ -197,7 +197,7 @@ namespace Karbon.Cms.Core
         /// <returns></returns>
         public static IEnumerable<IContent> Siblings(this IContent content)
         {
-            if (content.IsHomePage())
+            if (content.Parent() == null)
                 return Enumerable.Empty<IContent>();
 
             return content.Parent().Children(x => x.RelativeUrl != content.RelativeUrl);
@@ -553,52 +553,223 @@ namespace Karbon.Cms.Core
             return content.IsAncestorOf(descendant);
         }
 
+        /// <summary>
+        /// Determines whether the specified content has a next sibling.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified content has a next sibling; otherwise, <c>false</c>.
+        /// </returns>
         public static bool HasNext(this IContent content)
         {
-            throw new NotImplementedException();
+            return content.HasNext(x => true); 
         }
 
+        /// <summary>
+        /// Determines whether the specified content has a next sibling.
+        /// </summary>
+        /// <typeparam name="TContentType">The type of the content type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified content has a next sibling; otherwise, <c>false</c>.
+        /// </returns>
         public static bool HasNext<TContentType>(this IContent content)
             where TContentType : IContent
         {
-            throw new NotImplementedException();
+            return content.HasNext<TContentType>(x => true);
         }
 
+        /// <summary>
+        /// Determines whether the specified content has a next sibling.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified content has a next sibling; otherwise, <c>false</c>.
+        /// </returns>
         public static bool HasNext(this IContent content, Func<IContent, bool> filter)
         {
-            throw new NotImplementedException();
+            return content.HasNext<IContent>(filter);
         }
 
+        /// <summary>
+        /// Determines whether the specified content has a next sibling.
+        /// </summary>
+        /// <typeparam name="TContentType">The type of the content type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified content has a next sibling; otherwise, <c>false</c>.
+        /// </returns>
         public static bool HasNext<TContentType>(this IContent content, Func<TContentType, bool> filter)
             where TContentType : IContent
         {
-            throw new NotImplementedException();
+            var next = content.Next<TContentType>(filter);
+            return !EqualityComparer<TContentType>.Default.Equals(next, default(TContentType));
         }
 
-        public static bool HasNext<TKey>(this IContent content, 
-            Func<IContent, TKey> sort, SortDirection sortDirection)
+        /// <summary>
+        /// Gets the next sibling.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static IContent Next(this IContent content)
         {
-            throw new NotImplementedException();
+            return content.Next<IContent>();
         }
 
-        public static bool HasNext<TContentType, TKey>(this IContent content,
-            Func<IContent, TKey> sort, SortDirection sortDirection)
+        /// <summary>
+        /// Gets the next sibling.
+        /// </summary>
+        /// <typeparam name="TContentType">The type of the content type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static TContentType Next<TContentType>(this IContent content)
             where TContentType : IContent
         {
-            throw new NotImplementedException();
+            return content.Next<TContentType>(x => true);
         }
 
-        public static bool HasNext<TKey>(this IContent content, Func<IContent, bool> filter,
-            Func<IContent, TKey> sort, SortDirection sortDirection)
+        /// <summary>
+        /// Gets the next sibling.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static IContent Next(this IContent content, Func<IContent, bool> filter)
         {
-            throw new NotImplementedException();
+            return content.Next<IContent>(filter);
         }
 
-        public static bool HasNext<TContentType, TKey>(this IContent content, Func<TContentType, bool> filter,
-            Func<IContent, TKey> sort, SortDirection sortDirection)
+        /// <summary>
+        /// Gets the next sibling.
+        /// </summary>
+        /// <typeparam name="TContentType">The type of the content type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static TContentType Next<TContentType>(this IContent content, Func<TContentType, bool> filter)
+            where  TContentType : IContent
+        {
+            var parent = content.Parent();
+            if (parent == null)
+                return default(TContentType);
+
+            var children = parent.Children().ToList();
+            return children.SkipWhile(x => x.RelativeUrl != content.RelativeUrl).Skip(1)
+                .Where(x => typeof(TContentType).IsAssignableFromExtended(x.GetType()))
+                .Cast<TContentType>().FirstOrDefault(filter);
+        }
+
+        /// <summary>
+        /// Determines whether the specified content has a previous sibling.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified content has a previous sibling; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool HasPrev(this IContent content)
+        {
+            return content.HasPrev(x => true);
+        }
+
+        /// <summary>
+        /// Determines whether the specified content has a previous sibling.
+        /// </summary>
+        /// <typeparam name="TContentType">The type of the content type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified content has a previous sibling; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool HasPrev<TContentType>(this IContent content)
             where TContentType : IContent
         {
-            throw new NotImplementedException();
+            return content.HasPrev<TContentType>(x => true);
+        }
+
+        /// <summary>
+        /// Determines whether the specified content has a previous sibling.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified content has a previous sibling; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool HasPrev(this IContent content, Func<IContent, bool> filter)
+        {
+            return content.HasPrev<IContent>(filter);
+        }
+
+        /// <summary>
+        /// Determines whether the specified content has a previous sibling.
+        /// </summary>
+        /// <typeparam name="TContentType">The type of the content type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified content has a previous sibling; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool HasPrev<TContentType>(this IContent content, Func<TContentType, bool> filter)
+            where TContentType : IContent
+        {
+            var prev = content.Prev<TContentType>(filter);
+            return !EqualityComparer<TContentType>.Default.Equals(prev, default(TContentType));
+        }
+
+        /// <summary>
+        /// Gets the previous sibling.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static IContent Prev(this IContent content)
+        {
+            return content.Prev<IContent>();
+        }
+
+        /// <summary>
+        /// Gets the previous sibling.
+        /// </summary>
+        /// <typeparam name="TContentType">The type of the content type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static TContentType Prev<TContentType>(this IContent content)
+            where TContentType : IContent
+        {
+            return content.Prev<TContentType>(x => true);
+        }
+
+        /// <summary>
+        /// Gets the previous sibling.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static IContent Prev(this IContent content, Func<IContent, bool> filter)
+        {
+            return content.Prev<IContent>(filter);
+        }
+
+        /// <summary>
+        /// Gets the previous sibling.
+        /// </summary>
+        /// <typeparam name="TContentType">The type of the content type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static TContentType Prev<TContentType>(this IContent content, Func<TContentType, bool> filter)
+            where TContentType : IContent
+        {
+            var parent = content.Parent();
+            if (parent == null)
+                return default(TContentType);
+
+            var children = parent.Children().ToList();
+
+            children.Reverse();
+
+            return children.SkipWhile(x => x.RelativeUrl != content.RelativeUrl).Skip(1)
+                .Where(x => typeof(TContentType).IsAssignableFromExtended(x.GetType()))
+                .Cast<TContentType>().FirstOrDefault(filter);
         }
     }
 }

@@ -112,10 +112,9 @@ namespace Karbon.Cms.Core
         /// <returns>
         ///   <c>true</c> if the specified file has a next sibling; otherwise, <c>false</c>.
         /// </returns>
-        public static bool HasNext<TFileType>(this TFileType file)
-            where TFileType : IFile
+        public static bool HasNext(this IFile file)
         {
-            return ((IFile)file).HasNext<TFileType>();
+            return file.HasNext<IFile>();
         }
 
         /// <summary>
@@ -134,16 +133,14 @@ namespace Karbon.Cms.Core
         /// <summary>
         /// Determines whether the specified file has a next sibling.
         /// </summary>
-        /// <typeparam name="TFileType">The type of the file type.</typeparam>
         /// <param name="file">The file.</param>
         /// <param name="filter">The filter.</param>
         /// <returns>
         ///   <c>true</c> if the specified file has a next sibling; otherwise, <c>false</c>.
         /// </returns>
-        public static bool HasNext<TFileType>(this TFileType file, Func<TFileType, bool> filter)
-            where TFileType : IFile
+        public static bool HasNext(this IFile file, Func<IFile, bool> filter)
         {
-            return ((IFile)file).HasNext<TFileType>(filter);
+            return file.HasNext<IFile>();
         }
 
         /// <summary>
@@ -158,10 +155,8 @@ namespace Karbon.Cms.Core
         public static bool HasNext<TFileType>(this IFile file, Func<TFileType, bool> filter)
             where TFileType : IFile
         {
-            var content = StoreManager.ContentStore.GetByUrl(file.ContentRelativeUrl);
-            var files = content.Files(filter).ToList();
-            var idx = files.FindIndex(f => f.RelativePath == file.RelativePath);
-            return idx + 1 < files.Count();
+            var next = file.Next<TFileType>(filter);
+            return !EqualityComparer<TFileType>.Default.Equals(next, default(TFileType));
         }
 
         /// <summary>
@@ -171,10 +166,9 @@ namespace Karbon.Cms.Core
         /// <returns>
         ///   <c>true</c> if the specified file has a previous sibling; otherwise, <c>false</c>.
         /// </returns>
-        public static bool HasPrev<TFileType>(this TFileType file)
-            where TFileType : IFile
+        public static bool HasPrev(this IFile file)
         {
-            return ((IFile)file).HasPrev<TFileType>();
+            return file.HasPrev<IFile>();
         }
 
         /// <summary>
@@ -193,16 +187,14 @@ namespace Karbon.Cms.Core
         /// <summary>
         /// Determines whether the specified file has a previous sibling.
         /// </summary>
-        /// <typeparam name="TFileType">The type of the file type.</typeparam>
         /// <param name="file">The file.</param>
         /// <param name="filter">The filter.</param>
         /// <returns>
         ///   <c>true</c> if the specified file has a previous sibling; otherwise, <c>false</c>.
         /// </returns>
-        public static bool HasPrev<TFileType>(this TFileType file, Func<TFileType, bool> filter)
-            where TFileType : IFile
+        public static bool HasPrev(this IFile file, Func<IFile, bool> filter)
         {
-            return ((IFile)file).HasPrev<TFileType>(filter);
+            return file.HasPrev<IFile>(filter);
         }
 
         /// <summary>
@@ -217,24 +209,20 @@ namespace Karbon.Cms.Core
         public static bool HasPrev<TFileType>(this IFile file, Func<TFileType, bool> filter)
             where TFileType : IFile
         {
-            var content = StoreManager.ContentStore.GetByUrl(file.ContentRelativeUrl);
-            var files = content.Files<TFileType>().ToList();
-            var idx = files.FindIndex(f => f.RelativePath == file.RelativePath);
-            return idx - 1 >= 0;
+            var prev = file.Prev<TFileType>(filter);
+            return !EqualityComparer<TFileType>.Default.Equals(prev, default(TFileType));
         }
 
         /// <summary>
         /// Gets the next sibling.
         /// </summary>
-        /// <typeparam name="TFileType">The type of the file type.</typeparam>
         /// <param name="file">The file.</param>
         /// <returns>
         /// The next sibling.
         /// </returns>
-        public static TFileType Next<TFileType>(this TFileType file)
-            where TFileType : IFile
+        public static IFile Next(this IFile file)
         {
-            return ((IFile)file).Next<TFileType>();
+            return file.Next<IFile>();
         }
 
         /// <summary>
@@ -254,16 +242,14 @@ namespace Karbon.Cms.Core
         /// <summary>
         /// Gets the next sibling.
         /// </summary>
-        /// <typeparam name="TFileType">The type of the file type.</typeparam>
         /// <param name="file">The file.</param>
         /// <param name="filter">The filter.</param>
         /// <returns>
         /// The next sibling.
         /// </returns>
-        public static TFileType Next<TFileType>(this TFileType file, Func<TFileType, bool> filter)
-            where TFileType : IFile
+        public static IFile Next(this IFile file, Func<IFile, bool> filter)
         {
-            return ((IFile) file).Next<TFileType>(filter);
+            return file.Next<IFile>(filter);
         }
 
         /// <summary>
@@ -279,25 +265,23 @@ namespace Karbon.Cms.Core
             where TFileType : IFile
         {
             var content = StoreManager.ContentStore.GetByUrl(file.ContentRelativeUrl);
-            var files = content.Files(filter).ToList();
-            var idx = files.FindIndex(f => f.RelativePath == file.RelativePath);
-            return idx + 1 < files.Count()
-                ? files[idx + 1]
-                : default(TFileType);
+            var files = content.Files().ToList();
+
+            return files.SkipWhile(x => x.RelativeUrl != content.RelativeUrl).Skip(1)
+                .Where(x => typeof(TFileType).IsAssignableFromExtended(x.GetType()))
+                .Cast<TFileType>().FirstOrDefault(filter);
         }
 
         /// <summary>
         /// Gets the previous sibling.
         /// </summary>
-        /// <typeparam name="TFileType">The type of the file type.</typeparam>
         /// <param name="file">The file.</param>
         /// <returns>
         /// The previous sibling.
         /// </returns>
-        public static TFileType Prev<TFileType>(this TFileType file)
-            where TFileType : IFile
+        public static IFile Prev(this IFile file)
         {
-            return ((IFile)file).Prev<TFileType>();
+            return file.Prev<IFile>();
         }
 
         /// <summary>
@@ -317,16 +301,14 @@ namespace Karbon.Cms.Core
         /// <summary>
         /// Gets the previous sibling.
         /// </summary>
-        /// <typeparam name="TFileType">The type of the file type.</typeparam>
         /// <param name="file">The file.</param>
         /// <param name="filter">The filter.</param>
         /// <returns>
         ///   The previous sibling.
         /// </returns>
-        public static TFileType Prev<TFileType>(this TFileType file, Func<TFileType, bool> filter)
-            where TFileType : IFile
+        public static IFile Prev(this IFile file, Func<IFile, bool> filter)
         {
-            return ((IFile) file).Prev<TFileType>(filter);
+            return file.Prev<IFile>(filter);
         }
 
         /// <summary>
@@ -342,11 +324,13 @@ namespace Karbon.Cms.Core
             where TFileType : IFile
         {
             var content = StoreManager.ContentStore.GetByUrl(file.ContentRelativeUrl);
-            var files = content.Files<TFileType>().ToList();
-            var idx = files.FindIndex(f => f.RelativePath == file.RelativePath);
-            return idx - 1 >= 0
-                ? files[idx - 1]
-                : default(TFileType);
+            var files = content.Files().ToList();
+
+            files.Reverse();
+
+            return files.SkipWhile(x => x.RelativeUrl != content.RelativeUrl).Skip(1)
+                .Where(x => typeof(TFileType).IsAssignableFromExtended(x.GetType()))
+                .Cast<TFileType>().FirstOrDefault(filter);
         }
 
         #endregion
