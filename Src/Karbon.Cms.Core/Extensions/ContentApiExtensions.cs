@@ -51,7 +51,7 @@ namespace Karbon.Cms.Core
         public static IEnumerable<TContentType> Parents<TContentType>(this IContent content)
             where TContentType : IContent
         {
-            return content.Parents(x => x.GetType() == typeof(TContentType))
+            return content.Parents(x => typeof(TContentType).IsAssignableFromExtended(x.GetType()))
                 .Cast<TContentType>();
         }
 

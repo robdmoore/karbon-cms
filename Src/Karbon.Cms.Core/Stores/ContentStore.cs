@@ -57,6 +57,11 @@ namespace Karbon.Cms.Core.Stores
             return _contentCache[url];
         }
 
+        /// <summary>
+        /// Gets the ancestor content.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
         public IEnumerable<IContent> GetAncestors(IContent content)
         {
             content = GetParent(content);
