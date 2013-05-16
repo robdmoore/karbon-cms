@@ -81,6 +81,43 @@ namespace Karbon.Cms.Core
         }
 
         /// <summary>
+        /// Gets the closest ancestor based on the filter function.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static IContent Closest(this IContent content, Func<IContent, bool> filter)
+        {
+            return content.Parents().FirstOrDefault(filter);
+        }
+
+        /// <summary>
+        /// Gets the closest ancestor of the given type.
+        /// </summary>
+        /// <typeparam name="TContentType">The type of the content type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
+        public static TContentType Closest<TContentType>(this IContent content)
+            where TContentType : IContent
+        {
+            return content.Closest<TContentType>(x => true);
+        }
+
+        /// <summary>
+        /// Gets the closest ancestor of the given type filtered by the filter function.
+        /// </summary>
+        /// <typeparam name="TContentType">The type of the content type.</typeparam>
+        /// <param name="content">The content.</param>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public static TContentType Closest<TContentType>(this IContent content, Func<TContentType, bool> filter)
+            where TContentType : IContent
+        {
+            return content.Parents(x => typeof(TContentType).IsAssignableFromExtended(x.GetType()))
+                .Cast<TContentType>().FirstOrDefault(filter);
+        }
+
+        /// <summary>
         /// Gets the child content.
         /// </summary>
         /// <param name="content">The content.</param>
