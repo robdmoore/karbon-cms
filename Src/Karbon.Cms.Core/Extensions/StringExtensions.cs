@@ -27,7 +27,11 @@ namespace Karbon.Cms.Core
         /// <returns></returns>
         public static string EnsureTrailingForwardSlash(this string path)
         {
-            return EnsureTrailingCharacter(path, '/');
+            var url = EnsureTrailingCharacter(path, '/');
+            if (url == "~//")
+                url = "~/";
+
+            return url;
         }
 
         /// <summary>
@@ -90,7 +94,11 @@ namespace Karbon.Cms.Core
         /// </returns>
         public static bool IsAlphaNumeric(this string input)
         {
-            return Regex.IsMatch(input, @"^[a-zA-Z0-9]*$");
+            if (input == null)
+                throw new ArgumentNullException("input");
+
+            return input.All(char.IsLetterOrDigit);
+            // return Regex.IsMatch(input, @"^[a-zA-Z0-9]*$");
         }
     }
 }

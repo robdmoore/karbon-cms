@@ -57,6 +57,17 @@ namespace Karbon.Cms.Core.Stores
             return _contentCache[url];
         }
 
+        public IEnumerable<IContent> GetAncestors(IContent content)
+        {
+            content = GetParent(content);
+            while (content != null)
+            {
+                yield return content;
+
+                content = GetParent(content);
+            }
+        }
+
         /// <summary>
         /// Gets the parent content.
         /// </summary>
@@ -64,10 +75,13 @@ namespace Karbon.Cms.Core.Stores
         /// <returns></returns>
         public IContent GetParent(IContent content)
         {
-            if (content.RelativeUrl.LastIndexOf("/", StringComparison.InvariantCulture) <= 2)
+            var segments = content.RelativeUrl.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            if (segments.Count < 2)
                 return null;
 
-            var parentUrl = content.RelativeUrl.Substring(0, content.RelativeUrl.LastIndexOf("/", StringComparison.InvariantCulture));
+            segments.RemoveAt(segments.Count - 1);
+
+            var parentUrl = string.Join("/", segments).EnsureTrailingForwardSlash();
             if (!_contentCache.ContainsKey(parentUrl))
                 return null;
 
@@ -92,9 +106,7 @@ namespace Karbon.Cms.Core.Stores
         /// <returns></returns>
         public IEnumerable<IContent> GetDescendants(IContent content)
         {
-            var url = content.RelativeUrl + "/";
-            if (url == "~//")
-                url = "~/";
+            var url = content.RelativeUrl.EnsureTrailingForwardSlash();
 
             return _contentCache.Keys
                 .Where(x => x != url && x.StartsWith(url))
