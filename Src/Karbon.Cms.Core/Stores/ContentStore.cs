@@ -95,8 +95,9 @@ namespace Karbon.Cms.Core.Stores
         /// <returns></returns>
         public IEnumerable<IContent> GetChildren(IContent content)
         {
-            return GetDescendants(content).Where(x => x.Depth == content.Depth + 1);
-                .OrderBy(x => x.SortOrder).ThenBy(x => x.Slug)
+            return GetDescendants(content)
+                .Where(x => x.Depth == content.Depth + 1)
+                .OrderBy(x => x.SortOrder).ThenBy(x => x.Slug);
         }
 
         /// <summary>
@@ -110,8 +111,8 @@ namespace Karbon.Cms.Core.Stores
 
             return _contentCache.Keys
                 .Where(x => x != url && x.StartsWith(url))
-                .Select(x => _contentCache[x]);
-                .OrderBy(x => x.SortOrder).ThenBy(x => x.Slug)
+                .Select(x => _contentCache[x])
+                .OrderBy(x => x.SortOrder).ThenBy(x => x.Slug);
         }
 
         #endregion
