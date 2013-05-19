@@ -218,6 +218,11 @@ namespace Karbon.Cms.Web
             Image = image;
             Filters = new Dictionary<string, object>();
         }
+
+        public override string ToString()
+        {
+            return this.Url();
+        }
     }
 
     public enum FitMode

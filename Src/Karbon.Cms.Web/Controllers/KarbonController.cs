@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Karbon.Cms.Core.Models;
+using Karbon.Cms.Core.Stores;
 using Karbon.Cms.Web.Routing;
 
 namespace Karbon.Cms.Web.Controllers
@@ -12,20 +13,32 @@ namespace Karbon.Cms.Web.Controllers
     /// <summary>
     /// The base class for Karbon based controllers.
     /// </summary>
-    /// <typeparam name="TModel">The type of the model.</typeparam>
-    public class KarbonController<TModel> : Controller
-        where TModel : IContent
+    /// <typeparam name="TCurrentPageType">The type of the current page.</typeparam>
+    /// <typeparam name="THomePageType">The type of the home page.</typeparam>
+    public class KarbonController<TCurrentPageType, THomePageType> : Controller
+        where TCurrentPageType : IContent
+        where THomePageType : IContent
     {
         /// <summary>
-        /// Gets the model.
+        /// Gets the current page.
         /// </summary>
         /// <value>
-        /// The model.
+        /// The current page.
         /// </value>
-        public TModel Model
+        public TCurrentPageType CurrentPage
         {
-            //TODO: Rename Content inline with other aireas?
-            get { return (TModel)RouteData.Values[KarbonRoute.ModelKey]; }
+            get { return (TCurrentPageType)RouteData.Values[KarbonRoute.ModelKey]; }
+        }
+
+        /// <summary>
+        /// Gets the home page.
+        /// </summary>
+        /// <value>
+        /// The home page.
+        /// </value>
+        public THomePageType HomePage
+        {
+            get { return (THomePageType)StoreManager.ContentStore.GetByUrl("~/"); }
         }
 
         /// <summary>
@@ -34,14 +47,14 @@ namespace Karbon.Cms.Web.Controllers
         /// <returns></returns>
         public virtual ActionResult Index()
         {
-            var modelTypeName = Model.TypeName;
+            var modelTypeName = CurrentPage.TypeName;
             var viewName = ViewExists(modelTypeName)
                 ? modelTypeName
                 : "Index";
 
             //TODO: Handle allowed views?
 
-            return View(viewName, Model);
+            return View(viewName, CurrentPage);
         }
 
         /// <summary>
@@ -56,6 +69,17 @@ namespace Karbon.Cms.Web.Controllers
         }
     }
 
-    public class KarbonController : KarbonController<Content>
+    /// <summary>
+    /// The base class for Karbon based controllers.
+    /// </summary>
+    /// <typeparam name="TCurrentPageType">The type of the current page type.</typeparam>
+    public class KarbonController<TCurrentPageType> : KarbonController<TCurrentPageType, Content>
+        where TCurrentPageType : IContent
+    { }
+
+    /// <summary>
+    /// The base class for Karbon based controllers.
+    /// </summary>
+    public class KarbonController : KarbonController<Content, Content>
     { }
 }
