@@ -48,6 +48,7 @@
     <Compile Include="EnvironmentContext.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\ContentApiExtensions.cs" />
+    <Compile Include="Extensions\DataApiExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\FileApiExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />

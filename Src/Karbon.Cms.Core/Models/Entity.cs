@@ -15,6 +15,15 @@ namespace Karbon.Cms.Core.Models
         public virtual DateTimeOffset Created { get; set; }
         public virtual DateTimeOffset Modified { get; set; }
 
+        /// <summary>
+        /// <para>Gets or sets the data for this content.</para>
+        /// <para>The Data property gives you raw access to the data values. If you want to make use
+        /// of inbuilt error checking and fallback values, concider using one of the
+        /// .GetValue() extension methods.</para>
+        /// </summary>
+        /// <value>
+        /// The data.
+        /// </value>
         public virtual IDictionary<string, string> Data { get; set; }
 
         protected Entity()
