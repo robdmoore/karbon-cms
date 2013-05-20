@@ -84,7 +84,8 @@ namespace Karbon.Cms.Core.Stores
                 return null;
 
             var parentUrl = content.RelativeUrl.Substring(0, 
-                content.RelativeUrl.LastIndexOf("/", StringComparison.InvariantCulture));
+                content.RelativeUrl.LastIndexOf("/", StringComparison.InvariantCulture))
+                .EnsureTrailingForwardSlash();
 
             if (!_contentCache.ContainsKey(parentUrl))
                 return null;
