@@ -9,18 +9,8 @@
   </configSections>
 
   <karbon>
-    <fileStores default="local">
-      <providers>
-        <add name="local" type="Karbon.Cms.Core.IO.LocalFileStore, Karbon.Cms.Core"
-             rootPath="~/App_Data/Content/" pathSeperator="/" />
-      </providers>
-    </fileStores>
-    <dataSerializers default="karbon">
-      <providers>
-        <add name="karbon" type="Karbon.Cms.Core.Serialization.KarbonDataSerializer, Karbon.Cms.Core"
-             fileExtension="txt" />
-      </providers>
-    </dataSerializers>
+    <fileStores configSource="Config\FileStores.config" />
+    <dataSerializers configSource="Config\DataSerializers.config" />
   </karbon>
 
   <system.webServer>
