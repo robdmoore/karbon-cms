@@ -7,3 +7,10 @@ Most developers are comfortable editing files, so an elaborate UI can add a lot 
 In Karbon CMS, we've tried to use as many standard practises as possible, so where we can make use of built in functionality, we do. We don't see the point in re-inventing the wheel. For anyone who has used jQuery, our API should look pretty familiar too, with all the traversal methods based heavily on the jQuery syntax.
 
 Probably the biggest feature of Karbon CMS is the complete lack of database......
+
+
+## Cheat Sheet
+
+If all you are looking for is a quick reference for Karbon, you might want to grab a copy of the Karbon CMS cheat sheet below.
+
+[![Cheat Sheet](api/01.png)](http://karboncms.com/media/cheatsheet.pdf)
