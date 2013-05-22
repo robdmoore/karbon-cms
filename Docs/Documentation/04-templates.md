@@ -39,8 +39,8 @@ This is just the basics of what you can do with your content, be sure to checkou
 
 When working with templates, you may find that you have small components that you need to use across multiple templates. Rather than copying an pasting, you can break these out into separate files and include them in your templates.
 
-For this, Karbon uses the standard Partials Views functionality of ASP.NET MVC. Simply create a `.cshtml` for the component in the standard `Views\Partials` folder and render it out directly in your template.
+For this, Karbon uses the standard Partials Views functionality of ASP.NET MVC. Simply create a `.cshtml` for the component in either the `Views/Karbon` or `Views/Shared` folder and render it out directly in your template.
 
 	@Html.Partial("MainNav")
 
-If you want to access the CurrentPage or HomePage within your component, simply have the partial view inherit the `KarbonView` base class in the same way you do for templates.
+If you want to access the current page or home page properties within your component, simply have the partial view inherit the `KarbonView` base class in the same way you do for templates.
