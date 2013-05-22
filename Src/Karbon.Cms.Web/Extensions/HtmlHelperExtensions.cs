@@ -32,5 +32,35 @@ namespace Karbon.Cms.Web
         {
             return helper.Markdown(input);
         }
+
+        /// <summary>
+        /// Converts new lines to HTML breaks.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="input">The input.</param>
+        /// <returns></returns>
+        public static IHtmlString Multiline(this HtmlHelper helper, string input)
+        {
+            return new HtmlString(input.Replace(Environment.NewLine, "<br />"));
+        }
+
+        /// <summary>
+        /// Extracts a short excerpt from the input string.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="input">The input.</param>
+        /// <param name="length">The length.</param>
+        /// <param name="suffix">The suffix.</param>
+        /// <returns></returns>
+        public static IHtmlString Excerpt(this HtmlHelper helper, string input, int length = 150, string suffix = "...")
+        {
+            if(input == null)
+                input = "";
+
+            if (input.Length > length - suffix.Length)
+                input = input.Substring(0, length - suffix.Length) + suffix;
+
+            return new HtmlString(input);
+        }
     }
 }
