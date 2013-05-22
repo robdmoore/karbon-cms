@@ -1,0 +1,5 @@
+﻿Name: Solution 2
+----
+
+Content: Nunc tristique fermentum imperdiet. Duis dapibus porttitor rutrum. Suspendisse tincidunt, risus nec scelerisque rutrum, elit eros aliquet erat, eget dapibus metus quam ut arcu. Nunc dapibus, sapien id malesuada laoreet, nisi erat facilisis ipsum, a placerat neque arcu et metus. Phasellus porttitor tortor non erat semper volutpat. Donec blandit mi eget sapien gravida et vulputate nibh interdum. Fusce venenatis accumsan egestas. Aliquam ultrices pulvinar diam. Suspendisse potenti.
+----

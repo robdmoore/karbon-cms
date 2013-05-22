@@ -1,0 +1,12 @@
+﻿@inherits KarbonView
+@{
+    Layout = "_Layout.cshtml";
+}
+
+<section class="content">
+  <article>
+    <h1>@Model.CurrentPage.Name</h1>
+    @Html.Md(Model.CurrentPage.Data.GetValue("Content"))
+  </article>
+</section>
+

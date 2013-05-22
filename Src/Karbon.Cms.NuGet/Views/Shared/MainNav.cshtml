@@ -1,0 +1,10 @@
+﻿@inherits KarbonView
+
+<nav class="menu">
+    <ul>
+        @foreach(var page in Model.HomePage.Children(x => x.IsVisible()))
+        {
+            <li><a href="@page.Url()" class="@(page.IsOpen() ? "active" : "")">@page.Name</a></li>
+        }
+    </ul>
+</nav>

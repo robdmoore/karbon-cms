@@ -1,0 +1,5 @@
+﻿Name: Solution 3
+----
+
+Content: Sed felis nulla, vehicula non sodales et, consectetur vitae lectus. Integer ultricies, est non ultrices aliquam, elit augue consectetur augue, et dignissim arcu ligula a mauris. Praesent iaculis, sem non aliquet gravida, urna ante bibendum libero, eu vestibulum velit dui eu urna. Vivamus nec dignissim justo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc vel est eget tortor laoreet bibendum. Curabitur vitae rhoncus mauris. Vestibulum semper consectetur faucibus.
+----

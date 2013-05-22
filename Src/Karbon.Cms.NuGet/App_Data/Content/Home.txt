@@ -1,4 +1,26 @@
-Name: Welcome to Karbon
+Name: Welcome to Karbon CMS
 ----
-Content: A lightweight, open source, file based CMS for ASP.NET MVC.
+
+Content: 
+
+Yay! If you are seeing this, the installation of Karbon CMS worked :)
+Now just give the links in the menu a try to make sure the routing works and you are all set.
+
+
+
+Check out the docs at <http://karboncms.com/docs> if you run into any problems or just drop us an email at <help@karboncms.com>.
+
+
+
+Have fun!
+----
+
+###################################################################
+# Site Settings
+###################################################################
+
+SiteName: Karbon CMS
+----
+
+SiteCopyright: &copy; Copyright [Outfield Digital Ltd](http://theoutfield.net) 2013
 ----
