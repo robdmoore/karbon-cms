@@ -1,5 +1,5 @@
 # Strongly Typing
-Accessing data in your templates via the `.Data` property is certainly simple, but it doesn't offer much discoverability for you content entities and accessing values by string can be error prone. To combat this, we've also added the ability to have strongly typed views allowing you to access key values in your content files as real life properties on your content entities.
+Accessing data in your templates via the `.Data` property is certainly simple, but it doesn't offer much discoverability for you content items and accessing values by string can be error prone. To combat this, we've also added the ability to have strongly typed views allowing you to access key values in your content files as real life properties on your content items.
 
 Lets say we have a `Home.txt` file located in the root of our content folder containing the following key values.
 
@@ -12,7 +12,7 @@ Lets say we have a `Home.txt` file located in the root of our content folder con
 
 ## Creating your model
 
-Before we can access these properties in our view in a strongly typed manor, we first need to create our custom type. In your `Models` folder then, create a class `Home.cs` with the following contents:
+Before we can access these properties in our view in a strongly typed manor, we first need to create our custom type. In your `Models` folder, create a class `Home.cs` with the following contents:
 
 	public class Home : Content
     {

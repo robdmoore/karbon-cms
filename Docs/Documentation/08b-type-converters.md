@@ -7,7 +7,7 @@ Type converters are a standard .NET concept used to help convert one value type 
 
 If you want to create a custom converter, checkout the [official documentation on how to do this over on MSDN](http://msdn.microsoft.com/en-us/library/ayybcxe5.aspx).
 
-Now that you know how to create type converters, lets see how to hook them up.
+Now that you know how to create type converters, lets see how to hook them up in Karbon.
 
 ## Non-Strongly Typed Content
 If you are accessing data via the `.Data` property on your content, you can use one of the extended `GetValue(...)` methods to get data of a given type.
