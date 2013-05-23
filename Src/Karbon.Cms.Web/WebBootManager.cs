@@ -17,15 +17,23 @@ namespace Karbon.Cms.Web
 {
     public class WebBootManager : CoreBootManager
     {
+        private bool _appStartingFlag;
+        private bool _appStartedFlag;
+
         /// <summary>
         /// Initializes components that need to run before the application has started
         /// </summary>
         public override void AppStarting()
         {
+            if (_appStartingFlag)
+                throw new InvalidOperationException("The boot manager has already started");
+
             base.AppStarting();
 
             // Register http modules
             RegisterModules();
+
+            _appStartingFlag = true;
         }
 
         /// <summary>
@@ -33,6 +41,9 @@ namespace Karbon.Cms.Web
         /// </summary>
         public override void AppStarted()
         {
+            if (_appStartedFlag)
+                throw new InvalidOperationException("The boot manager has already started");
+
             base.AppStarted();
 
             // Wrap the http context
@@ -49,6 +60,8 @@ namespace Karbon.Cms.Web
 
             // Register required routes
             RegisterRoutes();
+
+            _appStartedFlag = true;
         }
 
         /// <summary>
