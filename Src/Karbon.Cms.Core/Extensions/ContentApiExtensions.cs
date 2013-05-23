@@ -780,7 +780,7 @@ namespace Karbon.Cms.Core
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns></returns>
-        public static string Get(this IContent content, string key, string defaultValue = "")
+        public static string Get(this IEntity content, string key, string defaultValue = "")
         {
             string value;
             return content.TryGet(key, out value) && !string.IsNullOrEmpty(value)
@@ -796,7 +796,7 @@ namespace Karbon.Cms.Core
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns></returns>
-        public static TValueType Get<TValueType>(this IContent content, string key, TValueType defaultValue = default(TValueType))
+        public static TValueType Get<TValueType>(this IEntity content, string key, TValueType defaultValue = default(TValueType))
         {
             TValueType value;
             return content.TryGet(key, out value) && !EqualityComparer<TValueType>.Default.Equals(value, default(TValueType))
@@ -813,7 +813,7 @@ namespace Karbon.Cms.Core
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns></returns>
-        public static TValueType Get<TValueType, TConverterType>(this IContent content, string key, TValueType defaultValue = default(TValueType))
+        public static TValueType Get<TValueType, TConverterType>(this IEntity content, string key, TValueType defaultValue = default(TValueType))
             where TConverterType : TypeConverter
         {
             TValueType value;
@@ -830,7 +830,7 @@ namespace Karbon.Cms.Core
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public static bool TryGet<TValueType>(this IContent content, string key, out TValueType value)
+        public static bool TryGet<TValueType>(this IEntity content, string key, out TValueType value)
         {
             value = default(TValueType);
 
@@ -860,7 +860,7 @@ namespace Karbon.Cms.Core
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public static bool TryGet<TValueType, TConverterType>(this IContent content, string key, out TValueType value)
+        public static bool TryGet<TValueType, TConverterType>(this IEntity content, string key, out TValueType value)
             where TConverterType : TypeConverter
         {
             value = default(TValueType);
