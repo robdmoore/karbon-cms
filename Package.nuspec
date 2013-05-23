@@ -4,7 +4,7 @@
     <id>Karbon.Cms</id>
     <version>0.0.0</version>
     <title>Karbon CMS</title>
-    <description>A lightweight, open source, file based CMS for ASP.NET MVC.</description>
+    <description>The database-less ASP.NET MVC CMS full of simple goodness</description>
     <authors>Matt Brailsford</authors>
     <projectUrl>http://www.karboncms.com</projectUrl>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
