@@ -6,7 +6,7 @@
 <section class="content">
   <article>
     <h1>@Model.CurrentPage.Name</h1>
-    @Html.Md(Model.CurrentPage.Data.GetValue("Content"))
+    @Html.Md(Model.CurrentPage.Get("Content"))
   </article>
 </section>
 
