@@ -33,7 +33,7 @@
             }
         </ul>
         @Model.CurrentPage.IsOpen()<br />
-        @(Model.CurrentPage.Data.GetValue<IEnumerable<string>>("keys"))
+        @(Model.CurrentPage.Get<IEnumerable<string>>("keys"))
     </div>
 </body>
 </html>
