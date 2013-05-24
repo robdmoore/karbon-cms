@@ -107,10 +107,14 @@ nav li
 	margin-right:20px;
 }
 
+nav a {
+    color: #fff;
+}
+
 nav li a.active,
 nav li a:hover
 {
-	color:#fff;
+	color:#155365;
 }
 
 nav.submenu
