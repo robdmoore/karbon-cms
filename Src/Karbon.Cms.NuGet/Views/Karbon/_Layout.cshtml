@@ -10,7 +10,9 @@
     <body>
         
         <header>
-            <h1><a href="/"><img src="/Images/logo.png" alt="@Model.HomePage.Get("SiteName")" /></a></h1>
+            <div>
+                <a href="/"><img src="/Images/logo.png" alt="@Model.HomePage.Get("SiteName")" /></a>
+            </div>
         </header>
         
         @Html.Partial("MainNav")
@@ -19,7 +21,9 @@
         @RenderBody()
 
         <footer>
-            @Html.Md(Model.HomePage.Get("SiteCopyright"))
+            <div>
+                @Html.Md(Model.HomePage.Get("SiteCopyright"))
+            </div>
         </footer>
     </body>
 </html>
