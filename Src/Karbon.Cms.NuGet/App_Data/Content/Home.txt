@@ -8,7 +8,7 @@ Now just give the links in the menu a try to make sure the routing works and you
 
 
 
-Check out the docs at <http://karboncms.com/docs> if you run into any problems or just drop us an email at <help@karboncms.com>.
+Check out the docs at <http://karboncms.com/docs> to find out what to do next or [join us on the forum](https://groups.google.com/forum/#!forum/karboncms) if you have any questions.
 
 
 
@@ -22,5 +22,5 @@ Have fun!
 SiteName: Karbon CMS
 ----
 
-SiteCopyright: &copy; Copyright [Outfield Digital Ltd](http://theoutfield.net) 2013
+SiteCopyright: &copy; Copyright [The Outfield](http://theoutfield.net)
 ----

@@ -40,9 +40,7 @@ Gets the last modified date of the file.
 ### .Data:IDictionary<String, String>
 Gets the key value dictionary of parsed content from the meta data file. 
 
-Whilst you can access the values of the dictionary directly, it is advised to use the `.GetValue(...)` methods instead, as they offer some in-built error handling and fallback values for a better experience.
-
-See the [Data API](05c-data-api.md) for further information on the `GetValue(...)` methods.
+Whilst you can access the values of the dictionary directly, it is advised to use the `.Get(...)` methods instead, as they offer some in-built error handling and fallback values for a better experience.
 
 ## Methods
 
@@ -67,15 +65,23 @@ Gets a flag indicating whether the file is a sound.
 ### .IsDocument():Bool 
 Gets a flag indicating whether the file is a document.
 
+### .Get(String key, [String defaultValue]):String
+Gets the value for the given key from the Data collection. If no key exists, or the value is empty, the optional defaultValue will be returned.
+
+### .TryGet(String key, out String value):Bool
+Gets a flag indicating whether a value for the given key can be found in the Data collection.
+
+## Traversal
+
 ### .HasPrev([Func<IFile, Bool> filter]):Bool
 Gets a flag indicating whether the file has a previous sibling optionally filtered by the filter function parameter.
+
+### .Prev([Func<IFile, Bool> filter]): IFile
+Gets the previous file optionally filtered by the filter function parameter. 
 
 ### .HasNext([Func<IFile, Bool> filter]):Bool
 Gets a flag indicating whether the file has a next sibling
 optionally filtered by the filter function parameter.
-
-### .Prev([Func<IFile, Bool> filter]): IFile
-Gets the previous file optionally filtered by the filter function parameter. 
 
 ### .Next([Func<IFile, Bool> filter]): IFile
 Gets the previous file optionally filtered by the filter function parameter. 

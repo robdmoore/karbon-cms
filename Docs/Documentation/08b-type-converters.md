@@ -14,11 +14,11 @@ If you are accessing data via the `.Data` property on your content, you can use 
 
 If the type converter you want to use is a built in one, you can just do something like this:
 
-	@Model.CurrentPage.Data.GetValue<Int32>("NumberOfEmployees")
+	@Model.CurrentPage.Get<Int32>("NumberOfEmployees")
 
 If you want to use your own type converter though, you will need to do this:
 
-	@Model.CurrentPage.Data.GetValue<MyType, MyTypeConverter>("MyProperty")
+	@Model.CurrentPage.Get<MyType, MyTypeConverter>("MyProperty")
 
 Karbon will then grab the value and attempt to convert it to the specific type.
 

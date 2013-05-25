@@ -4,13 +4,15 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@Model.CurrentPage.Name | @Model.HomePage.Data.GetValue("SiteName")</title>
+    <title>@Model.CurrentPage.Name | @Model.HomePage.Get("SiteName")</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css" />
 </head>
     <body>
         
         <header>
-            <h1><a href="/"><img src="/Images/logo.png" alt="@Model.HomePage.Data.GetValue("SiteName")" /></a></h1>
+            <div>
+                <a href="/"><img src="/Images/logo.png" alt="@Model.HomePage.Get("SiteName")" /></a>
+            </div>
         </header>
         
         @Html.Partial("MainNav")
@@ -19,7 +21,9 @@
         @RenderBody()
 
         <footer>
-            @Html.Md(Model.HomePage.Data.GetValue("SiteCopyright"))
+            <div>
+                @Html.Md(Model.HomePage.Get("SiteCopyright"))
+            </div>
         </footer>
     </body>
 </html>

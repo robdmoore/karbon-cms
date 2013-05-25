@@ -30,7 +30,7 @@ Now, in your template, instead of inheriting from `KarbonView` have it inherit f
 
 Within your views, instead of accessing properties like:
 
-	<h1>@Model.CurrentPage.Data.GetValue("Title")</h1>
+	<h1>@Model.CurrentPage.Get("Title")</h1>
 
 You should now be able to access your properties like so:
 

@@ -1,6 +1,5 @@
 # Introduction
-The Karbon docs are here to help you learn everything you need to know about the Karbon API. If you do run into any issues, feel free to [report it on our issue tracker](https://bitbucket.org/theoutfieldnet/karbon-cms/issues) or drop us an email at [help@karboncms.com](mailto:help@karboncms.com).
-
+The Karbon docs are here to help you learn everything you need to know about the Karbon API. If you do run into any issues, feel free to [report it on our issue tracker](https://bitbucket.org/theoutfieldnet/karbon-cms/issues) or ask us anything on the forum at <https://groups.google.com/forum/#!forum/karboncms>.
 
 ## Cheat Sheet
 

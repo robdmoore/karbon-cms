@@ -29,7 +29,7 @@ Once you've inherited the `KarbonView` base class, within your view you will get
 
 From these you can access content defined in your text files like so:
 
-	@Mode.CurrentPage.Data.GetValue("Title")
+	@Mode.CurrentPage.Get("Title")
 
 **Top tip:** Store site wide settings in your home pages content file and you can access them from any template via the `@Model.HomePage` property.
 

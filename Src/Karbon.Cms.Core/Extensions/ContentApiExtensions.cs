@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,7 +90,7 @@ namespace Karbon.Cms.Core
         /// <returns></returns>
         public static IContent Closest(this IContent content, Func<IContent, bool> filter)
         {
-            return content.Parents().FirstOrDefault(filter);
+            return content.Closest<IContent>(filter);
         }
 
         /// <summary>
@@ -114,7 +115,8 @@ namespace Karbon.Cms.Core
         public static TContentType Closest<TContentType>(this IContent content, Func<TContentType, bool> filter)
             where TContentType : IContent
         {
-            return content.Parents(x => typeof(TContentType).IsAssignableFromExtended(x.GetType()))
+            return new[] { content }.Concat(content.Parents())
+                .Where(x => typeof(TContentType).IsAssignableFromExtended(x.GetType()))
                 .Cast<TContentType>().FirstOrDefault(filter);
         }
 

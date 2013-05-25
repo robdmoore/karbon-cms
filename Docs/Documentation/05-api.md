@@ -4,4 +4,3 @@ If you've come here from the Templates section, you'll have seen how to get acce
 
 - [Content API](05a-content-api.md)
 - [Media API](05b-media-api.md)
-- [Data API](05c-data-api.md)

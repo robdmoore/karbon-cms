@@ -35,9 +35,7 @@ Gets the last modified date of the content.
 ### .Data:IDictionary<String, String>
 Gets the key value dictionary of parsed content from the content file. 
 
-Whilst you can access the values of the dictionary directly, it is advised to use the `.GetValue(...)` methods instead, as they offer some in-built error handling and fallback values for a better experience.
-
-See the [Data API](05c-data-api.md) for further information on the `GetValue(...)` methods.
+Whilst you can access the values of the dictionary directly, it is advised to use the `.Get(...)` methods instead, as they offer some in-built error handling and fallback values for a better experience.
 
 ## Methods
 
@@ -65,13 +63,11 @@ passed in content.
 Gets a flag indicating whether the content is a descendant of the
 passed in content.
 
-### .HasPrev([Func<IContent, Bool> filter]):Bool
-Gets a flag indicating whether the content has a previous sibling
-optionally filtered by the filter function parameter.
+### .Get(String key, [String defaultValue]):String
+Gets the value for the given key from the Data collection. If no key exists, or the value is empty, the optional defaultValue will be returned.
 
-### .HasNext([Func<IContent, Bool> filter]):Bool
-Gets a flag indicating whether the content has a next sibling
-optionally filtered by the filter function parameter.
+### .TryGet(String key, out String value):Bool
+Gets a flag indicating whether a value for the given key can be found in the Data collection.
 
 ## Traversal
 Once you have a piece of content, it is likely that you may want to find other content based upon it. To do this, you can navigate up and down the site structure using the following methods. 
@@ -93,8 +89,16 @@ Gets the child content items optionally filtered by the filter function paramete
 ### .Siblings([Func<IContent, Bool> filter]):IEnumerable<IContent>
 Gets the sibling content items optionally filtered by the filter function parameter. 
 
+### .HasPrev([Func<IContent, Bool> filter]):Bool
+Gets a flag indicating whether the content has a previous sibling
+optionally filtered by the filter function parameter.
+
 ### .Prev([Func<IContent, Bool> filter]): IContent
 Gets the previous content item optionally filtered by the filter function parameter. 
+
+### .HasNext([Func<IContent, Bool> filter]):Bool
+Gets a flag indicating whether the content has a next sibling
+optionally filtered by the filter function parameter.
 
 ### .Next([Func<IContent, Bool> filter]): IContent
 Gets the previous content item optionally filtered by the filter function parameter. 

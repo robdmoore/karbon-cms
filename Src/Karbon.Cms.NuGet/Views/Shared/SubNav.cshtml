@@ -1,9 +1,6 @@
 ﻿@inherits KarbonView
 @{
-    var root = Model.CurrentPage.Depth == 2
-        ? Model.CurrentPage 
-        : Model.CurrentPage.Closest(x => x.Depth == 2);
-        
+    var root = Model.CurrentPage.Closest(x => x.Depth == 2);
     if(root != null && root.Children(child => child.IsVisible()).Any())
     {
         <nav class="submenu">

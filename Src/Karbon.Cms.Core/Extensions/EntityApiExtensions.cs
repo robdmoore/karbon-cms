@@ -4,22 +4,23 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Karbon.Cms.Core.Models;
 
 namespace Karbon.Cms.Core
 {
-    public static class DataApiExtensions
+    public static class EntityApiExtensions
     {
         /// <summary>
         /// Gets the value for the given key.
         /// </summary>
-        /// <param name="data">The data.</param>
+        /// <param name="content">The content.</param>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns></returns>
-        public static string GetValue(this IDictionary<string, string> data, string key, string defaultValue = "")
+        public static string Get(this IEntity content, string key, string defaultValue = "")
         {
             string value;
-            return data.TryGetValue(key, out value) && !string.IsNullOrEmpty(value)
+            return content.TryGet(key, out value) && !string.IsNullOrEmpty(value)
                 ? value
                 : defaultValue;
         }
@@ -28,14 +29,14 @@ namespace Karbon.Cms.Core
         /// Gets the value for the given key.
         /// </summary>
         /// <typeparam name="TValueType">The type of the value type.</typeparam>
-        /// <param name="data">The data.</param>
+        /// <param name="content">The content.</param>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns></returns>
-        public static TValueType GetValue<TValueType>(this IDictionary<string, string> data, string key, TValueType defaultValue = default(TValueType))
+        public static TValueType Get<TValueType>(this IEntity content, string key, TValueType defaultValue = default(TValueType))
         {
             TValueType value;
-            return data.TryGetValue(key, out value) && !EqualityComparer<TValueType>.Default.Equals(value, default(TValueType))
+            return content.TryGet(key, out value) && !EqualityComparer<TValueType>.Default.Equals(value, default(TValueType))
                 ? value
                 : defaultValue;
         }
@@ -45,15 +46,15 @@ namespace Karbon.Cms.Core
         /// </summary>
         /// <typeparam name="TValueType">The type of the value type.</typeparam>
         /// <typeparam name="TConverterType">The type of the converter type.</typeparam>
-        /// <param name="data">The data.</param>
+        /// <param name="content">The content.</param>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns></returns>
-        public static TValueType GetValue<TValueType, TConverterType>(this IDictionary<string, string> data, string key, TValueType defaultValue = default(TValueType))
+        public static TValueType Get<TValueType, TConverterType>(this IEntity content, string key, TValueType defaultValue = default(TValueType))
             where TConverterType : TypeConverter
         {
             TValueType value;
-            return data.TryGetValue<TValueType, TConverterType>(key, out value) && !EqualityComparer<TValueType>.Default.Equals(value, default(TValueType))
+            return content.TryGet<TValueType, TConverterType>(key, out value) && !EqualityComparer<TValueType>.Default.Equals(value, default(TValueType))
                 ? value
                 : defaultValue;
         }
@@ -62,20 +63,20 @@ namespace Karbon.Cms.Core
         /// Tries to get the value for the given key.
         /// </summary>
         /// <typeparam name="TValueType">The type of the value type.</typeparam>
-        /// <param name="data">The data.</param>
+        /// <param name="content">The content.</param>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public static bool TryGetValue<TValueType>(this IDictionary<string, string> data, string key, out TValueType value)
+        public static bool TryGet<TValueType>(this IEntity content, string key, out TValueType value)
         {
             value = default(TValueType);
 
-            if (!data.ContainsKey(key))
+            if (!content.Data.ContainsKey(key))
                 return false;
 
             try
             {
-                var tmpValue = data[key];
+                var tmpValue = content.Data[key];
                 var converter = TypeDescriptor.GetConverter(typeof(TValueType));
                 value = (TValueType)converter.ConvertFromString(tmpValue);
 
@@ -92,22 +93,22 @@ namespace Karbon.Cms.Core
         /// </summary>
         /// <typeparam name="TValueType">The type of the value type.</typeparam>
         /// <typeparam name="TConverterType">The type of the converter type.</typeparam>
-        /// <param name="data">The data.</param>
+        /// <param name="content">The content.</param>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public static bool TryGetValue<TValueType, TConverterType>(this IDictionary<string, string> data, string key, out TValueType value)
+        public static bool TryGet<TValueType, TConverterType>(this IEntity content, string key, out TValueType value)
             where TConverterType : TypeConverter
         {
             value = default(TValueType);
 
-            if (!data.ContainsKey(key))
+            if (!content.Data.ContainsKey(key))
                 return false;
 
             try
             {
-                var tmpValue = data[key];
-                var converter = Activator.CreateInstance(typeof (TConverterType)) as TypeConverter;
+                var tmpValue = content.Data[key];
+                var converter = Activator.CreateInstance(typeof(TConverterType)) as TypeConverter;
                 if (converter == null)
                     return false;
 
