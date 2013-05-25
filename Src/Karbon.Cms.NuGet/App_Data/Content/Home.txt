@@ -22,5 +22,5 @@ Have fun!
 SiteName: Karbon CMS
 ----
 
-SiteCopyright: &copy; Copyright [Outfield Digital Ltd](http://theoutfield.net)
+SiteCopyright: &copy; Copyright [The Outfield](http://theoutfield.net)
 ----
