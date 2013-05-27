@@ -1,15 +1,11 @@
 #########################################
 #                                       #
 #       TheOutfiled's Ignore file       #
-#                                       #
-#########################################
 
 ##### File globs to match ####
 syntax: glob
-
 # Resharper
 _ReSharper.*
-
 # Visual Studio Stuff
 *.obj
 *.pdb
@@ -36,8 +32,9 @@ _ReSharper.*
 [Dd]ebug*/
 [Rr]elease*/
 *.[Pp]ublish.xml
-
 # General
 *.orig
 */Thumbs.db
 */log.txt
+/Assets/
+/Build/
