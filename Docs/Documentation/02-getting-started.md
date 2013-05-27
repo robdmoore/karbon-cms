@@ -21,9 +21,9 @@ And you are done!
 
 ## Get the Source Code
 
-If you are just building a website, you should only need to install the NuGet package. If however, you would like to have a poke around the source code or feel like getting involved, you can find the full source code for Karbon CMS over on BitBucket.
+If you are just building a website, you should only need to install the NuGet package. If however, you would like to have a poke around the source code or feel like getting involved, you can find the full source code for Karbon CMS over on GitHub.
 
-[https://bitbucket.org/theoutfieldnet/karbon-cms](https://bitbucket.org/theoutfieldnet/karbon-cms)
+<https://github.com/the-outfield/karbon-cms>
 
 ## Recommended Reading
 
