@@ -63,7 +63,7 @@ namespace Karbon.Cms.Core.Serialization
                         if (!line.StartsWith(ValueTerminator))
                         {
                             // Append line to value
-                            currentValue.AppendLine(line.Trim());
+                            currentValue.AppendLine(line);
                         }
                         else
                         {
