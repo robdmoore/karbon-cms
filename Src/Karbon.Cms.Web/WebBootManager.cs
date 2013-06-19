@@ -67,6 +67,9 @@ namespace Karbon.Cms.Web
             // Ignore media routes, these will be handled by the media VPP
             RouteTable.Routes.Ignore("media/{*path}");
 
+            // Ignore axd routes (incase this isn't an MVC app by default)
+            RouteTable.Routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
         }
     }
 }
