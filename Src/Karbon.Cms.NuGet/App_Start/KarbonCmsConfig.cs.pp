@@ -1,19 +1,13 @@
 using Karbon.Cms.Web;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof($rootnamespace$.App_Start.KarbonCmsConfig), "AppStarting")]
-[assembly: WebActivatorEx.PostApplicationStartMethod(typeof($rootnamespace$.App_Start.KarbonCmsConfig), "AppStarted")]
+[assembly: WebActivatorEx.PostApplicationStartMethod(typeof($rootnamespace$.App_Start.KarbonCmsConfig), "Initialize")]
 namespace $rootnamespace$.App_Start
 {
     public class KarbonCmsConfig
     {
-        public static void AppStarting()
+        public static void Initialize()
         {
-            new WebBootManager().AppStarting();
-        }
-
-        public static void AppStarted()
-        {
-            new WebBootManager().AppStarted();
+            new WebBootManager().Initialize();
         }
     }
 }

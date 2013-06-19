@@ -46,7 +46,6 @@ namespace Karbon.Cms.Core.Mapping
                 {
                     // Found property, so attempt to set it
                     TypeConverter typeConverter = null;
-
                     var typeConverterAttr = prop.GetCustomAttribute<TypeConverterAttribute>();
                     if(typeConverterAttr != null)
                     {
@@ -59,7 +58,7 @@ namespace Karbon.Cms.Core.Mapping
                         typeConverter = TypeDescriptor.GetConverter(prop.PropertyType);
 
                     var propValue = typeConverter.ConvertFromString(data[dataKey]);
-                    prop.SetValue(entity, propValue);
+                    prop.SetValue(entity, propValue, null);
                 }
                 else
                 {

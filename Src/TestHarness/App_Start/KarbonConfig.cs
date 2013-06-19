@@ -8,23 +8,16 @@ using Karbon.Cms.Web.Routing;
 using TestHarness.App_Start;
 using WebActivatorEx;
 
-[assembly: PreApplicationStartMethod(typeof(KarbonConfig), "AppStarting")]
-[assembly: PostApplicationStartMethod(typeof(KarbonConfig), "AppStarted")]
+[assembly: PostApplicationStartMethod(typeof(KarbonConfig), "Initialize")]
 
 namespace TestHarness.App_Start
 {
     public class KarbonConfig
     {
-        public static void AppStarting()
+        public static void Initialize()
         {
             new WebBootManager()
-                .AppStarting();
-        }
-
-        public static void AppStarted()
-        {
-            new WebBootManager()
-                .AppStarted();
+                .Initialize();
         }
     }
 }

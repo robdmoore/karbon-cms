@@ -17,34 +17,18 @@ namespace Karbon.Cms.Web
 {
     public class WebBootManager : CoreBootManager
     {
-        private bool _appStartingFlag;
-        private bool _appStartedFlag;
+        private bool _appInitedFlag;
 
-        /// <summary>
-        /// Initializes components that need to run before the application has started
-        /// </summary>
-        public override void AppStarting()
-        {
-            if (_appStartingFlag)
-                throw new InvalidOperationException("The boot manager has already started");
-
-            base.AppStarting();
-
-            // Register http modules
-            RegisterModules();
-
-            _appStartingFlag = true;
-        }
 
         /// <summary>
         /// Initializes components that need to run after the application has started
         /// </summary>
-        public override void AppStarted()
+        public override void Initialize()
         {
-            if (_appStartedFlag)
-                throw new InvalidOperationException("The boot manager has already started");
+            if (_appInitedFlag)
+                throw new InvalidOperationException("The boot manager has already been initialized");
 
-            base.AppStarted();
+            base.Initialize();
 
             // Wrap the http context
             var httpContextBase = new HttpContextWrapper(HttpContext.Current);
@@ -61,7 +45,7 @@ namespace Karbon.Cms.Web
             // Register required routes
             RegisterRoutes();
 
-            _appStartedFlag = true;
+            _appInitedFlag = true;
         }
 
         /// <summary>
@@ -83,14 +67,6 @@ namespace Karbon.Cms.Web
             // Ignore media routes, these will be handled by the media VPP
             RouteTable.Routes.Ignore("media/{*path}");
 
-        }
-
-        /// <summary>
-        /// Registers the modules.
-        /// </summary>
-        protected virtual void RegisterModules()
-        {
-            DynamicModuleUtility.RegisterModule(typeof(KarbonRequestModule));
         }
     }
 }

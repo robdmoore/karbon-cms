@@ -13,8 +13,16 @@
     <dataSerializers configSource="Config\DataSerializers.config" />
   </karbon>
 
+  <system.web>
+    <httpModules>
+      <add name="KarbonRequestModule" type="Karbon.Cms.Web.Modules.KarbonRequestModule, Karbon.Cms.Web" />
+    </httpModules>
+  </system.web>
+  
   <system.webServer>
-    <modules runAllManagedModulesForAllRequests="true" />
+    <modules runAllManagedModulesForAllRequests="true">
+      <add name="KarbonRequestModule" type="Karbon.Cms.Web.Modules.KarbonRequestModule, Karbon.Cms.Web" />
+    </modules>
   </system.webServer>
 
   <location path="media">
