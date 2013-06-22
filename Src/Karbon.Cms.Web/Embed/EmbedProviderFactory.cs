@@ -27,7 +27,6 @@ namespace Karbon.Cms.Web.Embed
             }
         }
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EmbedProviderFactory"/> class.
         /// </summary>
@@ -48,12 +47,24 @@ namespace Karbon.Cms.Web.Embed
         {
             try
             {
+                // Check for a specific provider
                 var providerKey = _providers.Keys.FirstOrDefault(x => Regex.IsMatch(url, x, RegexOptions.IgnoreCase));
                 if(providerKey != null)
                 {
                     var providerType = _providers[providerKey];
                     var provider = Activator.CreateInstance(providerType) as AbstractEmbedProvider;
-                    return provider.GetMarkup(url, parameters);
+                    var resp = provider.GetMarkup(url, parameters);
+                    if (!string.IsNullOrEmpty(resp))
+                    {
+                        return resp;
+                    }
+                }
+
+                // Try noembed
+                var resp2 = new NoEmbedProvider().GetMarkup(url, parameters);
+                if(!string.IsNullOrEmpty(resp2))
+                {
+                    return resp2;
                 }
             }
             catch (Exception)

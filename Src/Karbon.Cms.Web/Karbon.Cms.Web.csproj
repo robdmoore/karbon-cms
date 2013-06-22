@@ -53,6 +53,11 @@
   <ItemGroup>
     <Compile Include="Controllers\KarbonController.cs" />
     <Compile Include="Embed\BlipEmbedProvider.cs" />
+    <Compile Include="Embed\NoEmbedProvider.cs" />
+    <Compile Include="Embed\SlideShareEmbedProvider.cs" />
+    <Compile Include="Embed\TwitterEmbedProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Embed\ViddlerEmbedProvider.cs" />
     <Compile Include="Embed\QikEmbedProvider.cs" />
     <Compile Include="Embed\SimpleJsonEmbedResponse.cs" />
@@ -73,11 +78,9 @@
     <Compile Include="Embed\AbstractVideoEmbedProvider.cs" />
     <Compile Include="Embed\AbstractPhotoEmbedProvider.cs" />
     <Compile Include="Embed\AbstractRichEmbedProvider.cs" />
-    <Compile Include="Embed\TwitterEmbedProvider.cs" />
     <Compile Include="Embed\HuluEmbedProvider.cs" />
     <Compile Include="Embed\ScribdEmbedProvider.cs" />
     <Compile Include="Embed\SoundCloudEmbedProvider.cs" />
-    <Compile Include="Embed\SlideShareEmbedProvider.cs" />
     <Compile Include="Embed\ScreenrEmbedProvider.cs" />
     <Compile Include="Embed\FlickrEmbedProvider.cs" />
     <Compile Include="Embed\GistEmbedProvider.cs" />
