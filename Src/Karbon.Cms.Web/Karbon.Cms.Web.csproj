@@ -52,6 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\KarbonController.cs" />
+    <Compile Include="Embed\BlipEmbedProvider.cs" />
+    <Compile Include="Embed\ViddlerEmbedProvider.cs" />
+    <Compile Include="Embed\QikEmbedProvider.cs" />
+    <Compile Include="Embed\SimpleJsonEmbedResponse.cs" />
     <Compile Include="Extensions\ContentApiExtensions.cs" />
     <Compile Include="Extensions\ContentExtensions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />

@@ -46,12 +46,19 @@ namespace Karbon.Cms.Web.Embed
         /// <returns></returns>
         public string GetMarkup(string url, IDictionary<string, string> parameters)
         {
-            var providerKey = _providers.Keys.FirstOrDefault(x => Regex.IsMatch(url, x, RegexOptions.IgnoreCase));
-            if(providerKey != null)
+            try
             {
-                var providerType = _providers[providerKey];
-                var provider = Activator.CreateInstance(providerType) as AbstractEmbedProvider;
-                return provider.GetMarkup(url, parameters);
+                var providerKey = _providers.Keys.FirstOrDefault(x => Regex.IsMatch(url, x, RegexOptions.IgnoreCase));
+                if(providerKey != null)
+                {
+                    var providerType = _providers[providerKey];
+                    var provider = Activator.CreateInstance(providerType) as AbstractEmbedProvider;
+                    return provider.GetMarkup(url, parameters);
+                }
+            }
+            catch (Exception)
+            {
+                // TODO: Log exception
             }
 
             return string.Format("<a href=\"{0}\" target=\"_blank\">{0}</a>", url);

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Xml;
+using Karbon.Cms.Core;
 
 namespace Karbon.Cms.Web.Embed
 {
@@ -31,10 +33,10 @@ namespace Karbon.Cms.Web.Embed
         /// Gets the markup.
         /// </summary>
         /// <param name="url">The URL.</param>
-        /// <param name="parameters">The parameters.</param>
+        /// <param name="parameters">The parameters.</param> 
         /// <returns></returns>
         public virtual string GetMarkup(string url, IDictionary<string, string> parameters)
-        {
+        { 
             var requestUrl = BuildRequestUrl(url, parameters);
             var responseXml = GetXmlResponse(requestUrl);
             var selectSingleNode = responseXml.SelectSingleNode("/oembed/html");
@@ -52,18 +54,12 @@ namespace Karbon.Cms.Web.Embed
         /// <returns></returns>
         protected virtual string BuildRequestUrl(string url, IDictionary<string, string> parameters)
         {
-            var fullUrl = new StringBuilder();
+            foreach (var p in Parameters.Where(p => !parameters.ContainsKey(p.Key)))
+                parameters.Add(p.Key, p.Value);
 
-            fullUrl.Append(ApiEndpoint);
-            fullUrl.Append("?url=" + url);
+            parameters.Add("url", url);
 
-            foreach (var p in parameters)
-                fullUrl.Append(string.Format("&{0}={1}", p.Key, p.Value));
-
-            foreach (var p in Parameters.Where(x => !parameters.ContainsKey(x.Key)))
-                fullUrl.Append(string.Format("&{0}={1}", p.Key, p.Value));
-
-            return fullUrl.ToString();
+            return ApiEndpoint + parameters.ToQueryString();
         }
 
         /// <summary>
@@ -79,6 +75,18 @@ namespace Karbon.Cms.Web.Embed
             doc.LoadXml(response);
 
             return doc;
+        }
+
+        /// <summary>
+        /// Gets the json response.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
+        /// <param name="url">The URL.</param>
+        /// <returns></returns>
+        protected virtual TEntity GetJsonResponse<TEntity>(string url)
+        {
+            var response = GetStringResponse(url);
+            return response.DeserializeJsonTo<TEntity>();
         }
 
         /// <summary>
