@@ -8,17 +8,17 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Karbon.Cms.Core;
+using Karbon.Cms.Core.Parsers;
+using Karbon.Cms.Core.Stores;
+using Karbon.Cms.Web.Filters;
 using Karbon.Cms.Web.Hosting;
-using Karbon.Cms.Web.Modules;
 using Karbon.Cms.Web.Routing;
-using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
 namespace Karbon.Cms.Web
 {
     public class WebBootManager : CoreBootManager
     {
         private bool _appInitedFlag;
-
 
         /// <summary>
         /// Initializes components that need to run after the application has started
@@ -33,19 +33,28 @@ namespace Karbon.Cms.Web
             // Wrap the http context
             var httpContextBase = new HttpContextWrapper(HttpContext.Current);
 
-            // Create the web context
-            KarbonWebContext.Current = new KarbonWebContext(httpContextBase);
-
             // Reset the environment context
             KarbonAppContext.Current.Environment = new WebEnvironmentContext(httpContextBase);
 
             // Register the media VPP
             HostingEnvironment.RegisterVirtualPathProvider(new MediaVirtualPathProvider());
 
+            // Regitser global filters
+            RegisterFilters();
+
             // Register required routes
             RegisterRoutes();
 
             _appInitedFlag = true;
+        }
+
+        /// <summary>
+        /// Registers the filters.
+        /// </summary>
+        /// <exception cref="System.NotImplementedException"></exception>
+        protected void RegisterFilters()
+        {
+            GlobalFilters.Filters.Add(new KarbonTextFilterAttribute());
         }
 
         /// <summary>
@@ -69,7 +78,6 @@ namespace Karbon.Cms.Web
 
             // Ignore axd routes (incase this isn't an MVC app by default)
             RouteTable.Routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
         }
     }
 }

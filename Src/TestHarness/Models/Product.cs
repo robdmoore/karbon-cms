@@ -9,7 +9,6 @@ namespace TestHarness.Models
 {
     public class Product : Content
     {
-        public string Name { get; set; }
         public string Description { get; set; }
     }
 }

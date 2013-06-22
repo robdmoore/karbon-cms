@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Karbon.Cms.Core;
+using Karbon.Cms.Core.Models;
 using Karbon.Cms.Web.Routing;
 
 namespace Karbon.Cms.Web
@@ -27,7 +28,7 @@ namespace Karbon.Cms.Web
                 return _context;
             }
             set 
-            {
+            { 
                 lock (Locker)
                 {
                     // if running in a real HttpContext, this can only be set once
@@ -37,7 +38,7 @@ namespace Karbon.Cms.Web
                     // if there is an HttpContext, return the item
                     if (System.Web.HttpContext.Current != null)
                     {
-                        System.Web.HttpContext.Current.Items[HttpContextItemName] = value;
+                        System.Web.HttpContext.Current.Items.Add(HttpContextItemName, value);
                     }
                     else
                     {
@@ -50,6 +51,9 @@ namespace Karbon.Cms.Web
         #endregion
 
         public HttpContextBase HttpContext { get; private set; }
+
+        public IContent CurrentPage { get; internal set; }
+        public IContent HomePage { get; internal set; }
 
         internal KarbonWebContext(HttpContextBase httpContext)
         {

@@ -27,7 +27,7 @@ namespace Karbon.Cms.Web.Controllers
         /// </value>
         public TCurrentPageType CurrentPage
         {
-            get { return (TCurrentPageType)RouteData.Values[KarbonRoute.ModelKey]; }
+            get { return (TCurrentPageType)KarbonWebContext.Current.CurrentPage; }
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Karbon.Cms.Web.Controllers
         /// </value>
         public THomePageType HomePage
         {
-            get { return (THomePageType)StoreManager.ContentStore.GetByUrl("~/"); }
+            get { return (THomePageType)KarbonWebContext.Current.HomePage; }
         }
 
         /// <summary>
