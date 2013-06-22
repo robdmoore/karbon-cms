@@ -5,7 +5,7 @@ using System.Text;
 using Karbon.Cms.Core.Models;
 using Karbon.Cms.Core.Parsers;
 using Karbon.Cms.Core.Stores;
-using Karbon.Cms.Web.OEmbed;
+using Karbon.Cms.Web.Embed;
 
 namespace Karbon.Cms.Web.Tags
 {
@@ -24,7 +24,7 @@ namespace Karbon.Cms.Web.Tags
 
             parameters.Remove("embed");
 
-            return OEmbedProviderFactory.Instance.GetMarkup(url, parameters);
+            return EmbedProviderFactory.Instance.GetMarkup(url, parameters);
         }
     }
 }

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Web;
 
-namespace Karbon.Cms.Web.OEmbed
+namespace Karbon.Cms.Web.Embed
 {
-    [OEmbedProvider("Flickr", @"flickr\.com/")]
-    public class FlickrOEmbedProvider : AbstractPhotoOEmbedProvider
+    [EmbedProvider("Screenr", @"screenr\.com/")]
+    public class ScreenrEmbedProvider : AbstractVideoEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.
@@ -17,7 +17,7 @@ namespace Karbon.Cms.Web.OEmbed
         /// </value>
         public override string ApiEndpoint
         {
-            get { return "http://www.flickr.com/services/oembed/"; }
+            get { return "http://www.screenr.com/api/oembed.xml"; }
         }
     }
 }

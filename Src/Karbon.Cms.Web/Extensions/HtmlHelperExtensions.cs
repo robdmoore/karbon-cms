@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Karbon.Cms.Web.OEmbed;
+using Karbon.Cms.Web.Embed;
 using MarkdownSharp;
 
 namespace Karbon.Cms.Web
@@ -83,7 +83,7 @@ namespace Karbon.Cms.Web
             if (maxHeight > 0)
                 parameters.Add("maxheight", maxHeight.ToString(CultureInfo.InvariantCulture));
 
-            return new HtmlString(OEmbedProviderFactory.Instance.GetMarkup(url, parameters));
+            return new HtmlString(EmbedProviderFactory.Instance.GetMarkup(url, parameters));
         }
 
 
@@ -96,7 +96,7 @@ namespace Karbon.Cms.Web
         /// <returns></returns>
         public static IHtmlString Embed(this HtmlHelper helper, string url, IDictionary<string, string> parameters)
         {
-            return new HtmlString(OEmbedProviderFactory.Instance.GetMarkup(url, parameters));
+            return new HtmlString(EmbedProviderFactory.Instance.GetMarkup(url, parameters));
         }
     }
 }

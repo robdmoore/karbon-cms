@@ -16,13 +16,13 @@ namespace Karbon.Cms.Tests.Parsing
         {
             // Arrange
             var content = new Content();
-            var parser = new KarbonTextParser(content);
+            var parser = KarbonTextParser.Instance;
             var input1 = "Lorem ipsum [ LINK : http://www.google.com ] dolar.";
             var input2 = "Lorem ipsum [ link:http://www.google.com | title:Something something | text:Click here ] dolar.";
 
             // Act
-            var output1 = parser.ParseTags(input1);
-            var output2 = parser.ParseTags(input2);
+            var output1 = parser.ParseTags(content, input1);
+            var output2 = parser.ParseTags(content, input2);
 
             // Assert
             Assert.AreEqual(output1, "Lorem ipsum <a href=\"http://www.google.com\">http://www.google.com</a> dolar.");

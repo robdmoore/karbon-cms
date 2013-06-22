@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Karbon.Cms.Web.OEmbed
+namespace Karbon.Cms.Web.Embed
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    internal class OEmbedProviderAttribute : Attribute
+    internal class EmbedProviderAttribute : Attribute
     {
         /// <summary>
         /// Gets or sets the name.
@@ -25,11 +25,11 @@ namespace Karbon.Cms.Web.OEmbed
         public string UrlSchemeRegex { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OEmbedProviderAttribute" /> class.
+        /// Initializes a new instance of the <see cref="EmbedProviderAttribute" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="urlSchemeRegex">The URL scheme regex.</param>
-        public OEmbedProviderAttribute(string name, string urlSchemeRegex)
+        public EmbedProviderAttribute(string name, string urlSchemeRegex)
         {
             Name = name;
             UrlSchemeRegex = urlSchemeRegex;

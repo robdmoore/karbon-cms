@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Karbon.Cms.Web.OEmbed
+namespace Karbon.Cms.Web.Embed
 {
-    [OEmbedProvider("SlideShare", @"slideshare\.net/")]
-    public class SlideShareOEmbedProvider : AbstractRichOEmbedProvider
+    [EmbedProvider("Scribd", @"scribd\.com/")]
+    public class ScribdEmbedProvider : AbstractRichEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.
@@ -16,7 +16,7 @@ namespace Karbon.Cms.Web.OEmbed
         /// </value>
         public override string ApiEndpoint
         {
-            get { return "http://www.slideshare.net/api/oembed/1"; }
+            get { return "http://www.scribd.com/services/oembed"; }
         }
 
         /// <summary>

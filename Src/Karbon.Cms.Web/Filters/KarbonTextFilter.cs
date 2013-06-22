@@ -45,7 +45,7 @@ namespace Karbon.Cms.Web.Filters
         /// <exception cref="System.NotImplementedException"></exception>
         private string ReplaceTags(string html)
         {
-            return new KarbonTextParser(KarbonWebContext.Current.CurrentPage).ParseTags(html);
+            return KarbonTextParser.Instance.ParseTags(KarbonWebContext.Current.CurrentPage, html);
         }
     }
 }

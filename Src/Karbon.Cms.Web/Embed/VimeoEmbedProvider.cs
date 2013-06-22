@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Karbon.Cms.Web.OEmbed
+namespace Karbon.Cms.Web.Embed
 {
-    [OEmbedProvider("SoundCloud", @"soundcloud\.com/")]
-    public class SoundCloudOEmbedProvider : AbstractRichOEmbedProvider
+    [EmbedProvider("Vimeo", @"vimeo\.com/")]
+    public class VimeoEmbedProvider : AbstractVideoEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.
@@ -16,7 +16,7 @@ namespace Karbon.Cms.Web.OEmbed
         /// </value>
         public override string ApiEndpoint
         {
-            get { return "http://soundcloud.com/oembed"; }
+            get { return "http://vimeo.com/api/oembed.xml"; }
         }
     }
 }

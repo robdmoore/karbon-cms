@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace Karbon.Cms.Web.OEmbed
+namespace Karbon.Cms.Web.Embed
 {
-    public abstract class AbstractOEmbedProvider
+    public abstract class AbstractEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.
@@ -73,13 +73,23 @@ namespace Karbon.Cms.Web.OEmbed
         /// <returns></returns>
         protected virtual XmlDocument GetXmlResponse(string url)
         {
-            var webClient = new System.Net.WebClient();
-            var response = webClient.DownloadString(url);
+            var response = GetStringResponse(url);
 
             var doc = new XmlDocument();
             doc.LoadXml(response);
 
             return doc;
+        }
+
+        /// <summary>
+        /// Gets the string response.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <returns></returns>
+        protected virtual string GetStringResponse(string url)
+        {
+            var webClient = new System.Net.WebClient();
+            return webClient.DownloadString(url);
         }
     }
 }

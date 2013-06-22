@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Web;
 
-namespace Karbon.Cms.Web.OEmbed
+namespace Karbon.Cms.Web.Embed
 {
-    public abstract class AbstractPhotoOEmbedProvider : AbstractOEmbedProvider
+    public abstract class AbstractPhotoEmbedProvider : AbstractEmbedProvider
     {
         /// <summary>
         /// Gets the markup.

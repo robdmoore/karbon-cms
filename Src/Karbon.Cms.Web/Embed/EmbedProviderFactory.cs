@@ -6,12 +6,12 @@ using System.Text.RegularExpressions;
 using Karbon.Cms.Core;
 using Karbon.Cms.Core.Parsers;
 
-namespace Karbon.Cms.Web.OEmbed
+namespace Karbon.Cms.Web.Embed
 {
-    internal class OEmbedProviderFactory
+    internal class EmbedProviderFactory
     {
-        private static readonly OEmbedProviderFactory _instance = new OEmbedProviderFactory();
-        private IDictionary<string, Type> _providers;
+        private static readonly EmbedProviderFactory _instance = new EmbedProviderFactory();
+        private readonly IDictionary<string, Type> _providers;
 
         /// <summary>
         /// Gets the instance.
@@ -19,7 +19,7 @@ namespace Karbon.Cms.Web.OEmbed
         /// <value>
         /// The instance.
         /// </value>
-        public static OEmbedProviderFactory Instance
+        public static EmbedProviderFactory Instance
         {
             get 
             {
@@ -29,13 +29,13 @@ namespace Karbon.Cms.Web.OEmbed
 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OEmbedProviderFactory"/> class.
+        /// Initializes a new instance of the <see cref="EmbedProviderFactory"/> class.
         /// </summary>
-        private OEmbedProviderFactory()
+        private EmbedProviderFactory()
         {
-            _providers = TypeFinder.FindTypes<AbstractOEmbedProvider>()
-                .Where(x => x.GetCustomAttribute<OEmbedProviderAttribute>() != null)
-                .ToDictionary(x => x.GetCustomAttribute<OEmbedProviderAttribute>().UrlSchemeRegex, x => x);
+            _providers = TypeFinder.FindTypes<AbstractEmbedProvider>()
+                .Where(x => x.GetCustomAttribute<EmbedProviderAttribute>() != null)
+                .ToDictionary(x => x.GetCustomAttribute<EmbedProviderAttribute>().UrlSchemeRegex, x => x);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Karbon.Cms.Web.OEmbed
             if(providerKey != null)
             {
                 var providerType = _providers[providerKey];
-                var provider = Activator.CreateInstance(providerType) as AbstractOEmbedProvider;
+                var provider = Activator.CreateInstance(providerType) as AbstractEmbedProvider;
                 return provider.GetMarkup(url, parameters);
             }
 

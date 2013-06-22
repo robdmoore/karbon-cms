@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
 
-namespace Karbon.Cms.Web.OEmbed
+namespace Karbon.Cms.Web.Embed
 {
-    [OEmbedProvider("Screenr", @"screenr\.com/")]
-    public class ScreenrOEmbedProvider : AbstractVideoOEmbedProvider
+    [EmbedProvider("SoundCloud", @"soundcloud\.com/")]
+    public class SoundCloudEmbedProvider : AbstractRichEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.
@@ -17,7 +16,7 @@ namespace Karbon.Cms.Web.OEmbed
         /// </value>
         public override string ApiEndpoint
         {
-            get { return "http://www.screenr.com/api/oembed.xml"; }
+            get { return "http://soundcloud.com/oembed"; }
         }
     }
 }

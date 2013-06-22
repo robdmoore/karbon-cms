@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Karbon.Cms.Web.OEmbed
+namespace Karbon.Cms.Web.Embed
 {
-    [OEmbedProvider("Gist", @"gist\.github\.com/")]
-    public class GistOEmbedProvider : AbstractRichOEmbedProvider
+    [EmbedProvider("Gist", @"gist\.github\.com/")]
+    public class GistEmbedProvider : AbstractRichEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.
