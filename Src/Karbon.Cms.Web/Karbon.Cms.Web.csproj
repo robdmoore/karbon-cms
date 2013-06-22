@@ -65,9 +65,23 @@
     <Compile Include="Models\KarbonViewModel.cs" />
     <Compile Include="Modules\KarbonRequestModule.cs" />
     <Compile Include="Mvc\KarbonView.cs" />
+    <Compile Include="OEmbed\AbstractOEmbedProvider.cs" />
+    <Compile Include="OEmbed\AbstractVideoOEmbedProvider.cs" />
+    <Compile Include="OEmbed\AbstractPhotoOEmbedProvider.cs" />
+    <Compile Include="OEmbed\AbstractRichOEmbedProvider.cs" />
+    <Compile Include="OEmbed\SoundCloudOEmbedProvider.cs" />
+    <Compile Include="OEmbed\SlideShareOEmbedProvider.cs" />
+    <Compile Include="OEmbed\ScreenrOEmbedProvider.cs" />
+    <Compile Include="OEmbed\FlickrOEmbedProvider.cs" />
+    <Compile Include="OEmbed\GistOEmbedProvider.cs" />
+    <Compile Include="OEmbed\VimeoOEmbedProvider.cs" />
+    <Compile Include="OEmbed\OEmbedProviderAttribute.cs" />
+    <Compile Include="OEmbed\OEmbedProviderFactory.cs" />
+    <Compile Include="OEmbed\YouTubeOEmbedProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routing\KarbonRoute.cs" />
     <Compile Include="Hosting\MediaVirtualPathProvider.cs" />
+    <Compile Include="Tags\EmbedTag.cs" />
     <Compile Include="Tags\TwitterTag.cs" />
     <Compile Include="Tags\EmailTag.cs" />
     <Compile Include="Tags\ImageTag.cs" />
@@ -84,6 +98,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
