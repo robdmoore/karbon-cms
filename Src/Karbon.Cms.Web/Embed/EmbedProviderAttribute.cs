@@ -6,7 +6,7 @@ using System.Text;
 namespace Karbon.Cms.Web.Embed
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    internal class EmbedProviderAttribute : Attribute
+    public class EmbedProviderAttribute : Attribute
     {
         /// <summary>
         /// Gets or sets the name.

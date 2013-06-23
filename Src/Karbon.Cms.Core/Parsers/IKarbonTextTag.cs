@@ -6,7 +6,7 @@ using Karbon.Cms.Core.Models;
 
 namespace Karbon.Cms.Core.Parsers
 {
-    internal interface IKarbonTextTag
+    public interface IKarbonTextTag
     {
         string Parse(IContent currentPage, IDictionary<string, string> parameters);
     }

@@ -9,7 +9,7 @@ namespace Karbon.Cms.Core.Parsers
     /// Used to decorate a Karbon Text tag parser
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    internal class KarbonTextTagAttribute : Attribute
+    public class KarbonTextTagAttribute : Attribute
     {
         /// <summary>
         /// Gets or sets the name.
