@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Karbon.Cms.Core;
 using Karbon.Cms.Core.Models;
 using Karbon.Cms.Core.Parsers;
 using Karbon.Cms.Core.Stores;
@@ -77,7 +78,7 @@ namespace Karbon.Cms.Web.Tags
         /// <returns></returns>
         public override string Parse(IContent currentPage, IDictionary<string, string> parameters)
         {
-            parameters.Add("link", parameters["a"]);
+            parameters.AddOrUpdate("link", parameters["a"]);
 
             return base.Parse(currentPage, parameters);
         }

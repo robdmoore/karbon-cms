@@ -59,7 +59,11 @@ namespace Karbon.Cms.Web.Tags
 
             sb.Append(" />");
 
-            // TODO: Handle links
+            if(parameters.ContainsKey("link"))
+            {
+                parameters.AddOrUpdate("text", sb.ToString());
+                return new LinkTag().Parse(currentPage, parameters);
+            }
 
             return sb.ToString();
         }
@@ -76,7 +80,7 @@ namespace Karbon.Cms.Web.Tags
         /// <returns></returns>
         public override string Parse(IContent currentPage, IDictionary<string, string> parameters)
         {
-            parameters.Add("image", parameters["img"]);
+            parameters.AddOrUpdate("image", parameters["img"]);
 
             return base.Parse(currentPage, parameters);
         }
