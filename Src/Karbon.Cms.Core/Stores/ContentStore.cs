@@ -454,15 +454,18 @@ namespace Karbon.Cms.Core.Stores
         /// <returns></returns>
         private Size GetImageSize(string path)
         {
+            var size = Size.Empty;
+
             if (!string.IsNullOrEmpty(path) && _fileStore.FileExists(path))
             {
-                using (var img = Image.FromStream(_fileStore.OpenFile(path)))
+                using (var stream = _fileStore.OpenFile(path))
+                using (var img = Image.FromStream(stream))
                 {
-                    return img.Size;
+                    size = img.Size;
                 }
             }
 
-            return Size.Empty;
+            return size;
         }
 
         #endregion
