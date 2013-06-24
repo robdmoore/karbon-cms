@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Karbon.Cms.Core;
 using Karbon.Cms.Core.Models;
 
-namespace Karbon.Cms.Core.Parsers
+namespace Karbon.Cms.Web.Parsers.KarbonText
 {
     internal class KarbonTextParser
     {
@@ -57,7 +58,7 @@ namespace Karbon.Cms.Core.Parsers
 
                     var tag = Activator.CreateInstance(_tags[tagName]) as AbstractKarbonTextTag;
                     return tag != null
-                        ? tag.Parse(currentPage, parameters)
+                        ? tag.GetMarkup(currentPage, parameters)
                         : match.Value;
                 }
                 return match.Value;

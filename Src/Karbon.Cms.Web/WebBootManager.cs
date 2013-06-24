@@ -8,8 +8,6 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Karbon.Cms.Core;
-using Karbon.Cms.Core.Parsers;
-using Karbon.Cms.Core.Stores;
 using Karbon.Cms.Web.Filters;
 using Karbon.Cms.Web.Hosting;
 using Karbon.Cms.Web.Routing;

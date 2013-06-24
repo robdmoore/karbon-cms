@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Karbon.Cms.Core.Parsers;
+using Karbon.Cms.Web.Parsers.KarbonText;
 
 namespace Karbon.Cms.Web.Filters
 {

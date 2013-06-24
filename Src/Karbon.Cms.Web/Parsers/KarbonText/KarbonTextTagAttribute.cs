@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Karbon.Cms.Core.Parsers
+namespace Karbon.Cms.Web.Parsers.KarbonText
 {
     /// <summary>
     /// Used to decorate a Karbon Text tag parser

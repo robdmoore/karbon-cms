@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Karbon.Cms.Core;
-using Karbon.Cms.Core.Parsers;
 
 namespace Karbon.Cms.Web.Embed
 {

@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Web;
 using Karbon.Cms.Core.Models;
-using Karbon.Cms.Core.Parsers;
-using Karbon.Cms.Core.Stores;
 
-namespace Karbon.Cms.Web.Tags
+namespace Karbon.Cms.Web.Parsers.KarbonText
 {
     [KarbonTextTag("email")]
     public class EmailTag : AbstractKarbonTextTag
     {
         /// <summary>
-        /// Parses the tag based upon the specified parameters.
+        /// Gets the markup for the tag based upon the passed in parameters.
         /// </summary>
         /// <param name="currentPage">The current page.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public override string Parse(IContent currentPage, IDictionary<string, string> parameters)
+        public override string GetMarkup(IContent currentPage, IDictionary<string, string> parameters)
         {
             var email = parameters["email"];
             var text = email;

@@ -4,20 +4,19 @@ using System.Linq;
 using System.Text;
 using Karbon.Cms.Core;
 using Karbon.Cms.Core.Models;
-using Karbon.Cms.Core.Parsers;
 
-namespace Karbon.Cms.Web.Tags
+namespace Karbon.Cms.Web.Parsers.KarbonText
 {
     [KarbonTextTag("image")]
     public class ImageTag : AbstractKarbonTextTag
     {
         /// <summary>
-        /// Parses the tag based upon the specified parameters.
+        /// Gets the markup for the tag based upon the passed in parameters.
         /// </summary>
         /// <param name="currentPage">The current page.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public override string Parse(IContent currentPage, IDictionary<string, string> parameters)
+        public override string GetMarkup(IContent currentPage, IDictionary<string, string> parameters)
         {
             var src = parameters["img"];
 
@@ -62,7 +61,7 @@ namespace Karbon.Cms.Web.Tags
             if(parameters.ContainsKey("link"))
             {
                 parameters.AddOrUpdate("text", sb.ToString());
-                return new LinkTag().Parse(currentPage, parameters);
+                return new LinkTag().GetMarkup(currentPage, parameters);
             }
 
             return sb.ToString();
@@ -73,16 +72,16 @@ namespace Karbon.Cms.Web.Tags
     public class ImgTag : ImageTag
     {
         /// <summary>
-        /// Parses the tag based upon the specified parameters.
+        /// Gets the markup for the tag based upon the passed in parameters.
         /// </summary>
         /// <param name="currentPage">The current page.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public override string Parse(IContent currentPage, IDictionary<string, string> parameters)
+        public override string GetMarkup(IContent currentPage, IDictionary<string, string> parameters)
         {
             parameters.AddOrUpdate("image", parameters["img"]);
 
-            return base.Parse(currentPage, parameters);
+            return base.GetMarkup(currentPage, parameters);
         }
     }
 }

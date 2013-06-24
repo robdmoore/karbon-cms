@@ -89,14 +89,17 @@
     <Compile Include="Embed\EmbedProviderAttribute.cs" />
     <Compile Include="Embed\EmbedProviderFactory.cs" />
     <Compile Include="Embed\YouTubeEmbedProvider.cs" />
+    <Compile Include="Parsers\KarbonText\AbstractKarbonTextTag.cs" />
+    <Compile Include="Parsers\KarbonText\KarbonTextParser.cs" />
+    <Compile Include="Parsers\KarbonText\KarbonTextTagAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routing\KarbonRoute.cs" />
     <Compile Include="Hosting\MediaVirtualPathProvider.cs" />
-    <Compile Include="Tags\EmbedTag.cs" />
-    <Compile Include="Tags\TwitterTag.cs" />
-    <Compile Include="Tags\EmailTag.cs" />
-    <Compile Include="Tags\ImageTag.cs" />
-    <Compile Include="Tags\LinkTag.cs" />
+    <Compile Include="Parsers\KarbonText\EmbedTag.cs" />
+    <Compile Include="Parsers\KarbonText\TwitterTag.cs" />
+    <Compile Include="Parsers\KarbonText\EmailTag.cs" />
+    <Compile Include="Parsers\KarbonText\ImageTag.cs" />
+    <Compile Include="Parsers\KarbonText\LinkTag.cs" />
     <Compile Include="WebBootManager.cs" />
     <Compile Include="WebEnvironmentContext.cs" />
   </ItemGroup>
