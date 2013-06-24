@@ -6,7 +6,7 @@ using System.Text;
 namespace Karbon.Cms.Web.Embed
 {
     [EmbedProvider("SlideShare", @"slideshare\.net/")]
-    public class SlideShareEmbedProvider : AbstractRichEmbedProvider
+    public class SlideShareEmbedProvider : AbstractRichOEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.

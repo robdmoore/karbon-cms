@@ -6,7 +6,7 @@ using System.Text;
 namespace Karbon.Cms.Web.Embed
 {
     [EmbedProvider("Hulu", @"hulu\.com/")]
-    public class HuluEmbedProvider : AbstractVideoEmbedProvider
+    public class HuluEmbedProvider : AbstractVideoOEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.

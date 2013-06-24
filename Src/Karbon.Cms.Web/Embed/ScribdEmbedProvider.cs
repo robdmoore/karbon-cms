@@ -6,7 +6,7 @@ using System.Text;
 namespace Karbon.Cms.Web.Embed
 {
     [EmbedProvider("Scribd", @"scribd\.com/")]
-    public class ScribdEmbedProvider : AbstractRichEmbedProvider
+    public class ScribdEmbedProvider : AbstractRichOEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.

@@ -5,8 +5,14 @@ using System.Text;
 
 namespace Karbon.Cms.Web.Embed
 {
-    internal class SimpleJsonEmbedResponse
+    public class SimpleJsonEmbedResponse
     {
+        /// <summary>
+        /// Gets or sets the HTML.
+        /// </summary>
+        /// <value>
+        /// The HTML.
+        /// </value>
         public string html { get; set; }
     }
 }

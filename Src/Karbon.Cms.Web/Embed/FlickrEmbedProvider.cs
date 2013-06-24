@@ -7,7 +7,7 @@ using System.Web;
 namespace Karbon.Cms.Web.Embed
 {
     [EmbedProvider("Flickr", @"flickr\.com/")]
-    public class FlickrEmbedProvider : AbstractPhotoEmbedProvider
+    public class FlickrEmbedProvider : AbstractPhotoOEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.

@@ -7,7 +7,7 @@ using System.Web;
 namespace Karbon.Cms.Web.Embed
 {
     [EmbedProvider("Screenr", @"screenr\.com/")]
-    public class ScreenrEmbedProvider : AbstractVideoEmbedProvider
+    public class ScreenrEmbedProvider : AbstractVideoOEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.

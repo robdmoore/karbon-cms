@@ -9,7 +9,7 @@ using Karbon.Cms.Core.Parsers;
 namespace Karbon.Cms.Web.Tags
 {
     [KarbonTextTag("image")]
-    public class ImageTag : IKarbonTextTag
+    public class ImageTag : AbstractKarbonTextTag
     {
         /// <summary>
         /// Parses the tag based upon the specified parameters.
@@ -17,7 +17,7 @@ namespace Karbon.Cms.Web.Tags
         /// <param name="currentPage">The current page.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public virtual string Parse(IContent currentPage, IDictionary<string, string> parameters)
+        public override string Parse(IContent currentPage, IDictionary<string, string> parameters)
         {
             var src = parameters["img"];
 

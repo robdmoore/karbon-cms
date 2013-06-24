@@ -6,7 +6,7 @@ using System.Text;
 namespace Karbon.Cms.Web.Embed
 {
     [EmbedProvider("Viddler", @"viddler\.com/explore/.*/videos/\w+/?")]
-    public class ViddlerEmbedProvider : AbstractVideoEmbedProvider
+    public class ViddlerEmbedProvider : AbstractVideoOEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.

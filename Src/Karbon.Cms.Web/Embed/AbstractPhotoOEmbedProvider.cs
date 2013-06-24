@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Karbon.Cms.Web.Embed
 {
-    public abstract class AbstractPhotoEmbedProvider : AbstractEmbedProvider
+    public abstract class AbstractPhotoOEmbedProvider : AbstractOEmbedProvider
     {
         /// <summary>
         /// Gets the markup.

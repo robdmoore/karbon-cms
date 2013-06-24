@@ -10,7 +10,7 @@ using Karbon.Cms.Web.Embed;
 namespace Karbon.Cms.Web.Tags
 {
     [KarbonTextTag("embed")]
-    public class EmbedTag : IKarbonTextTag
+    public class EmbedTag : AbstractKarbonTextTag
     {
         /// <summary>
         /// Parses the tag based upon the specified parameters.
@@ -18,7 +18,7 @@ namespace Karbon.Cms.Web.Tags
         /// <param name="currentPage">The current page.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public virtual string Parse(IContent currentPage, IDictionary<string, string> parameters)
+        public override string Parse(IContent currentPage, IDictionary<string, string> parameters)
         {
             var url = parameters["embed"];
 

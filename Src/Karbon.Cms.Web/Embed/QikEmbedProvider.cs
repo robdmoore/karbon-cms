@@ -6,7 +6,7 @@ using System.Text;
 namespace Karbon.Cms.Web.Embed
 {
     [EmbedProvider("Qik", @"qik\.com/")]
-    public class QikEmbedProvider : AbstractVideoEmbedProvider
+    public class QikEmbedProvider : AbstractVideoOEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.

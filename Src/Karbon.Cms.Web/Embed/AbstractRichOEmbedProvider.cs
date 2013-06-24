@@ -5,6 +5,6 @@ using System.Text;
 
 namespace Karbon.Cms.Web.Embed
 {
-    public abstract class AbstractVideoEmbedProvider : AbstractEmbedProvider
+    public abstract class AbstractRichOEmbedProvider : AbstractOEmbedProvider
     { }
 }

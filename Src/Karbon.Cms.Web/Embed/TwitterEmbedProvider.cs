@@ -6,7 +6,7 @@ using System.Text;
 namespace Karbon.Cms.Web.Embed
 {
     [EmbedProvider("Twitter", @"twitter\.com/")]
-    public class TwitterEmbedProvider : AbstractRichEmbedProvider
+    public class TwitterEmbedProvider : AbstractRichOEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.

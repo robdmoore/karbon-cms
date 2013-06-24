@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\KarbonController.cs" />
+    <Compile Include="Embed\AbstractEmbedProvider.cs" />
     <Compile Include="Embed\BlipEmbedProvider.cs" />
     <Compile Include="Embed\NoEmbedProvider.cs" />
     <Compile Include="Embed\SlideShareEmbedProvider.cs" />
@@ -74,10 +75,10 @@
     <Compile Include="Models\KarbonViewModel.cs" />
     <Compile Include="Modules\KarbonRequestModule.cs" />
     <Compile Include="Mvc\KarbonView.cs" />
-    <Compile Include="Embed\AbstractEmbedProvider.cs" />
-    <Compile Include="Embed\AbstractVideoEmbedProvider.cs" />
-    <Compile Include="Embed\AbstractPhotoEmbedProvider.cs" />
-    <Compile Include="Embed\AbstractRichEmbedProvider.cs" />
+    <Compile Include="Embed\AbstractOEmbedProvider.cs" />
+    <Compile Include="Embed\AbstractVideoOEmbedProvider.cs" />
+    <Compile Include="Embed\AbstractPhotoOEmbedProvider.cs" />
+    <Compile Include="Embed\AbstractRichOEmbedProvider.cs" />
     <Compile Include="Embed\HuluEmbedProvider.cs" />
     <Compile Include="Embed\ScribdEmbedProvider.cs" />
     <Compile Include="Embed\SoundCloudEmbedProvider.cs" />

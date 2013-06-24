@@ -33,7 +33,7 @@ namespace Karbon.Cms.Core.Parsers
         /// </summary>
         public KarbonTextParser()
         {
-            _tags = TypeFinder.FindTypes<IKarbonTextTag>()
+            _tags = TypeFinder.FindTypes<AbstractKarbonTextTag>()
                 .Where(x => x.GetCustomAttribute<KarbonTextTagAttribute>() != null)
                 .ToDictionary(x => x.GetCustomAttribute<KarbonTextTagAttribute>().Name, x => x);
         }
@@ -55,7 +55,7 @@ namespace Karbon.Cms.Core.Parsers
                         .Split('|').ToDictionary(x => x.Substring(0, x.FindIndex(':')).Trim().ToLower(CultureInfo.InvariantCulture),
                                                  x => x.Substring(x.FindIndex(':') + 1).Trim());
 
-                    var tag = Activator.CreateInstance(_tags[tagName]) as IKarbonTextTag;
+                    var tag = Activator.CreateInstance(_tags[tagName]) as AbstractKarbonTextTag;
                     return tag != null
                         ? tag.Parse(currentPage, parameters)
                         : match.Value;

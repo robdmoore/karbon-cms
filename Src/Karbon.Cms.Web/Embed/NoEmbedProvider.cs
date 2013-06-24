@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Karbon.Cms.Web.Embed
 {
-    public class NoEmbedProvider : AbstractEmbedProvider
+    public class NoEmbedProvider : AbstractOEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.

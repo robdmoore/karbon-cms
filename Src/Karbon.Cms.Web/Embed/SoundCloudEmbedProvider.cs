@@ -6,7 +6,7 @@ using System.Text;
 namespace Karbon.Cms.Web.Embed
 {
     [EmbedProvider("SoundCloud", @"soundcloud\.com/")]
-    public class SoundCloudEmbedProvider : AbstractRichEmbedProvider
+    public class SoundCloudEmbedProvider : AbstractRichOEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.

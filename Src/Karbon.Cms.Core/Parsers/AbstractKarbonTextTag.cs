@@ -6,8 +6,8 @@ using Karbon.Cms.Core.Models;
 
 namespace Karbon.Cms.Core.Parsers
 {
-    public interface IKarbonTextTag
+    public abstract class AbstractKarbonTextTag
     {
-        string Parse(IContent currentPage, IDictionary<string, string> parameters);
+        public abstract string Parse(IContent currentPage, IDictionary<string, string> parameters);
     }
 }

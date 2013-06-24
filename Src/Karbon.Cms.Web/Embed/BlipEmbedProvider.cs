@@ -7,7 +7,7 @@ using Karbon.Cms.Core;
 namespace Karbon.Cms.Web.Embed
 {
     [EmbedProvider("Blip", @"blip\.tv/")]
-    public class BlipEmbedProvider : AbstractVideoEmbedProvider
+    public class BlipEmbedProvider : AbstractVideoOEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.

@@ -6,7 +6,7 @@ using System.Text;
 namespace Karbon.Cms.Web.Embed
 {
     [EmbedProvider("Vimeo", @"vimeo\.com/")]
-    public class VimeoEmbedProvider : AbstractVideoEmbedProvider
+    public class VimeoEmbedProvider : AbstractVideoOEmbedProvider
     {
         /// <summary>
         /// Gets the API endpoint.

@@ -6,19 +6,8 @@ using System.Text;
 namespace Karbon.Cms.Web.Embed
 {
     [EmbedProvider("Gist", @"gist\.github\.com/")]
-    public class GistEmbedProvider : AbstractRichEmbedProvider
+    public class GistEmbedProvider : AbstractEmbedProvider
     {
-        /// <summary>
-        /// Gets the API endpoint.
-        /// </summary>
-        /// <value>
-        /// The API endpoint.
-        /// </value>
-        public override string ApiEndpoint
-        {
-            get { return "https://gist.github.com"; }
-        }
-
         /// <summary>
         /// Gets the markup.
         /// </summary>
