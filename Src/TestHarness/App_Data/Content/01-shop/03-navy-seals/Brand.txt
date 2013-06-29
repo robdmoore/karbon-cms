@@ -1,11 +1,12 @@
 ﻿Title: A TRADITIONAL YORKSHIRE PUB
 ----
 Body: 
-The nostalgia hits you when you walk through the door; the traditional bar, cosy corners by the wood burning fire, the chatter of happy customers and the tinkling of knives and forks. Instantly, The Woodman Inn feels like a place where you want to kick back and relax.
+The nostalgia [link:shop/navy-seals | text:something | title:something | target:_blank | class:someclass] hits you when you walk through the door; the traditional bar, cosy corners by the wood burning fire, the chatter of happy customers and the tinkling of knives and forks. Instantly, The Woodman Inn feels like a place where you want to kick back and relax.
 
-As an independent, award-winning, traditional real ale pub, The Woodman Inn has an excellent selection of local ales to tempt your taste buds, including Timothy Taylor's Landlord and Bradfield's Farmer's Blonde beer. We're particularly proud to have just been awarded the Cask Marque; the sign of a quality real ale pub.  
+As an independent, [img:01.png | width:100] award-winning, traditional real ale pub, The Woodman Inn has an excellent selection of local ales to tempt your taste buds, including Timothy Taylor's Landlord and Bradfield's Farmer's Blonde beer. We're particularly proud to have just been awarded the Cask Marque; the sign of a quality real ale pub.  
 
-For something by the bottle, ask a member of our team about the wine of the season. If you’re dining with us, our waiters will be delighted to recommend a perfect accompaniment to your meal.
+For something by the [a:01.png] bottle, ask a member of our [twitter:karboncms] team about the wine of the season. If you’re dining with us, our waiters will be delighted to recommend a perfect accompaniment to your meal.
 
-Our regulars are an eclectic and welcoming bunch who enjoy the country and are proud of their enchanting hamlet. If you haven’t visited us yet, you really are missing a treat. So come and enjoy a bit of good old Yorkshire hospitality at our country pub, restaurant & accommodation.
+Our regulars are an [email:me@mattbrailsford.com | subject:Thought you might like this] eclectic and welcoming bunch who enjoy the country and are proud of their enchanting hamlet. If you haven’t visited us yet, you really are missing a treat. So come and enjoy a bit of good old Yorkshire hospitality at our country pub, restaurant & accommodation.
+
 ----

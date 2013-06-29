@@ -64,5 +64,18 @@ namespace Karbon.Cms.Core
             }
             return true;
         }
+
+        /// <summary>
+        /// Gets the custom attribute.
+        /// </summary>
+        /// <typeparam name="TAttributeType">The type of the attribute type.</typeparam>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
+        public static TAttributeType GetCustomAttribute<TAttributeType>(this Type type)
+            where TAttributeType : Attribute
+        {
+            return type.GetCustomAttributes(typeof(TAttributeType), false)
+                       .FirstOrDefault() as TAttributeType;
+        }
     }
 }

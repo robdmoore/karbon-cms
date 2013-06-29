@@ -128,7 +128,7 @@ namespace Karbon.Cms.Core.IO
 
         public override Stream OpenFile(string relativePath)
         {
-            return File.OpenRead(GetPhysicalPath(relativePath));
+            return new FileStream(GetPhysicalPath(relativePath), FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
         }
 
         public override void DeleteFile(string relativePath)

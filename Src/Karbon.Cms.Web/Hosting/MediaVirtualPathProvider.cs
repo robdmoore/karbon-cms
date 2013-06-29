@@ -91,7 +91,7 @@ namespace Karbon.Cms.Web.Hosting
                 return null;
 
             // Find the file
-            var file = content.AllFiles.SingleOrDefault(x => x.Slug == fileSlug);
+            var file = content.AllFiles.SingleOrDefault(x => x.Slug.ToLowerInvariant() == fileSlug.ToLowerInvariant());
             if (file == null)
                 return null;
 

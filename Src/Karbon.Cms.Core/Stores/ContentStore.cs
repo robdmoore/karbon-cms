@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Karbon.Cms.Core.IO;
@@ -138,7 +140,7 @@ namespace Karbon.Cms.Core.Stores
                 {
                     if(_cacheDirty)
                     {
-                        var data = ParseContent();
+                        var data = LoadContent();
                         _contentCache = new ConcurrentDictionary<string, IContent>(data);
                         _cacheDirty = false;
                     }
@@ -147,22 +149,22 @@ namespace Karbon.Cms.Core.Stores
         }
 
         /// <summary>
-        /// Parses the content.
+        /// Loads the content.
         /// </summary>
         /// <returns></returns>
-        private IDictionary<string, IContent> ParseContent()
+        private IDictionary<string, IContent> LoadContent()
         {
-            return ParseContentDirectories(new[] {""}, new Dictionary<string, IContent>());
+            return LoadContentRecursive(new[] { "" }, new Dictionary<string, IContent>());
         }
 
 
         /// <summary>
-        /// Parses the content directories.
+        /// Loads the content recursively.
         /// </summary>
         /// <param name="dirs">The dirs.</param>
         /// <param name="data">The data.</param>
         /// <returns></returns>
-        private IDictionary<string, IContent> ParseContentDirectories(IEnumerable<string> dirs, IDictionary<string, IContent> data)
+        private IDictionary<string, IContent> LoadContentRecursive(IEnumerable<string> dirs, IDictionary<string, IContent> data)
         {
             foreach (var dir in dirs)
             {
@@ -170,7 +172,7 @@ namespace Karbon.Cms.Core.Stores
                 if (content != null)
                     data.Add(content.RelativeUrl, content);
 
-                ParseContentDirectories(_fileStore.GetDirectories(dir), data);
+                LoadContentRecursive(_fileStore.GetDirectories(dir), data);
             }
 
             return data;
@@ -234,22 +236,23 @@ namespace Karbon.Cms.Core.Stores
             model.Modified = _fileStore.GetLastModified(contentFilePath ?? path);
             model.Depth = model.RelativeUrl == "~/" ? 1 : model.RelativeUrl.Count(x => x == '/') + 1;
 
-            model = (IContent)_dataMapper.Map(type, model, data);
+            //model.Data = data;
+            model = (IContent)_dataMapper.Map(model.GetType(), model, data);
 
             // Parse files
-            model.AllFiles = ParseFiles(filePaths.Where(x => x != contentFilePath), model.RelativeUrl);
+            model.AllFiles = LoadFiles(filePaths.Where(x => x != contentFilePath), model.RelativeUrl);
 
             // Return model
             return model;
         }
 
         /// <summary>
-        /// Parses the files from the file paths list provided.
+        /// Loads the files from the file paths list provided.
         /// </summary>
         /// <param name="filePaths">The file paths.</param>
         /// <param name="contentUrl">The content relative URL.</param>
         /// <returns></returns>
-        private IEnumerable<IFile> ParseFiles(IEnumerable<string> filePaths, string contentUrl)
+        private IEnumerable<IFile> LoadFiles(IEnumerable<string> filePaths, string contentUrl)
         {
             var files = new List<IFile>();
 
@@ -300,10 +303,10 @@ namespace Karbon.Cms.Core.Stores
                         data.Add("Width", imageSize.Width.ToString());
                         data.Add("Height", imageSize.Height.ToString());
                     }
-
                 }
 
-                model = (IFile)_dataMapper.Map(type, model, data);
+                //model.Data = data;
+                model = (IFile)_dataMapper.Map(model.GetType(), model, data);
 
                 // Return the file
                 files.Add(model);
@@ -451,15 +454,18 @@ namespace Karbon.Cms.Core.Stores
         /// <returns></returns>
         private Size GetImageSize(string path)
         {
+            var size = Size.Empty;
+
             if (!string.IsNullOrEmpty(path) && _fileStore.FileExists(path))
             {
-                using (var img = Image.FromStream(_fileStore.OpenFile(path)))
+                using (var stream = _fileStore.OpenFile(path))
+                using (var img = Image.FromStream(stream))
                 {
-                    return img.Size;
+                    size = img.Size;
                 }
             }
 
-            return Size.Empty;
+            return size;
         }
 
         #endregion

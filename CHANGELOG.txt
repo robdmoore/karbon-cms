@@ -1,0 +1,19 @@
+0.1
+----------------------------------------
+Initial release
+
+0.2 
+----------------------------------------
+Compiled against .NET 4.0
+Now works with ASP.NET Website projects
+Added KarbonText support
+Added embed provider support
+Fixed issue with IIS keeping a lock on image files
+Added CurrentPage / HomePage properties to KarbonWebContext
+Swapped MarkdownSharp for MarkdownDeep, as more performant
+
+Breaking Changes:
+ASP.NET Website projects don't support pre application start events
+so Karbon request module is now registered in web.config. BootManagers
+also now only have a .Initialize() method rather than .AppStarting() /
+.AppStarted() methods.

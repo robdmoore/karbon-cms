@@ -8,49 +8,28 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Karbon.Cms.Core;
+using Karbon.Cms.Web.Filters;
 using Karbon.Cms.Web.Hosting;
-using Karbon.Cms.Web.Modules;
 using Karbon.Cms.Web.Routing;
-using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
 namespace Karbon.Cms.Web
 {
     public class WebBootManager : CoreBootManager
     {
-        private bool _appStartingFlag;
-        private bool _appStartedFlag;
-
-        /// <summary>
-        /// Initializes components that need to run before the application has started
-        /// </summary>
-        public override void AppStarting()
-        {
-            if (_appStartingFlag)
-                throw new InvalidOperationException("The boot manager has already started");
-
-            base.AppStarting();
-
-            // Register http modules
-            RegisterModules();
-
-            _appStartingFlag = true;
-        }
+        private bool _appInitedFlag;
 
         /// <summary>
         /// Initializes components that need to run after the application has started
         /// </summary>
-        public override void AppStarted()
+        public override void Initialize()
         {
-            if (_appStartedFlag)
-                throw new InvalidOperationException("The boot manager has already started");
+            if (_appInitedFlag)
+                throw new InvalidOperationException("The boot manager has already been initialized");
 
-            base.AppStarted();
+            base.Initialize();
 
             // Wrap the http context
             var httpContextBase = new HttpContextWrapper(HttpContext.Current);
-
-            // Create the web context
-            KarbonWebContext.Current = new KarbonWebContext(httpContextBase);
 
             // Reset the environment context
             KarbonAppContext.Current.Environment = new WebEnvironmentContext(httpContextBase);
@@ -58,10 +37,22 @@ namespace Karbon.Cms.Web
             // Register the media VPP
             HostingEnvironment.RegisterVirtualPathProvider(new MediaVirtualPathProvider());
 
+            // Regitser global filters
+            RegisterFilters();
+
             // Register required routes
             RegisterRoutes();
 
-            _appStartedFlag = true;
+            _appInitedFlag = true;
+        }
+
+        /// <summary>
+        /// Registers the filters.
+        /// </summary>
+        /// <exception cref="System.NotImplementedException"></exception>
+        protected void RegisterFilters()
+        {
+            GlobalFilters.Filters.Add(new KarbonTextFilterAttribute());
         }
 
         /// <summary>
@@ -83,14 +74,8 @@ namespace Karbon.Cms.Web
             // Ignore media routes, these will be handled by the media VPP
             RouteTable.Routes.Ignore("media/{*path}");
 
-        }
-
-        /// <summary>
-        /// Registers the modules.
-        /// </summary>
-        protected virtual void RegisterModules()
-        {
-            DynamicModuleUtility.RegisterModule(typeof(KarbonRequestModule));
+            // Ignore axd routes (incase this isn't an MVC app by default)
+            RouteTable.Routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
         }
     }
 }

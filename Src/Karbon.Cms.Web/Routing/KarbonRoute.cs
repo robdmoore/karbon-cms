@@ -42,17 +42,6 @@ namespace Karbon.Cms.Web.Routing
         }
 
         /// <summary>
-        /// Gets the model key.
-        /// </summary>
-        /// <value>
-        /// The model key.
-        /// </value>
-        public static string ModelKey
-        {
-            get { return "content"; }
-        }
-
-        /// <summary>
         /// Gets the default controller.
         /// </summary>
         /// <value>
@@ -109,7 +98,7 @@ namespace Karbon.Cms.Web.Routing
                         action = tmpAction;
                     }
                 }
-                else
+                else 
                 {
                     model = StoreManager.ContentStore.GetByUrl("~/");
                     if (model != null)
@@ -127,12 +116,19 @@ namespace Karbon.Cms.Web.Routing
             // We have a model, so lets work out where to direct the request
             var controller = model.GetController(DefaultController);
             if(controller == null || !controller.HasMethod(action))
-                return null;
+                return null; 
 
             // Route the request
             routeData.Values[ControllerKey] = controller.Name.TrimEnd("Controller");
             routeData.Values[ActionKey] = action;
-            routeData.Values[ModelKey] = model;
+
+            // Set the current web context
+            KarbonWebContext.Current = new KarbonWebContext(new HttpContextWrapper(HttpContext.Current))
+            {
+                CurrentPage = model,
+                HomePage = StoreManager.ContentStore.GetByUrl("~/")
+            };
+
             return routeData;
         }
 
@@ -147,7 +143,7 @@ namespace Karbon.Cms.Web.Routing
         public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values)
         {
             // Grab the model from the route data collection
-            var model = values[ModelKey] as IContent;
+            var model = KarbonWebContext.Current.CurrentPage;
             if (model == null)
                 return null;
 
@@ -155,8 +151,7 @@ namespace Karbon.Cms.Web.Routing
             var vpd = new VirtualPathData(this, model.RelativeUrl.TrimStart("~/"));
 
             // Append any other route data values as querystring params
-            var queryParams = values.Where(kvp => !kvp.Key.Equals(ModelKey) 
-                && !kvp.Key.Equals(ControllerKey) 
+            var queryParams = values.Where(kvp => !kvp.Key.Equals(ControllerKey) 
                 && !kvp.Key.Equals(ActionKey))
                 .ToQueryString();
             

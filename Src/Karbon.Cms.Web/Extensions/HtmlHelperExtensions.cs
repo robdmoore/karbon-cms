@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using MarkdownSharp;
+using Karbon.Cms.Web.Embed;
+using MarkdownDeep;
 
 namespace Karbon.Cms.Web
 {
@@ -61,6 +63,40 @@ namespace Karbon.Cms.Web
                 input = input.Substring(0, length - suffix.Length) + suffix;
 
             return new HtmlString(input);
+        }
+
+        /// <summary>
+        /// Embeds the specified URL via oEmbed.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="maxWidth">Width of the max.</param>
+        /// <param name="maxHeight">Height of the max.</param>
+        /// <returns></returns>
+        public static IHtmlString Embed(this HtmlHelper helper, string url, int maxWidth = 0, int maxHeight = 0)
+        {
+            var parameters = new Dictionary<string, string>();
+
+            if(maxWidth > 0)
+                parameters.Add("maxwidth", maxWidth.ToString(CultureInfo.InvariantCulture));
+
+            if (maxHeight > 0)
+                parameters.Add("maxheight", maxHeight.ToString(CultureInfo.InvariantCulture));
+
+            return new HtmlString(EmbedProviderFactory.Instance.GetMarkup(url, parameters));
+        }
+
+
+        /// <summary>
+        /// Embeds the specified URL.
+        /// </summary>
+        /// <param name="helper">The helper.</param>
+        /// <param name="url">The URL.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns></returns>
+        public static IHtmlString Embed(this HtmlHelper helper, string url, IDictionary<string, string> parameters)
+        {
+            return new HtmlString(EmbedProviderFactory.Instance.GetMarkup(url, parameters));
         }
     }
 }

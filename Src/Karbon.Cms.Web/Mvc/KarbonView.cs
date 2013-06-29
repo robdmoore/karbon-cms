@@ -27,8 +27,9 @@ namespace Karbon.Cms.Web.Mvc
         {
             if (viewData.Model is TCurrentPageContentType)
             {
-                viewData.Model = new KarbonViewModel<TCurrentPageContentType, THomePageContentType>((TCurrentPageContentType)viewData.Model,
-                    (THomePageContentType)StoreManager.ContentStore.GetByUrl("~/"));
+                viewData.Model = new KarbonViewModel<TCurrentPageContentType, THomePageContentType>(
+                    (TCurrentPageContentType)viewData.Model,
+                    (THomePageContentType)KarbonWebContext.Current.HomePage);
             }
 
             base.SetViewData(viewData);

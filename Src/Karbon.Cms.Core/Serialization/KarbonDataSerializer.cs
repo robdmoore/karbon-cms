@@ -81,6 +81,8 @@ namespace Karbon.Cms.Core.Serialization
                 }
             }
 
+            data.Dispose(); 
+
             // Append any unfinished entries
             if(!string.IsNullOrEmpty(currentKey))
             {

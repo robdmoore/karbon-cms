@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Karbon.Cms.Core.Models;
@@ -70,6 +72,17 @@ namespace Karbon.Cms.Core
         public static bool TryGet<TValueType>(this IEntity content, string key, out TValueType value)
         {
             value = default(TValueType);
+
+            //var prop = content.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
+            //    .SingleOrDefault(x => x.Name.ToLower(CultureInfo.InvariantCulture) == key.ToLower(CultureInfo.InvariantCulture) 
+            //        && x.PropertyType == typeof (TValueType) 
+            //        && x.CanRead);
+
+            //if(prop != null)
+            //{
+            //    value = (TValueType)prop.GetValue(content, null);
+            //    return true;
+            //}
 
             if (!content.Data.ContainsKey(key))
                 return false;
