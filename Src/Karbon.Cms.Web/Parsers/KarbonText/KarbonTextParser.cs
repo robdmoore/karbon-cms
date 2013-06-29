@@ -12,7 +12,7 @@ namespace Karbon.Cms.Web.Parsers.KarbonText
     {
         private static readonly KarbonTextParser _instance = new KarbonTextParser();
 
-        private readonly Regex _tagPattern = new Regex(@"\[(?:\s*)?(?<name>[a-zA-Z0-9]+)(?:\s*)?:.*?\]", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        private readonly Regex _tagPattern = new Regex(@"\\?\[(?:\s*)?(?<name>[a-zA-Z0-9]+)(?:\s*)?:.*?\]", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         private readonly IDictionary<string, Type> _tags;
 
         /// <summary>
@@ -48,7 +48,11 @@ namespace Karbon.Cms.Web.Parsers.KarbonText
         public string ParseTags(IContent currentPage, string input)
         {
             return _tagPattern.Replace(input, match =>
-            {
+            { 
+                var val = match.Value;
+                if(val.StartsWith("\\"))
+                    return val.TrimStart('\\');
+
                 var tagName = match.Groups["name"].Value.ToLower(CultureInfo.InvariantCulture);
                 if (_tags.ContainsKey(tagName))
                 {
@@ -59,9 +63,9 @@ namespace Karbon.Cms.Web.Parsers.KarbonText
                     var tag = Activator.CreateInstance(_tags[tagName]) as AbstractKarbonTextTag;
                     return tag != null
                         ? tag.GetMarkup(currentPage, parameters)
-                        : match.Value;
+                        : val;
                 }
-                return match.Value;
+                return val;
             });
         }
     }

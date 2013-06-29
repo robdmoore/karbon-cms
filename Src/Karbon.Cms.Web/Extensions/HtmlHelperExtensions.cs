@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Karbon.Cms.Web.Embed;
-using MarkdownSharp;
+using MarkdownDeep;
 
 namespace Karbon.Cms.Web
 {

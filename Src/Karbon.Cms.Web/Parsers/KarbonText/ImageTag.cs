@@ -18,7 +18,7 @@ namespace Karbon.Cms.Web.Parsers.KarbonText
         /// <returns></returns>
         public override string GetMarkup(IContent currentPage, IDictionary<string, string> parameters)
         {
-            var src = parameters["img"];
+            var src = parameters["image"];
 
             if (!src.StartsWith("http") && !src.StartsWith("/"))
             {
