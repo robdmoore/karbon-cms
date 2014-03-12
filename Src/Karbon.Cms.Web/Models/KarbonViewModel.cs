@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Karbon.Cms.Core.Mapping;
 using Karbon.Cms.Core.Models;
 
 namespace Karbon.Cms.Web.Models
@@ -31,7 +32,7 @@ namespace Karbon.Cms.Web.Models
         /// The home page content.
         /// </value>
         public THomePageContentType HomePage { get; private set; }
-
+		 
         /// <summary>
         /// Initializes a new instance of the <see cref="KarbonViewModel{TContentType, TSiteType}" /> class.
         /// </summary>
@@ -49,7 +50,7 @@ namespace Karbon.Cms.Web.Models
     /// The view model class for Karbon based views.
     /// </summary>
     /// <typeparam name="TCurrentPageContentType">The type of the current page content type.</typeparam>
-    public class KarbonViewModel<TCurrentPageContentType> : KarbonViewModel<TCurrentPageContentType, Content>
+	public class KarbonViewModel<TCurrentPageContentType> : KarbonViewModel<TCurrentPageContentType, Content>
         where TCurrentPageContentType : IContent
     {
         /// <summary>
@@ -57,7 +58,7 @@ namespace Karbon.Cms.Web.Models
         /// </summary>
         /// <param name="currentPage">The current page content.</param>
         /// <param name="homePage">The home page content.</param>
-        public KarbonViewModel(TCurrentPageContentType currentPage, Content homePage)
+		public KarbonViewModel(TCurrentPageContentType currentPage, Content homePage)
             : base(currentPage, homePage)
         { }
     }
@@ -65,14 +66,14 @@ namespace Karbon.Cms.Web.Models
     /// <summary>
     /// The view model class for Karbon based views.
     /// </summary>
-    public class KarbonViewModel : KarbonViewModel<Content, Content>
+	public class KarbonViewModel : KarbonViewModel<Content, Content>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="KarbonViewModel" /> class.
         /// </summary>
         /// <param name="currentPage">The current page content.</param>
         /// <param name="homePage">The home page content.</param>
-        public KarbonViewModel(Content currentPage, Content homePage)
+		public KarbonViewModel(Content currentPage, Content homePage)
             : base(currentPage, homePage)
         { }
     }

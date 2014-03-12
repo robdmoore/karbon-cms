@@ -123,11 +123,19 @@ namespace Karbon.Cms.Web.Routing
             routeData.Values[ActionKey] = action;
 
             // Set the current web context
-            KarbonWebContext.Current = new KarbonWebContext(new HttpContextWrapper(HttpContext.Current))
+            if (KarbonWebContext.Current == null)
             {
-                CurrentPage = model,
-                HomePage = StoreManager.ContentStore.GetByUrl("~/")
-            };
+                KarbonWebContext.Current = new KarbonWebContext(new HttpContextWrapper(HttpContext.Current))
+                    {
+                        CurrentPage = model,
+                        HomePage = StoreManager.ContentStore.GetByUrl("~/")
+                    };
+            }
+            else
+            {
+                KarbonWebContext.Current.CurrentPage = model;
+                KarbonWebContext.Current.HomePage = StoreManager.ContentStore.GetByUrl("~/");
+            }
 
             return routeData;
         }
@@ -142,6 +150,9 @@ namespace Karbon.Cms.Web.Routing
         /// </returns>
         public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values)
         {
+            if (KarbonWebContext.Current == null)
+                return null;
+
             // Grab the model from the route data collection
             var model = KarbonWebContext.Current.CurrentPage;
             if (model == null)
