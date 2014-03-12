@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Karbon.Cms.Core.Models;
-using Karbon.Cms.Core.Stores;
 using Karbon.Cms.Web.Models;
 
 namespace Karbon.Cms.Web.Mvc
@@ -17,7 +11,7 @@ namespace Karbon.Cms.Web.Mvc
     /// <typeparam name="THomePageContentType">The type of the home page content.</typeparam>
     public abstract class KarbonView<TCurrentPageContentType, THomePageContentType> : WebViewPage<KarbonViewModel<TCurrentPageContentType, THomePageContentType>>
         where TCurrentPageContentType : IContent
-        where THomePageContentType : IContent
+		where THomePageContentType : IContent
     {
         /// <summary>
         /// Sets the view data.
@@ -29,10 +23,24 @@ namespace Karbon.Cms.Web.Mvc
             {
                 viewData.Model = new KarbonViewModel<TCurrentPageContentType, THomePageContentType>(
                     (TCurrentPageContentType)viewData.Model,
-                    (THomePageContentType)KarbonWebContext.Current.HomePage);
-            }
+					(THomePageContentType)KarbonWebContext.Current.HomePage);
 
-            base.SetViewData(viewData);
+				base.SetViewData(viewData); 
+            }
+			else if (viewData.Model.GetType().GetGenericTypeDefinition() == typeof (KarbonViewModel<,>))
+			{
+				var tmp = viewData.Model as dynamic;
+				base.SetViewData(new ViewDataDictionary(viewData)
+				{
+					Model = new KarbonViewModel<TCurrentPageContentType, THomePageContentType>(
+						(TCurrentPageContentType)tmp.CurrentPage,
+						(THomePageContentType)tmp.HomePage)
+				}); 
+			}
+			else
+			{
+				base.SetViewData(viewData); 
+			}
         }
     }
 
@@ -40,13 +48,13 @@ namespace Karbon.Cms.Web.Mvc
     /// The base class for Karbon based views.
     /// </summary>
     /// <typeparam name="TCurrentPageContentType">The type of the current page content.</typeparam>
-    public abstract class KarbonView<TCurrentPageContentType> : KarbonView<TCurrentPageContentType, Content>
-        where TCurrentPageContentType : IContent
+	public abstract class KarbonView<TCurrentPageContentType> : KarbonView<TCurrentPageContentType, Content>
+		where TCurrentPageContentType : IContent
     { }
 
     /// <summary>
     /// The base class for Karbon based views.
     /// </summary>
-    public abstract class KarbonView : KarbonView<Content, Content>
+	public abstract class KarbonView : KarbonView<Content, Content>
     { }
 }
