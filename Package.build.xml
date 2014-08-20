@@ -102,7 +102,7 @@
 		  ManifestFile="$(BuildDir)\Package.nuspec" 
 		  BasePath="$(BuildDir)" 
 		  OutputDirectory="$(PackageDir)" 
-		  Verbose="true" />
+		  Verbose="false" />
   </Target> 
 
   <Target Name="All" DependsOnTargets="Compile;Package"> </Target>
