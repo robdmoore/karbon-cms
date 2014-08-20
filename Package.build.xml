@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Package">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="All">
 
   <!-- 
   	****************************************
@@ -72,7 +72,7 @@
   </Target>
     
   <!-- PREPAIRE FILES --> 
-  <Target Name="PrepairFiles" DependsOnTargets="Compile">
+  <Target Name="PrepairFiles">
 	  <ItemGroup>
       <ContentFiles Include="$(RootDir)\Src\Karbon.Cms.NuGet\**\*" />
       <LibFiles Include="$(RootDir)\Src\Karbon.Cms.Core\Bin\$(BuildConfig)\Karbon.Cms.Core.dll" />
@@ -104,5 +104,7 @@
 		  OutputDirectory="$(PackageDir)" 
 		  Verbose="true" />
   </Target> 
+
+  <Target Name="All" DependsOnTargets="Compile;Package"> </Target>
   
 </Project>
