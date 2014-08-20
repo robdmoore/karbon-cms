@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Karbon.Cms.Core.IO;
@@ -16,11 +18,10 @@ namespace Karbon.Cms.Core.Stores
 {
     internal class ContentStore : IContentStore
     {
-        private readonly FileStore _fileStore;
-        private readonly DataSerializer _dataSerializer;
-        private readonly DataMapper _dataMapper;
+        private FileStore _fileStore;
+        private DataSerializer _dataSerializer;
+        private DataMapper _dataMapper;
 
-        private static readonly Regex VisibleRegex = new Regex(@"^\d+-");
         private readonly ReaderWriterLockSlim _cacheLock = new ReaderWriterLockSlim();
         private IDictionary<string, IContent> _contentCache = new ConcurrentDictionary<string, IContent>();
         private bool _cacheDirty = true;
@@ -388,7 +389,7 @@ namespace Karbon.Cms.Core.Stores
             }
 
             int parsedSortOrder;
-            if (VisibleRegex.IsMatch(nameParts[0]))
+            if (nameParts[0].IndexOf('-') > 0)
             {
                 var hyphenIndex = nameParts[0].IndexOf('-');
                 var possibleSortOrder = nameParts[0].Substring(0, hyphenIndex);
