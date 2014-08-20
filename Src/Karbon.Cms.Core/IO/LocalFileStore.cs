@@ -36,10 +36,6 @@ namespace Karbon.Cms.Core.IO
             {
                 RegisterFileSystemWatcher();
             }
-            else
-            {
-                throw new FileNotFoundException("rootPath not found", _rootPath);
-            }
         }
 
         /// <summary>
