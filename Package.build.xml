@@ -21,7 +21,7 @@
   -->
   <PropertyGroup>
 	  <PackageVersion Condition="'$(PackageVersion)' == ''">0.0.1</PackageVersion>
-    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration> 
   </PropertyGroup>
 
   <PropertyGroup>
