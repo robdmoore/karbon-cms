@@ -20,8 +20,8 @@
 	****************************************
   -->
   <PropertyGroup>
-	  <PackageVersion>0.3</PackageVersion>
-    <BuildConfig>Debug</BuildConfig>
+	  <PackageVersion>0.0.1</PackageVersion>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -68,15 +68,15 @@
       <ProjectFiles Include="$(RootDir)\Src\Karbon.Cms.Core\Karbon.Cms.Core.csproj" />
       <ProjectFiles Include="$(RootDir)\Src\Karbon.Cms.Web\Karbon.Cms.Web.csproj" />
     </ItemGroup>
-    <MSBuild Projects="@(ProjectFiles)" Properties="Configuration=$(BuildConfig);" />
+    <MSBuild Projects="@(ProjectFiles)" Properties="Configuration=$(Configuration);" />
   </Target>
     
   <!-- PREPAIRE FILES --> 
   <Target Name="PrepairFiles">
 	  <ItemGroup>
       <ContentFiles Include="$(RootDir)\Src\Karbon.Cms.NuGet\**\*" />
-      <LibFiles Include="$(RootDir)\Src\Karbon.Cms.Core\Bin\$(BuildConfig)\Karbon.Cms.Core.dll" />
-      <LibFiles Include="$(RootDir)\Src\Karbon.Cms.Web\Bin\$(BuildConfig)\Karbon.Cms.Web.dll" />
+      <LibFiles Include="$(RootDir)\Src\Karbon.Cms.Core\Bin\$(Configuration)\Karbon.Cms.Core.dll" />
+      <LibFiles Include="$(RootDir)\Src\Karbon.Cms.Web\Bin\$(Configuration)\Karbon.Cms.Web.dll" />
 		  <PackageFiles Include="$(RootDir)\Package.nuspec" /> 
 	  </ItemGroup>
     <Copy SourceFiles="@(ContentFiles)" DestinationFolder="$(BuildDir)\content\%(RecursiveDir)" />
