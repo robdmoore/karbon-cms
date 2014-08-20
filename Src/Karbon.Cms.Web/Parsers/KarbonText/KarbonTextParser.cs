@@ -8,7 +8,7 @@ using Karbon.Cms.Core.Models;
 
 namespace Karbon.Cms.Web.Parsers.KarbonText
 {
-    internal class KarbonTextParser
+    public class KarbonTextParser
     {
         private static readonly KarbonTextParser _instance = new KarbonTextParser();
 
