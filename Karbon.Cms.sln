@@ -36,6 +36,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Karbon.Cms.NuGet", "Src\Kar
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "49524"
+		SlnRelativePath = "Src\Karbon.Cms.NuGet\"
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{8201E907-8254-4A36-AE26-F1A226FAD0D8}"

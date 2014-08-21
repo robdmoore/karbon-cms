@@ -36,6 +36,9 @@
 	****************************************
   -->
 
+  <!-- FORCE ASSEMBLEY INFO TO UPDATE -->
+  <Target Name="BeforeBuild" DependsOnTargets="UpdateAssemblyInfo" />
+
   <!-- CLEAN -->
   <Target Name="Clean">
 	  <RemoveDir Directories="$(BuildDir)" Condition="Exists('$(BuildDir)')" />
