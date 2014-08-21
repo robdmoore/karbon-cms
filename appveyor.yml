@@ -1,0 +1,44 @@
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+
+# version format
+# we use GitVersion to generate official version numbers, so just use the build number by default
+version: {build}
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+# Operating system (build VM template)
+os: Windows Server 2012
+
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+
+# build Configuration, i.e. Debug, Release, etc.
+configuration: Release
+
+build:
+  project: Karbon.Cms.sln
+  verbosity: minimal
+
+# scripts to run before build
+before_build:
+  - nuget restore
+
+#---------------------------------#
+#       tests configuration       #
+#---------------------------------#
+
+# scripts to run after tests
+after_test:
+  - msbuild Package.build.xml /t:Clean;Package
+
+#---------------------------------#
+#      artifacts configuration    #
+#---------------------------------#
+
+artifacts:
+  - path: Package\*.nupkg
