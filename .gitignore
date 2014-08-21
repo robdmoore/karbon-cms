@@ -119,7 +119,8 @@ docs/_site/
 *.ncrunchsolution
 Temp/
 
-packages
+[Pp]ackages
+/[Pp]ackage/
 
 *.received.txt
 *.received.html
