@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karbon.Cms.Core", "Src\Karbon.Cms.Core\Karbon.Cms.Core.csproj", "{0CBE1B67-2FB8-40AE-B93F-87FE0BC17246}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karbon.Cms.Web", "Src\Karbon.Cms.Web\Karbon.Cms.Web.csproj", "{4F7AAB85-3046-4BA4-AD8A-0E3A08BC093C}"

@@ -7,12 +7,13 @@
 	****************************************
   -->
   <PropertyGroup>
-  	<MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)\Packages\MSBuildCommunityTasks</MSBuildCommunityTasksPath>
-  	<MSBuildNuGetTasksPath>$(MSBuildProjectDirectory)\Packages\MSBuildNuGetTasks</MSBuildNuGetTasksPath>
+  	<MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)\Tools\MSBuildCommunityTasks</MSBuildCommunityTasksPath>
+  	<MSBuildNuGetTasksPath>$(MSBuildProjectDirectory)\Tools\MSBuildNuGetTasks</MSBuildNuGetTasksPath>
   </PropertyGroup>
   
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
   <Import Project="$(MSBuildNuGetTasksPath)\MSBuild.NuGet.Tasks.Targets" />
+  <Import Project="packages\GitVersionTask.1.2.0\Build\GitVersionTask.targets" Condition="Exists('packages\GitVersionTask.1.2.0\Build\GitVersionTask.targets')" />
 
   <!-- 
   	****************************************
@@ -20,7 +21,6 @@
 	****************************************
   -->
   <PropertyGroup>
-	  <PackageVersion Condition="'$(PackageVersion)' == ''">0.0.1</PackageVersion>
     <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration> 
   </PropertyGroup>
 
@@ -35,7 +35,7 @@
   	* TARGETS
 	****************************************
   -->
-  
+
   <!-- CLEAN -->
   <Target Name="Clean">
 	  <RemoveDir Directories="$(BuildDir)" Condition="Exists('$(BuildDir)')" />
@@ -44,26 +44,8 @@
   	<MakeDir Directories="$(PackageDir)" />
   </Target>
 
-  <!-- UPDATE ASSEMBLEY VERSION -->
-  <Target Name="UpdateAssemblyInfo" DependsOnTargets="Clean">
-    <ItemGroup>
-      <AssemblyInfoFiles Include="$(RootDir)\Src\Karbon.Cms.Core\Properties\AssemblyInfo.cs" />
-      <AssemblyInfoFiles Include="$(RootDir)\Src\Karbon.Cms.Web\Properties\AssemblyInfo.cs" />
-    </ItemGroup>
-    <FileUpdate
-          Encoding="ASCII"
-          Files="@(AssemblyInfoFiles)"
-          Regex="AssemblyVersion\(&quot;.*&quot;\)\]"
-          ReplacementText="AssemblyVersion(&quot;$(PackageVersion)&quot;)]" />
-    <FileUpdate
-          Encoding="ASCII"
-          Files="@(AssemblyInfoFiles)"
-          Regex="AssemblyFileVersion\(&quot;.*&quot;\)\]"
-          ReplacementText="AssemblyFileVersion(&quot;$(PackageVersion)&quot;)]" />
-  </Target>
-
   <!-- COMPILE -->
-  <Target Name="Compile" DependsOnTargets="UpdateAssemblyInfo">
+  <Target Name="Compile" DependsOnTargets="Clean">
     <ItemGroup>
       <ProjectFiles Include="$(RootDir)\Src\Karbon.Cms.Core\Karbon.Cms.Core.csproj" />
       <ProjectFiles Include="$(RootDir)\Src\Karbon.Cms.Web\Karbon.Cms.Web.csproj" />
@@ -89,16 +71,19 @@
 	  <ItemGroup>
       <ManifestFiles Include="$(BuildDir)\**\*" Exclude="$(BuildDir)\Package.nuspec" />
     </ItemGroup>
+    <GetVersion SolutionDirectory="$(RootDir)">
+      <Output TaskParameter="NugetVersion" PropertyName="GfvNuGetVersion" />
+    </GetVersion>
 	  <ManifestUpdate 
 		  ManifestFile="$(BuildDir)\Package.nuspec"
 		  WorkingDirectory="$(BuildDir)"
-		  Version="$(PackageVersion)"
+		  Version="$(GfvNuGetVersion)"
 	    Files="@(ManifestFiles)" />
   </Target> 
     
   <!-- PACKAGE -->
   <Target Name="Package" DependsOnTargets="Manifest">
-	  <Pack NuGetExePath="$(RootDir)\Packages\NuGet\NuGet.exe" 
+	  <Pack NuGetExePath="$(RootDir)\Tools\NuGet\NuGet.exe" 
 		  ManifestFile="$(BuildDir)\Package.nuspec" 
 		  BasePath="$(BuildDir)" 
 		  OutputDirectory="$(PackageDir)" 

@@ -170,11 +170,11 @@
   <ItemGroup>
     <ProjectReference Include="..\Karbon.Cms.Core\Karbon.Cms.Core.csproj">
       <Project>{0CBE1B67-2FB8-40AE-B93F-87FE0BC17246}</Project>
-      <Name>Karbon.Core</Name>
+      <Name>Karbon.Cms.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Karbon.Cms.Web\Karbon.Cms.Web.csproj">
       <Project>{4F7AAB85-3046-4BA4-AD8A-0E3A08BC093C}</Project>
-      <Name>Karbon.Web</Name>
+      <Name>Karbon.Cms.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
