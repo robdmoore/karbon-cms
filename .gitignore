@@ -37,6 +37,7 @@ TestResults
 *.vspscc
 *.vssscc
 .builds
+*.bak
 
 # Visual C++ cache files
 ipch/
@@ -111,6 +112,9 @@ build/Published/*
 
 Thumbs.db
 docs/_site/
+.DS_Store
+/[Aa]ssets/
+/[Bb]uild/
 
 *.ncrunchsolution
 Temp/
