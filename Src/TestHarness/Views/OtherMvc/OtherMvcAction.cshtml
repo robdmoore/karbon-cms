@@ -1,0 +1,22 @@
+﻿@using TestHarness.Models
+@model dynamic
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Other Mvc Action</title>
+    </head>
+    <body>
+        <div>
+            <h2>Other MVC page outside of Karbon context</h2>
+            <p>@Html.ActionLink("Go again to page outside of Karbon context - implicit controller","OtherMvcAction")</p>
+            <p>@Html.ActionLink("Go again to page outside of Karbon context - explicit controller","OtherMvcAction", "OtherMvc")</p>
+
+        </div>
+    </body>
+</html>

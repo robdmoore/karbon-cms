@@ -121,6 +121,7 @@
     <Content Include="App_Code\Test.cs" />
     <Compile Include="App_Start\KarbonConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OtherMvcController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -200,6 +201,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Karbon\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\OtherMvc\OtherMvcAction.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

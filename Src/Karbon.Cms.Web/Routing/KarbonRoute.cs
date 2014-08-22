@@ -63,6 +63,7 @@ namespace Karbon.Cms.Web.Routing
             get { return "Index"; }
         }
 
+
         /// <summary>
         /// Returns information about the requested route.
         /// </summary>
@@ -150,6 +151,12 @@ namespace Karbon.Cms.Web.Routing
         /// </returns>
         public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values)
         {
+            // Check if this route should be handled by Karbon. If not, fallback to other handlers (MVC)
+            var routeRoot = (string) (values["area"] ?? values["controller"]);
+            if (routeRoot != null) 
+                if (!StoreManager.ContentStore.GetByUrl("~/").Children().Any(x => x.Slug.Equals(routeRoot, StringComparison.InvariantCultureIgnoreCase)))
+                    return null;
+
             if (KarbonWebContext.Current == null)
                 return null;
 
