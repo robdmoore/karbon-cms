@@ -20,14 +20,16 @@
   	* PROPERTIES
 	****************************************
   -->
-  <PropertyGroup>
-    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration> 
-  </PropertyGroup>
 
   <PropertyGroup>
 	  <RootDir>$(MSBuildProjectDirectory)</RootDir>
 	  <BuildDir>$(RootDir)\Build</BuildDir>
 	  <PackageDir>$(RootDir)\Package</PackageDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration> 
+    <SolutionDir Condition="'$(SolutionDir)' == ''">$(RootDir)</SolutionDir> 
   </PropertyGroup>
   
   <!-- 
