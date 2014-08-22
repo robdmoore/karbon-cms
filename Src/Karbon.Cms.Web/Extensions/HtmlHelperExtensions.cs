@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Karbon.Cms.Core.Models;
+using Karbon.Cms.Core.Stores;
 using Karbon.Cms.Web.Embed;
 using MarkdownDeep;
 
@@ -98,5 +100,15 @@ namespace Karbon.Cms.Web
         {
             return new HtmlString(EmbedProviderFactory.Instance.GetMarkup(url, parameters));
         }
+
+        /// <summary>
+        /// Allows accessing Karbon home page outside of Karbon context
+        /// </summary>
+        /// <param name="helper">The helper</param>
+        /// <returns></returns>
+        public static IContent KarbonHomePage(this HtmlHelper helper)
+        {
+            return StoreManager.ContentStore.GetByUrl("~/");
+        }	
     }
 }
