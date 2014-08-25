@@ -100,15 +100,5 @@ namespace Karbon.Cms.Web
         {
             return new HtmlString(EmbedProviderFactory.Instance.GetMarkup(url, parameters));
         }
-
-        /// <summary>
-        /// Allows accessing Karbon home page outside of Karbon context
-        /// </summary>
-        /// <param name="helper">The helper</param>
-        /// <returns></returns>
-        public static IContent KarbonHomePage(this HtmlHelper helper)
-        {
-            return StoreManager.ContentStore.GetByUrl("~/");
-        }	
     }
 }

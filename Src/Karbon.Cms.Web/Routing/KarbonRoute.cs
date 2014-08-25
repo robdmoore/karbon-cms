@@ -122,21 +122,9 @@ namespace Karbon.Cms.Web.Routing
             // Route the request
             routeData.Values[ControllerKey] = controller.Name.TrimEnd("Controller");
             routeData.Values[ActionKey] = action;
-
-            // Set the current web context
-            if (KarbonWebContext.Current == null)
-            {
-                KarbonWebContext.Current = new KarbonWebContext(new HttpContextWrapper(HttpContext.Current))
-                    {
-                        CurrentPage = model,
-                        HomePage = StoreManager.ContentStore.GetByUrl("~/")
-                    };
-            }
-            else
-            {
-                KarbonWebContext.Current.CurrentPage = model;
-                KarbonWebContext.Current.HomePage = StoreManager.ContentStore.GetByUrl("~/");
-            }
+            
+            // Set the current page on current web context
+            KarbonWebContext.Current.CurrentPage = model;
 
             return routeData;
         }
@@ -151,14 +139,14 @@ namespace Karbon.Cms.Web.Routing
         /// </returns>
         public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values)
         {
-            // Check if this route should be handled by Karbon. If not, fallback to other handlers (MVC)
-            var routeRoot = (string) (values["area"] ?? values["controller"]);
-            if (routeRoot != null) 
-                if (!StoreManager.ContentStore.GetByUrl("~/").Children().Any(x => x.Slug.Equals(routeRoot, StringComparison.InvariantCultureIgnoreCase)))
-                    return null;
-
             if (KarbonWebContext.Current == null)
                 return null;
+
+            // Check if this route should be handled by Karbon. If not, fallback to other handlers (MVC)
+            var routeRoot = (string) (values["area"] ?? values["controller"]);
+            if (routeRoot != null)
+                if (!KarbonWebContext.Current.HomePage.Children().Any(x => x.Slug.Equals(routeRoot, StringComparison.InvariantCultureIgnoreCase)))
+                    return null;
 
             // Grab the model from the route data collection
             var model = KarbonWebContext.Current.CurrentPage;
