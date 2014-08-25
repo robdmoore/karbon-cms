@@ -2,6 +2,23 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="All">
 
   <!-- 
+    ****************************************
+    * PROPERTIES
+  ****************************************
+  -->
+
+  <PropertyGroup>
+    <RootDir>$(MSBuildProjectDirectory)</RootDir>
+    <BuildDir>$(RootDir)\Build</BuildDir>
+    <PackageDir>$(RootDir)\Package</PackageDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration> 
+    <SolutionDir Condition="'$(SolutionDir)' == ''">$(RootDir)</SolutionDir> 
+  </PropertyGroup>
+
+  <!-- 
   	****************************************
   	* IMPORTS
 	****************************************
@@ -14,23 +31,6 @@
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
   <Import Project="$(MSBuildNuGetTasksPath)\MSBuild.NuGet.Tasks.Targets" />
   <Import Project="packages\GitVersionTask.1.2.0\Build\GitVersionTask.targets" Condition="Exists('packages\GitVersionTask.1.2.0\Build\GitVersionTask.targets')" />
-
-  <!-- 
-  	****************************************
-  	* PROPERTIES
-	****************************************
-  -->
-
-  <PropertyGroup>
-	  <RootDir>$(MSBuildProjectDirectory)</RootDir>
-	  <BuildDir>$(RootDir)\Build</BuildDir>
-	  <PackageDir>$(RootDir)\Package</PackageDir>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration> 
-    <SolutionDir Condition="'$(SolutionDir)' == ''">$(RootDir)</SolutionDir> 
-  </PropertyGroup>
   
   <!-- 
   	****************************************
@@ -55,7 +55,7 @@
       <ProjectFiles Include="$(RootDir)\Src\Karbon.Cms.Core\Karbon.Cms.Core.csproj" />
       <ProjectFiles Include="$(RootDir)\Src\Karbon.Cms.Web\Karbon.Cms.Web.csproj" />
     </ItemGroup>
-    <MSBuild Projects="@(ProjectFiles)" Properties="Configuration=$(Configuration);" />
+    <MSBuild Projects="@(ProjectFiles)" Properties="Configuration=$(Configuration);SolutionDir=$(SolutionDir);NoWarn=0436;" />
   </Target>
     
   <!-- PREPAIRE FILES --> 
@@ -76,7 +76,7 @@
 	  <ItemGroup>
       <ManifestFiles Include="$(BuildDir)\**\*" Exclude="$(BuildDir)\Package.nuspec" />
     </ItemGroup>
-    <GetVersion SolutionDirectory="$(RootDir)">
+    <GetVersion SolutionDirectory="$(SolutionDir)">
       <Output TaskParameter="NugetVersion" PropertyName="GfvNuGetVersion" />
     </GetVersion>
 	  <ManifestUpdate 
