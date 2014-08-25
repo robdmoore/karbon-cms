@@ -25,6 +25,19 @@ namespace Karbon.Cms.Web.Modules
                 // the application can rest assured the cache is up to date.
                 StoreManager.ContentStore.SyncCache();
 
+                // Set the current web context
+                if (KarbonWebContext.Current == null)
+                {
+                    KarbonWebContext.Current = new KarbonWebContext(new HttpContextWrapper(HttpContext.Current))
+                    {
+                        HomePage = StoreManager.ContentStore.GetByUrl("~/")
+                    };
+                }
+                else
+                {                 
+                    KarbonWebContext.Current.HomePage = StoreManager.ContentStore.GetByUrl("~/");
+                }
+
                 // If you came hear looking to see how Karbon requests are routed
                 // you are in the wrong place, this module is purely for content
                 // cache updating. Go take a look at the KarbonRoute class instead.

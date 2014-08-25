@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Karbon.Cms.Core.Models;
+using Karbon.Cms.Core.Stores;
 using Karbon.Cms.Web.Embed;
 using MarkdownDeep;
 

@@ -25,3 +25,6 @@
     @Model.CurrentPage.IsOpen() <br />
     @(Model.CurrentPage.Get<IEnumerable<string>>("keys"))
 </p>
+        <h2>Go to MVC context</h2>       
+        <p>@Html.RouteLink("Go to MVC context - explicit route, controller and action","Default", new {@controller="OtherMvc", @action="OtherMvcAction"})</p>
+        <p>@Html.ActionLink("Go to MVC context - no explicit route, path does not match any Karbon root folders", "OtherMvcAction","OtherMvc")</p>
