@@ -21,7 +21,7 @@
 
   build:
     project: Karbon.Cms.sln
-    verbosity: minimal
+    verbosity: normal
 
   before_build:
     - nuget restore
@@ -59,7 +59,7 @@
 
   build:
     project: Karbon.Cms.sln
-    verbosity: minimal
+    verbosity: normal
 
   before_build:
     - nuget restore
