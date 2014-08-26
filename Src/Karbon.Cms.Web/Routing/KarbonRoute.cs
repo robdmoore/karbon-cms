@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Routing;
+using Karbon.Cms.Core;
 using Karbon.Cms.Core.Stores;
 
 namespace Karbon.Cms.Web.Routing

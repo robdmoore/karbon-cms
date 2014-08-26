@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Karbon.Cms.Core;
 using Karbon.Cms.Core.Models;
 using Karbon.Cms.Core.Stores;
 
