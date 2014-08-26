@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
 using System.Web.Routing;
-using Karbon.Cms.Core;
-using Karbon.Cms.Core.Models;
 using Karbon.Cms.Core.Stores;
 
 namespace Karbon.Cms.Web.Routing
