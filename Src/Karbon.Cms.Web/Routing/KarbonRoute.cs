@@ -6,10 +6,9 @@ using Karbon.Cms.Core.Stores;
 
 namespace Karbon.Cms.Web.Routing
 {
-    internal class KarbonRoute : Route
+    public class KarbonRoute : Route
     {
-        private string _url;
-        private IRouteHandler _routeHandler;
+        private readonly IRouteHandler _routeHandler;
 
         /// <summary>
         /// Gets the controller key.
@@ -170,7 +169,6 @@ namespace Karbon.Cms.Web.Routing
             IRouteHandler routeHandler) 
             : base(url, routeHandler)
         {
-            _url = url;
             _routeHandler = routeHandler;
         }
 
@@ -185,7 +183,6 @@ namespace Karbon.Cms.Web.Routing
             IRouteHandler routeHandler) 
             : base(url, defaults, routeHandler)
         {
-            _url = url;
             _routeHandler = routeHandler;
         }
 
@@ -202,7 +199,6 @@ namespace Karbon.Cms.Web.Routing
             IRouteHandler routeHandler) 
             : base(url, defaults, constraints, routeHandler)
         {
-            _url = url;
             _routeHandler = routeHandler;
         }
 
@@ -221,7 +217,6 @@ namespace Karbon.Cms.Web.Routing
             IRouteHandler routeHandler) 
             : base(url, defaults, constraints, dataTokens, routeHandler)
         {
-            _url = url;
             _routeHandler = routeHandler;
         }
 
