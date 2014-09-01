@@ -8,6 +8,7 @@ namespace Karbon.Cms.Web.Routing
 {
     public class KarbonRoute : Route
     {
+        private readonly RouteValueDictionary _defaults;
         private readonly IRouteHandler _routeHandler;
 
         /// <summary>
@@ -106,8 +107,8 @@ namespace Karbon.Cms.Web.Routing
                 return null;
 
             // We have a model, so lets work out where to direct the request
-            var controller = model.GetController(DefaultController);
-            if(controller == null || !controller.HasMethod(action))
+            var controller = model.GetController(_defaults != null && _defaults.ContainsKey(ControllerKey) ? _defaults[ControllerKey] + "Controller" : DefaultController);
+            if (controller == null || !controller.HasMethod(action))
                 return null; 
 
             // Route the request
@@ -183,6 +184,7 @@ namespace Karbon.Cms.Web.Routing
             IRouteHandler routeHandler) 
             : base(url, defaults, routeHandler)
         {
+            _defaults = defaults;
             _routeHandler = routeHandler;
         }
 
@@ -199,6 +201,7 @@ namespace Karbon.Cms.Web.Routing
             IRouteHandler routeHandler) 
             : base(url, defaults, constraints, routeHandler)
         {
+            _defaults = defaults;
             _routeHandler = routeHandler;
         }
 
@@ -217,6 +220,7 @@ namespace Karbon.Cms.Web.Routing
             IRouteHandler routeHandler) 
             : base(url, defaults, constraints, dataTokens, routeHandler)
         {
+            _defaults = defaults;
             _routeHandler = routeHandler;
         }
 
